@@ -9,4 +9,4 @@ Membros do grupo:
 | João Ferro      | 98194           | IronIdkDev    | 
 | Rafael Gésero   | 99063           | RafaelGesero  |
 | Miguel Monteiro | 99860           | MikaZico36    | 
-| Ricardo Ribeiro | 98805           |               |
+| Ricardo Ribeiro | 98805           | ricardo-mar   |
