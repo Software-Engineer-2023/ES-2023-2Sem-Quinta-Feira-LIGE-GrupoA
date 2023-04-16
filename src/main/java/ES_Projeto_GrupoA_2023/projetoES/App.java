@@ -6,7 +6,7 @@ package ES_Projeto_GrupoA_2023.projetoES;
  */
 public class App 
 {
-    public static void main( String[] args )
+  public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
     }
