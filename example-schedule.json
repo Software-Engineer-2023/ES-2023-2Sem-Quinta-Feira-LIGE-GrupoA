@@ -1,67 +1,28 @@
-{
-    "schedule": {
-      "courses": [
-        {
-          "name": "Course A",
-          "curricular_unit": "Curricular Unit A",
-          "turns": [
-            {
-              "name": "Turn A1",
-              "classroom": "Room 101",
-              "schedule": [
-                {
-                  "weekday": "Monday",
-                  "start_time": "08:00",
-                  "end_time": "10:00"
-                },
-                {
-                  "weekday": "Wednesday",
-                  "start_time": "08:00",
-                  "end_time": "10:00"
-                }
-              ]
-            },
-            {
-              "name": "Turn A2",
-              "classroom": "Room 102",
-              "schedule": [
-                {
-                  "weekday": "Tuesday",
-                  "start_time": "10:00",
-                  "end_time": "12:00"
-                },
-                {
-                  "weekday": "Thursday",
-                  "start_time": "10:00",
-                  "end_time": "12:00"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Course B",
-          "curricular_unit": "Curricular Unit B",
-          "turns": [
-            {
-              "name": "Turn B1",
-              "classroom": "Room 201",
-              "schedule": [
-                {
-                  "weekday": "Monday",
-                  "start_time": "14:00",
-                  "end_time": "16:00"
-                },
-                {
-                  "weekday": "Wednesday",
-                  "start_time": "14:00",
-                  "end_time": "16:00"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+[
+  {
+    "Curso": "ME",
+    "Unidade Curricular": "Teoria dos Jogos e dos Contratos",
+    "Turno": "01789TP01",
+    "Turma": "MEA1",
+    "Inscritos no turno": 30,
+    "Dia da semana": "Sex",
+    "Hora início da aula": "13:00:00",
+    "Hora fim da aula": "14:30:00",
+    "Data da aula": "2/12/2022",
+    "Sala atribuída à aula": "AA2.25",
+    "Lotação da sala": 34
+  },
+  {
+    "Curso": "PIUDHIST",
+    "Unidade Curricular": "Seminário de Projecto I (Piudhist)",
+    "Turno": "SP-I_(Piudhist)S01",
+    "Turma": "DHMCMG1",
+    "Inscritos no turno": 0,
+    "Dia da semana": "Seg",
+    "Hora início da aula": "18:00:00",
+    "Hora fim da aula": "20:00:00",
+    "Data da aula": "12/12/2022",
+    "Sala atribuída à aula": "AA3.24",
+    "Lotação da sala": 30
   }
-  
+]
