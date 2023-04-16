@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import com.google.gson.Gson;
 
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
@@ -73,6 +74,13 @@ public class CSVToJSon {
 		return array;
 	}
 	
+	public void convertArrayToJson(ArrayList<CSVToJSon> array) {
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(array);
+		System.out.println(json);
+		
+	}
 	
 	
 	public String getCurso() {

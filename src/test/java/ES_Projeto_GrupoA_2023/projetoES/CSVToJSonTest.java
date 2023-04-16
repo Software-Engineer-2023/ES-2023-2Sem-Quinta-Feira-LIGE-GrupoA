@@ -13,7 +13,7 @@ class CSVToJSonTest {
 
 	CSVToJSon csv = new CSVToJSon();
 	
-	ArrayList<CSVToJSon> array = csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
+	ArrayList<CSVToJSon> array = csv.convertCSVToArray("C:\\Users\\Henrique\\Documents\\Iscte\\ES\\horario_exemplo.csv");
 	assertNotNull(array);
 	
 	assertEquals("ME", array.get(0).getCurso());
@@ -29,7 +29,14 @@ class CSVToJSonTest {
 	assertEquals(34, array.get(0).getLotacao());
 	}
 	
-
+	@Test
+	void test2() {
+		CSVToJSon csv = new CSVToJSon();
+		
+		ArrayList<CSVToJSon> array = csv.convertCSVToArray("C:\\Users\\Henrique\\Documents\\Iscte\\ES\\horario_exemplo.csv");
+		
+		csv.convertArrayToJson(array);
+	}
 
 
 }
