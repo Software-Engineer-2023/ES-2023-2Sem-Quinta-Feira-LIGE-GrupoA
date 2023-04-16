@@ -35,7 +35,6 @@ public class CSVToJSon {
 		        .build()) {
 			reader.readNext(); 
 			reader.readNext(); 
-
 			String[] linha;
 			try {
 				while((linha = reader.readNext()) != null) {

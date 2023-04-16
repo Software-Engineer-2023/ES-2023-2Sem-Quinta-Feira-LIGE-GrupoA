@@ -27,10 +27,6 @@ class CSVToJSonTest {
 	assertEquals("02/12/2022", array.get(0).getDataAula());
 	assertEquals("AA2.25", array.get(0).getSalaAtribuida());
 	assertEquals(34, array.get(0).getLotacao());
-
-
-	
-	
 	}
 	
 
