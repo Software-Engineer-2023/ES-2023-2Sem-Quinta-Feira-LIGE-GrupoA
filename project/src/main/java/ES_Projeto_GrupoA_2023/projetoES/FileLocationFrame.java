@@ -21,7 +21,6 @@ public class FileLocationFrame extends JFrame {
     public FileLocationFrame() {
         super("Selecionar Localização do Arquivo");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         setLayout(new GridLayout(2, 2));
 
         locationLabel = new JLabel("Localização do ficheiro:");

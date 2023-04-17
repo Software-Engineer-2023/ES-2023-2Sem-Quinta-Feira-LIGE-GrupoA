@@ -66,12 +66,8 @@ class CSVToJSonTest {
         }
     }
     
-    
-	
-	
-	
-	@Test
-	void test2() {
+    @Test
+	void convertArrayListToJSonTest() {
 		CSVToJSon csv = new CSVToJSon();
 		
 		ArrayList<CSVToJSon> array = csv.convertCSVToArray("C:\\Users\\Henrique\\Documents\\Iscte\\ES\\horario_exemplo.csv");

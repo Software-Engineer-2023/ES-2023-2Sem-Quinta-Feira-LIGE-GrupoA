@@ -27,7 +27,7 @@ public class AppTest {
 	        assertTrue(frame.isVisible());
 	        
 
-		
+
 	}
 	
 	

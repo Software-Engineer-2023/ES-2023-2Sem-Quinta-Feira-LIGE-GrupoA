@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
 
+
 public class App {
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
 

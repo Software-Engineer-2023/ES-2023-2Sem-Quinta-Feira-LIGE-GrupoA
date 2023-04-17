@@ -25,9 +25,8 @@ public class CSVToJSon {
 	private String path;
 	
 	public CSVToJSon() {
-
 	}
-	
+
 	/* Método que converte um ficheiro CSV para um ArrayList */
 	public ArrayList<CSVToJSon> convertCSVToArray(String path) {
 		ArrayList<CSVToJSon> array = new ArrayList<>();
