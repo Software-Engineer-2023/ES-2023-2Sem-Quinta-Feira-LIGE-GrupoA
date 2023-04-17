@@ -25,6 +25,7 @@ public class CSVToJSon {
 	private String path;
 	
 	public CSVToJSon() {
+
 	}
 	
 	/* Método que converte um ficheiro CSV para um ArrayList */
@@ -34,8 +35,8 @@ public class CSVToJSon {
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(path))
 		        .withCSVParser(new CSVParserBuilder().withSeparator(';').build())
 		        .build()) {
-			reader.readNext(); 
-			reader.readNext(); 
+			//Passa duas linhas à frente pois a primeira é não possui texto e a segunda possui as colunas da tabela
+			reader.skip(2); 
 			String[] linha;
 			try {
 				while((linha = reader.readNext()) != null) {
@@ -67,12 +68,9 @@ public class CSVToJSon {
 			System.err.println("Erro:O ficheiro não foi encontrado! Verifique se o path está correto");
 		} catch (IOException e) {
 			System.err.println("Erro: Não foi possível ler o ficheiro");
-		} catch (CsvValidationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		return array;
-	}
+	}	
 	
 	public void convertArrayToJson(ArrayList<CSVToJSon> array) {
 		
