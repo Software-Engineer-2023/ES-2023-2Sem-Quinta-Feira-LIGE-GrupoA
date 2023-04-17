@@ -138,8 +138,6 @@ public class CSVToJSon {
 		return s; 
 	}
 	
-	
-
 	public void convertCSVToJSon(String path) {
 		
 		ArrayList<CSVToJSon> array = convertCSVToArray(path);

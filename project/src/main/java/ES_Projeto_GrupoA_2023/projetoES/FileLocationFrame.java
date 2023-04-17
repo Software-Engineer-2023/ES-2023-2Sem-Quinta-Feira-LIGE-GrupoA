@@ -41,8 +41,8 @@ public class FileLocationFrame extends JFrame {
                 }
             }
         });
+        
         add(browseButton);
-
         okButton = new JButton("OK");
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
