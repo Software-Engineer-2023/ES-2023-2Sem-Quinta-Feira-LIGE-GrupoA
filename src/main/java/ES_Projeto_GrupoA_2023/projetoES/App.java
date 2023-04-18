@@ -6,10 +6,6 @@ package ES_Projeto_GrupoA_2023.projetoES;
  */
 
 import java.util.logging.Logger;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.net.URL;
 
 
 public class App {

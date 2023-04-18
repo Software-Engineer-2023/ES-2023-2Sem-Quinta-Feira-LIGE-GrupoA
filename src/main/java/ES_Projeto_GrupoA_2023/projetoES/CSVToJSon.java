@@ -1,41 +1,71 @@
 package ES_Projeto_GrupoA_2023.projetoES;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.fasterxml.jackson.core.exc.StreamWriteException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import java.util.logging.Logger;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
-
 public class CSVToJSon {
-	private String curso;
-	private String uc;
-	private String turno;
-	private String turma;
-	private int incritos;
-	private String diaSemana;
-	private String horaInicio;
-	private String horaFim;
-	private String dataAula;
-	private String salaAtribuida;
-	private int lotacao;
-	private String path;
+	//Tag @JsonProperty é usada para quando um ficheiro csv for convertido em json, os campos tenham o mesmo nome que no ficheiro csv
 	
+	
+	@JsonProperty("Curso")
+    private String curso;
+
+    @JsonProperty("Unidade Curricular")
+    private String uc;
+
+    @JsonProperty("Turno")
+    private String turno;
+
+    @JsonProperty("Turma")
+    private String turma;
+
+    @JsonProperty("Inscritos no turno")
+    private int inscritos;
+
+    @JsonProperty("Dia da semana")
+    private String diaSemana;
+
+    @JsonProperty("Hora início da aula")
+    private String horaInicio;
+
+    @JsonProperty("Hora fim da aula")
+    private String horaFim;
+
+    @JsonProperty("Data da aula")
+    private String dataAula;
+
+    @JsonProperty("Sala atribuída à aula")
+    private String salaAtribuida;
+
+    @JsonProperty("Lotação da sala")
+    private int lotacao;
+	
+    private static final Logger LOGGER = Logger.getLogger("CSVToJSON");
+
+    
+    //Método vazio que apenas permite criar um objeto CSVToJSon e acessar aos métodos desta classe
 	public CSVToJSon() {
 	}
 
 	/* Método que converte um ficheiro CSV para um ArrayList */
 	public ArrayList<CSVToJSon> convertCSVToArray(String path) {
 		ArrayList<CSVToJSon> array = new ArrayList<>();
-		
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(path))
 		        .withCSVParser(new CSVParserBuilder().withSeparator(';').build())
 		        .build()) {
@@ -49,14 +79,16 @@ public class CSVToJSon {
 					csv.setUc(linha[1]);
 					csv.setTurno(linha[2]);
 					csv.setTurma(linha[3]);
-					csv.setIncritos(Integer.parseInt(linha[4]));
+					csv.setInscritos(Integer.parseInt(linha[4]));
 					csv.setDiaSemana(linha[5]);
 					csv.setHoraInicio(linha[6]);
 					csv.setHoraFim(linha[7]);
 					csv.setDataAula(linha[8]);
 					csv.setSalaAtribuida(linha[9]);
 					
-					if(linha[10] == "" ) {
+					//Existem valores inteiros que estão vazios no ficheiro csv. Para evitar possíveis erros, colocamos esses valores a 0.
+					
+					if(linha[10].equals("") ) {
 						linha[10] = "0";
 					}else {
 						csv.setLotacao(Integer.parseInt(linha[10]));
@@ -64,82 +96,40 @@ public class CSVToJSon {
 					array.add(csv);
 				}
 			} catch (CsvValidationException e) {
-				System.err.println("Erro: problemas na validação CSV");
+				LOGGER.severe("Erro: problemas na validação CSV");
 				
 			}
 			
 		} catch (FileNotFoundException e) {
-			System.err.println("Erro:O ficheiro não foi encontrado! Verifique se o path está correto");
+			LOGGER.severe("Erro:O ficheiro não foi encontrado! Verifique se o path está correto");
 		} catch (IOException e) {
-			System.err.println("Erro: Não foi possível ler o ficheiro");
+			LOGGER.severe("Erro: Não foi possível ler o ficheiro");
 		}
 		return array;
 	}	
 	
 	public void convertArrayToJson(ArrayList<CSVToJSon> array) {
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(array);
-		String[] linhas = json.split(",");
-			
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("horario.json"));
-			for (String linhaAux : linhas) {
-				String linha = stringConverter(linhaAux);
-					
-				if(linha.startsWith("[")) {
-					writer.write("[\n");
-					linha = linha.substring(1);
-				}
-					
-				if(linha.startsWith("{")) {
-					writer.write("\n  {\n");
-					linha = linha.substring(1);
-				}
-				linha = "    " + linha;
-					
-				if(linha.endsWith("}")) {
-					linha = linha.substring(0, linha.length() - 1);
-					writer.write(linha);
-					writer.write("\n  }");
-				} else if(linha.endsWith("}]")) {
-					linha = linha.substring(0, linha.length() - 1);
-					linha = linha.substring(0, linha.length() - 1);
-					writer.write(linha);
-					writer.write("\n  }");
-					writer.write("\n]");
-					writer.newLine();
-					break;
-				} else {
-					writer.write(linha);
-					writer.write(",");
-					writer.newLine();
-				}
-			}
-			writer.close();
-			System.out.println("Sucesso:Conteúdo gravado com sucesso no arquivo!");
+		//Cria um mapeamento novo para mapear dados json em java
+		ObjectMapper mapa = new ObjectMapper();
+		//Seleciona a forma como o ficheiro será escrito tornando-o mais claro para ser lido
+        mapa.enable(SerializationFeature.INDENT_OUTPUT);
+        //Escreve os dados json num ficheiro
+        ObjectWriter writer = mapa.writerWithDefaultPrettyPrinter();
+
+        File file = new File("horario.json");
+        try {
+			writer.writeValue(file, array);
+		} catch (StreamWriteException e) {
+			LOGGER.severe("Erro: problemas na escrita do ficheiro ");
+		} catch (DatabindException e) {
+			LOGGER.severe("Erro: problemas no mapeamento do ficheiro");
 		} catch (IOException e) {
-			System.err.println("Erro:Ocorreu um erro ao gravar o arquivo: " + e.getMessage());
+			LOGGER.severe("Erro: Mão foi possível encontrar o ficheiro ou ficheiro inválido");
 		}
+        
+        LOGGER.info("Sucesso: ficheiro criado com sucesso");
+        
 	}
-
-
-	private String stringConverter(String s) {
-		
-		s = s.replaceAll("curso", "Curso");
-		s = s.replaceAll("uc", "Unidade Curricular");
-		s = s.replaceAll("turno", "Turno");
-		s = s.replaceAll("turma", "Turma");
-		s = s.replaceAll("inscritos", "Inscritos no turno");
-		s = s.replaceAll("diaSemana", "Dia da semana");
-		s = s.replaceAll("horaInicio", "Hora início da aula");
-		s = s.replaceAll("horaFim", "Hora fim da aula");
-		s = s.replaceAll("dataAula", "Data da aula");
-		s = s.replaceAll("salaAtribuida", "Sala atribuída à aula");
-		s = s.replaceAll("lotacao", "Lotação da sala");
-		return s; 
-	}
-	
 	public void convertCSVToJSon(String path) {
 		
 		ArrayList<CSVToJSon> array = convertCSVToArray(path);
@@ -171,11 +161,11 @@ public class CSVToJSon {
 	public void setTurma(String turma) {
 		this.turma = turma;
 	}
-	public int getIncritos() {
-		return incritos;
+	public int getInscritos() {
+		return inscritos;
 	}
-	public void setIncritos(int inscritos) {
-		this.incritos = inscritos;
+	public void setInscritos(int inscritos) {
+		this.inscritos = inscritos;
 	}
 	public String getDiaSemana() {
 		return diaSemana;
