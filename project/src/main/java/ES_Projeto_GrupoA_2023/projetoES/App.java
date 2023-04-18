@@ -16,7 +16,7 @@ public class App {
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
 
     public static void main(String[] args) {
-        LOGGER.info("This is an information message");
+        LOGGER.info("Program started with no issues.");
 
         // cria a instância da janela de seleção de arquivo
         FileLocationFrame fileLocationFrame = new FileLocationFrame();
@@ -24,4 +24,3 @@ public class App {
         fileLocationFrame.setVisible(true);
     }
 }
-
