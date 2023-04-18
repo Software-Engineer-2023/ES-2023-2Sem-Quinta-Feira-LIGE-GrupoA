@@ -1,15 +1,13 @@
 package ES_Projeto_GrupoA_2023.projetoES;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
 
 public class FileLocationFrame extends JFrame {
     private JLabel locationLabel;
@@ -19,7 +17,7 @@ public class FileLocationFrame extends JFrame {
 
     public FileLocationFrame() {
         super("Selecionar localização do ficheiro");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridLayout(2, 2));
         initComponents();
         layoutComponents();
@@ -43,18 +41,10 @@ public class FileLocationFrame extends JFrame {
     }
 
     private void addListeners() {
-        browseButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                browseButtonClicked();
-            }
-        });
-
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                okButtonClicked();
-            }
-        });
+        browseButton.addActionListener(e -> browseButtonClicked());
+        okButton.addActionListener(e -> okButtonClicked());
     }
+
 
     private void browseButtonClicked() {
         JFileChooser fileChooser = new JFileChooser();
@@ -99,7 +89,5 @@ public class FileLocationFrame extends JFrame {
         browseButton.doClick();
     }
 
-    public void clickOkButton() {
-        okButton.doClick();
-    }
+
 }
