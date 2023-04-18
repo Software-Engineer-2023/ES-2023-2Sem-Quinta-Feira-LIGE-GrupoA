@@ -8,57 +8,69 @@
   <artifactId>projetoES</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>projetoES</name>
-  <description>A simple projetoES.</description>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <name>ES-2023-2Sem-Quinta-Feira-LIGE-GrupoA</name>
+  <description>College project done for the course 'Software Engineering'</description>
+  <url>https://github.com/IronIdkDev/ES-2023-2Sem-Quinta-Feira-LIGE-GrupoA</url>
 
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>19</maven.compiler.source>
+    <maven.compiler.target>19</maven.compiler.target>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>net.sf.json-lib</groupId>
+      <artifactId>json-lib</artifactId>
+      <version>2.4</version>
+      <classifier>jdk15</classifier>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
     </dependency>
     <dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-core</artifactId>
-    <version>2.13.0</version>
-</dependency>
-
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.13.0</version>
-</dependency>
-<dependency>
-    <groupId>com.opencsv</groupId>
-    <artifactId>opencsv</artifactId>
-    <version>5.5.2</version>
-</dependency>
-<dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20210307</version>
-</dependency>
-<dependency>
-    <groupId>net.sf.json-lib</groupId>
-    <artifactId>json-lib</artifactId>
-    <version>2.4</version>
-    <classifier>jdk15</classifier>
-</dependency>
-
-
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.13.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20210307</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.15.0-rc1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.opencsv</groupId>
+      <artifactId>opencsv</artifactId>
+      <version>5.5.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>	
+      <artifactId>json</artifactId>	
+      <version>20210307</version>	
+    </dependency>	
+    <dependency>	
+      <groupId>net.sf.json-lib</groupId>	
+      <artifactId>json-lib</artifactId>	
+      <version>2.4</version>	
+      <classifier>jdk15</classifier>
+    </dependency>
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
@@ -72,7 +84,6 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
