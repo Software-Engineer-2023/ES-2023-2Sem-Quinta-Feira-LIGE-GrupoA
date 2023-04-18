@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.tools.DocumentationTool.Location;
 
 public class FileLocationFrame extends JFrame {
     private JLabel locationLabel;
@@ -19,48 +18,88 @@ public class FileLocationFrame extends JFrame {
     private JButton okButton;
 
     public FileLocationFrame() {
-        super("Selecionar Localização do Arquivo");
+        super("Selecionar localização do ficheiro");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(2, 2));
-
-        locationLabel = new JLabel("Localização do ficheiro:");
-        add(locationLabel);
-
-        locationTextField = new JTextField(20);
-        add(locationTextField);
-
-        browseButton = new JButton("Procurar ficheiro localmente");
-        browseButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //procura o ficheiro
-                JFileChooser fileChooser = new JFileChooser();
-                int result = fileChooser.showOpenDialog(FileLocationFrame.this);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    String path = fileChooser.getSelectedFile().getPath();
-                    locationTextField.setText(path);
-                }
-            }
-        });
-        
-        add(browseButton);
-        okButton = new JButton("OK");
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String location = locationTextField.getText();
-                // faça algo com a localização do arquivo aqui
-                JOptionPane.showMessageDialog(FileLocationFrame.this, "Localização do ficheiro selecionada: " + location);
-                //Verifica se a String com o caminho do ficheiro inserido terminar em .csv, então converte-o em JSon
-                if(location.endsWith(".csv")) {
-                    CSVToJSon csv = new CSVToJSon();
-                    csv.convertCSVToJSon(location);
-                }
-                
-                dispose();
-            }
-        });
-        add(okButton);
-
+        initComponents();
+        layoutComponents();
+        addListeners();
         pack();
         setLocationRelativeTo(null);
+    }
+
+    private void initComponents() {
+        locationLabel = new JLabel("Localização do ficheiro:");
+        locationTextField = new JTextField(20);
+        browseButton = new JButton("Procurar ficheiro localmente");
+        okButton = new JButton("OK");
+    }
+
+    private void layoutComponents() {
+        add(locationLabel);
+        add(locationTextField);
+        add(browseButton);
+        add(okButton);
+    }
+
+    private void addListeners() {
+        browseButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                browseButtonClicked();
+            }
+        });
+
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                okButtonClicked();
+            }
+        });
+    }
+
+    private void browseButtonClicked() {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String path = fileChooser.getSelectedFile().getPath();
+            locationTextField.setText(path);
+        }
+    }
+
+    private void okButtonClicked() {
+        String location = locationTextField.getText();
+        // faça algo com a localização do arquivo aqui
+        JOptionPane.showMessageDialog(this, "Localização do ficheiro selecionada: " + location);
+        //Verifica se a String com o caminho do ficheiro inserido terminar em .csv, então converte-o em JSon
+        if(location.endsWith(".csv")) {
+            CSVToJSon csv = new CSVToJSon();
+            csv.convertCSVToJSon(location);
+        }
+        dispose();
+    }
+
+    // Métodos para testar
+
+    public JTextField getLocationTextField() {
+        return locationTextField;
+    }
+
+    public JButton getBrowseButton() {
+        return browseButton;
+    }
+
+    public JButton getOkButton() {
+        return okButton;
+    }
+
+    public void setLocationTextField(String location) {
+        locationTextField.setText(location);
+    }
+
+    public void clickBrowseButton() {
+        browseButton.doClick();
+    }
+
+    public void clickOkButton() {
+        okButton.doClick();
     }
 }
