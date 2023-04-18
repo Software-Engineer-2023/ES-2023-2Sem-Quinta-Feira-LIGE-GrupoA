@@ -1,4 +1,5 @@
 package ES_Projeto_GrupoA_2023.projetoES;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
@@ -13,6 +14,7 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
+
 public class CSVToJSon {
 	private String curso;
 	private String uc;
