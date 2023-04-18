@@ -1,11 +1,14 @@
 package ES_Projeto_GrupoA_2023.projetoES;
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import com.google.gson.Gson;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -26,7 +29,7 @@ public class CSVToJSon {
 	
 	public CSVToJSon() {
 	}
-	
+
 	/* Método que converte um ficheiro CSV para um ArrayList */
 	public ArrayList<CSVToJSon> convertCSVToArray(String path) {
 		ArrayList<CSVToJSon> array = new ArrayList<>();
@@ -34,8 +37,8 @@ public class CSVToJSon {
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(path))
 		        .withCSVParser(new CSVParserBuilder().withSeparator(';').build())
 		        .build()) {
-			reader.readNext(); 
-			reader.readNext(); 
+			//Passa duas linhas à frente pois a primeira é não possui texto e a segunda possui as colunas da tabela
+			reader.skip(2); 
 			String[] linha;
 			try {
 				while((linha = reader.readNext()) != null) {
@@ -67,21 +70,80 @@ public class CSVToJSon {
 			System.err.println("Erro:O ficheiro não foi encontrado! Verifique se o path está correto");
 		} catch (IOException e) {
 			System.err.println("Erro: Não foi possível ler o ficheiro");
-		} catch (CsvValidationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		return array;
-	}
+	}	
 	
 	public void convertArrayToJson(ArrayList<CSVToJSon> array) {
 		
 		Gson gson = new Gson();
 		String json = gson.toJson(array);
-		System.out.println(json);
+		String[] linhas = json.split(",");
+			
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("horario.json"));
+			for (String linhaAux : linhas) {
+				String linha = stringConverter(linhaAux);
+					
+				if(linha.startsWith("[")) {
+					writer.write("[\n");
+					linha = linha.substring(1);
+				}
+					
+				if(linha.startsWith("{")) {
+					writer.write("\n  {\n");
+					linha = linha.substring(1);
+				}
+				linha = "    " + linha;
+					
+				if(linha.endsWith("}")) {
+					linha = linha.substring(0, linha.length() - 1);
+					writer.write(linha);
+					writer.write("\n  }");
+				} else if(linha.endsWith("}]")) {
+					linha = linha.substring(0, linha.length() - 1);
+					linha = linha.substring(0, linha.length() - 1);
+					writer.write(linha);
+					writer.write("\n  }");
+					writer.write("\n]");
+					writer.newLine();
+					break;
+				} else {
+					writer.write(linha);
+					writer.write(",");
+					writer.newLine();
+				}
+			}
+			writer.close();
+			System.out.println("Sucesso:Conteúdo gravado com sucesso no arquivo!");
+		} catch (IOException e) {
+			System.err.println("Erro:Ocorreu um erro ao gravar o arquivo: " + e.getMessage());
+		}
+	}
+
+
+	private String stringConverter(String s) {
 		
+		s = s.replaceAll("curso", "Curso");
+		s = s.replaceAll("uc", "Unidade Curricular");
+		s = s.replaceAll("turno", "Turno");
+		s = s.replaceAll("turma", "Turma");
+		s = s.replaceAll("inscritos", "Inscritos no turno");
+		s = s.replaceAll("diaSemana", "Dia da semana");
+		s = s.replaceAll("horaInicio", "Hora início da aula");
+		s = s.replaceAll("horaFim", "Hora fim da aula");
+		s = s.replaceAll("dataAula", "Data da aula");
+		s = s.replaceAll("salaAtribuida", "Sala atribuída à aula");
+		s = s.replaceAll("lotacao", "Lotação da sala");
+		return s; 
 	}
 	
+	public void convertCSVToJSon(String path) {
+		
+		ArrayList<CSVToJSon> array = convertCSVToArray(path);
+		convertArrayToJson(array);
+		
+	}
 	
 	public String getCurso() {
 		return curso;
