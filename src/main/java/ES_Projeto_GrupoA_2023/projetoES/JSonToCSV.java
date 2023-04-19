@@ -19,10 +19,10 @@ public class JSonToCSV{
     private Iterator<JsonNode> elements;
     private CSVWriter writer;
 
-    public JSonToCSV(File file) throws IOException {
-        JsonNode rootNode = new ObjectMapper().readTree(file);
+    public JSonToCSV(String fileName) throws IOException {
+        JsonNode rootNode = new ObjectMapper().readTree(new File(fileName));
         elements =  rootNode.elements();
-        writer = new CSVWriter(new FileWriter("src/main/resources/data_temp.csv"));
+        writer = new CSVWriter(new FileWriter(fileName));
         createSchema();
     }
 
@@ -84,7 +84,7 @@ public class JSonToCSV{
 
     public static void main(String[] args){
         try {
-            JSonToCSV x = new JSonToCSV(new File("src/main/resources/example-schedule.json"));
+            JSonToCSV x = new JSonToCSV("src/main/resources/example-schedule.json");
            x.convertFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
