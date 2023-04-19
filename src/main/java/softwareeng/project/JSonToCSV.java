@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.opencsv.CSVWriter;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import java.io.*;
 import java.util.Iterator;
@@ -73,7 +74,7 @@ public class JSonToCSV{
                 writer2.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Exception occurred", e);
         } finally {
             boolean deleted = new File(inputFileName).delete();
             if (!deleted) {
