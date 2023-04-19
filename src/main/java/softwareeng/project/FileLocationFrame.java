@@ -9,6 +9,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import java.io.IOException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 public class FileLocationFrame extends JFrame {
@@ -16,6 +20,8 @@ public class FileLocationFrame extends JFrame {
     private JTextField locationTextField;
     private JButton browseButton;
     private JButton okButton;
+    private static final Logger LOGGER = Logger.getLogger("FileLocationFrame");
+
 
     public FileLocationFrame() {
         super("Selecionar localização do ficheiro");
@@ -73,6 +79,32 @@ public class FileLocationFrame extends JFrame {
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Erro ao converter o arquivo JSON para CSV: " + e.getMessage());
             }
+        }
+        if(location.startsWith("webcal")) {
+        	Web web = new Web();
+        	String s = location.replace("webcal", "https");
+        	
+				try {
+					URL url = new URL(s);
+					web.ReadWeb(url);
+					web.URLToCSV(url);
+				} catch (MalformedURLException e) {
+					LOGGER.log(Level.SEVERE, "Exception occurred", e);
+				} catch (IOException e) {
+					LOGGER.log(Level.SEVERE, "Exception occurred", e);
+				}
+        }else {
+        	Web web = new Web();
+        	
+				try {
+					URL url = new URL(location);
+					web.ReadWeb(url);
+					web.URLToCSV(url);
+				} catch (MalformedURLException e) {
+					LOGGER.log(Level.SEVERE, "Exception occurred", e);
+				} catch (IOException e) {
+					LOGGER.log(Level.SEVERE, "Exception occurred", e);
+				}
         }
         dispose();
     }
