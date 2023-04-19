@@ -81,11 +81,8 @@ public class CSVToJSon {
 				if (linha[10].equals("")) {
 					linha[10] = "0";
 				} else {
-					try {
-						csv.setLotacao(Integer.parseInt(linha[10]));
-					} catch (NumberFormatException e) {
-						LOGGER.severe("Erro: não foi possível converter o valor para inteiro");
-					}
+					csv.setLotacao(Integer.parseInt(linha[10]));
+					LOGGER.severe("Erro: não foi possível converter o valor para inteiro");
 				}
 				array.add(csv);
 			}
