@@ -58,13 +58,6 @@ public class CSVToJSon {
 	
     private static final Logger LOGGER = Logger.getLogger("CSVToJSON");
 
-
-	/**
-	 * Método vazio que apenas permite criar um objeto CSVToJSon e acessar aos métodos desta classe
-	 */
-	public CSVToJSon() {
-	}
-
 	/* Método que converte um ficheiro CSV para um ArrayList */
 	public ArrayList<CSVToJSon> convertCSVToArray(String path) {
 		ArrayList<CSVToJSon> array = new ArrayList<>();
