@@ -57,41 +57,39 @@ public class CSVToJSon {
 
 	public CSVToJSon() { /* This is a default constructor with no paramerters */ }	
 
-	/* Método que converte um ficheiro CSV para um ArrayList */
+	/* Method that converts a CSV file to an ArrayList. */
 	public List<CSVToJSon> convertCSVToArray(String path) {
 		ArrayList<CSVToJSon> array = new ArrayList<>();
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(path))
 				.withCSVParser(new CSVParserBuilder().withSeparator(';').build())
 				.build()) {
 			reader.skip(2);
-			String[] linha;
-			while ((linha = reader.readNext()) != null) {
+			String[] line;
+			while ((line = reader.readNext()) != null) {
 				CSVToJSon csv = new CSVToJSon();
-				csv.setCurso(linha[0]);
-				csv.setUc(linha[1]);
-				csv.setTurno(linha[2]);
-				csv.setTurma(linha[3]);
-				csv.setInscritos(Integer.parseInt(linha[4]));
-				csv.setDiaSemana(linha[5]);
-				csv.setHoraInicio(linha[6]);
-				csv.setHoraFim(linha[7]);
-				csv.setDataAula(linha[8]);
-				csv.setSalaAtribuida(linha[9]);
+				csv.setCurso(line[0]);
+				csv.setUc(line[1]);
+				csv.setTurno(line[2]);
+				csv.setTurma(line[3]);
+				csv.setInscritos(Integer.parseInt(line[4]));
+				csv.setDiaSemana(line[5]);
+				csv.setHoraInicio(line[6]);
+				csv.setHoraFim(line[7]);
+				csv.setDataAula(line[8]);
+				csv.setSalaAtribuida(line[9]);
 	
-				if (linha[10].equals("")) {
-					linha[10] = "0";
+				if (line[10].equals("")) {
+					line[10] = "0";
 				} else {
-					csv.setLotacao(Integer.parseInt(linha[10]));
-					LOGGER.severe("Erro: não foi possível converter o valor para inteiro");
+					csv.setLotacao(Integer.parseInt(line[10]));
+					LOGGER.severe("Error: unable to convert the value to integer.");
 				}
 				array.add(csv);
 			}
 		} catch (FileNotFoundException e) {
-			LOGGER.severe("Erro: O ficheiro não foi encontrado! Verifique se o path está correto");
-		} catch (CsvValidationException e) {
-			LOGGER.severe("Erro: problemas na validação CSV");
-		} catch (IOException e) {
-			LOGGER.severe("Erro: Não foi possível ler o ficheiro");
+			LOGGER.severe("File not found! Please check if the path is correct.");
+		} catch (CsvValidationException | IOException e) {
+			LOGGER.severe("Error: issues with CSV validation.");
 		}
 		return array;
 	}		

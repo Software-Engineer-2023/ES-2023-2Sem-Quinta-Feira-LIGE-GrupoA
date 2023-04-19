@@ -9,9 +9,9 @@ public class App {
     public static void main(String[] args) {
         LOGGER.info("Program started with no issues.");
 
-        // cria a instância da janela de seleção de arquivo
+        // Create the instance of the file selection window.
         FileLocationFrame fileLocationFrame = new FileLocationFrame();
-        // torna a janela visível para o usuário
+        // Make the window visible to the user
         fileLocationFrame.setVisible(true);
     }
 }
