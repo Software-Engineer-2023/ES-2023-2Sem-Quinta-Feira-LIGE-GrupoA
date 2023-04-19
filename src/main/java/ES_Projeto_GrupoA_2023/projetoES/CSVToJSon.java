@@ -58,8 +58,10 @@ public class CSVToJSon {
 	
     private static final Logger LOGGER = Logger.getLogger("CSVToJSON");
 
-    
-    //Método vazio que apenas permite criar um objeto CSVToJSon e acessar aos métodos desta classe
+
+	/**
+	 * Método vazio que apenas permite criar um objeto CSVToJSon e acessar aos métodos desta classe
+	 */
 	public CSVToJSon() {
 	}
 

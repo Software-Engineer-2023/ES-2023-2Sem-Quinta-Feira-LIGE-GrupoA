@@ -1,10 +1,5 @@
 package ES_Projeto_GrupoA_2023.projetoES;
 
-/**
- * Hello world!
- *
- */
-
 import java.util.logging.Logger;
 
 

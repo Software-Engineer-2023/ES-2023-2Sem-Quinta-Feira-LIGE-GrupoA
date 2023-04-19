@@ -64,6 +64,10 @@ public class FileLocationFrame extends JFrame {
             CSVToJSon csv = new CSVToJSon();
             csv.convertCSVToJSon(location);
         }
+        if(location.endsWith(".json")) {
+            JSonToCSV json = new JSonToCSV();
+            json.convertJSonToCSV(location);
+        }
         dispose();
     }
 
