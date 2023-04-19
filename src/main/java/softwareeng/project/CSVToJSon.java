@@ -1,29 +1,26 @@
 package softwareeng.project;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import com.fasterxml.jackson.core.exc.StreamWriteException;
-import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import java.util.logging.Logger;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvValidationException;
 public class CSVToJSon {
-	//Tag @JsonProperty é usada para quando um ficheiro csv for convertido em json, os campos tenham o mesmo nome que no ficheiro csv
-	
-	
-	@JsonProperty("Curso")
+    @JsonProperty("Curso")
     private String curso;
 
     @JsonProperty("Unidade Curricular")
@@ -58,52 +55,51 @@ public class CSVToJSon {
 	
     private static final Logger LOGGER = Logger.getLogger("CSVToJSON");
 
+	public CSVToJSon() { /* This is a default constructor with no paramerters */ }	
+
 	/* Método que converte um ficheiro CSV para um ArrayList */
-	public ArrayList<CSVToJSon> convertCSVToArray(String path) {
+	public List<CSVToJSon> convertCSVToArray(String path) {
 		ArrayList<CSVToJSon> array = new ArrayList<>();
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(path))
-		        .withCSVParser(new CSVParserBuilder().withSeparator(';').build())
-		        .build()) {
-			//Passa duas linhas à frente pois a primeira é não possui texto e a segunda possui as colunas da tabela
-			reader.skip(2); 
+				.withCSVParser(new CSVParserBuilder().withSeparator(';').build())
+				.build()) {
+			reader.skip(2);
 			String[] linha;
-			try {
-				while((linha = reader.readNext()) != null) {
-					CSVToJSon csv = new CSVToJSon();
-					csv.setCurso(linha[0]);
-					csv.setUc(linha[1]);
-					csv.setTurno(linha[2]);
-					csv.setTurma(linha[3]);
-					csv.setInscritos(Integer.parseInt(linha[4]));
-					csv.setDiaSemana(linha[5]);
-					csv.setHoraInicio(linha[6]);
-					csv.setHoraFim(linha[7]);
-					csv.setDataAula(linha[8]);
-					csv.setSalaAtribuida(linha[9]);
-					
-					//Existem valores inteiros que estão vazios no ficheiro csv. Para evitar possíveis erros, colocamos esses valores a 0.
-					
-					if(linha[10].equals("") ) {
-						linha[10] = "0";
-					}else {
+			while ((linha = reader.readNext()) != null) {
+				CSVToJSon csv = new CSVToJSon();
+				csv.setCurso(linha[0]);
+				csv.setUc(linha[1]);
+				csv.setTurno(linha[2]);
+				csv.setTurma(linha[3]);
+				csv.setInscritos(Integer.parseInt(linha[4]));
+				csv.setDiaSemana(linha[5]);
+				csv.setHoraInicio(linha[6]);
+				csv.setHoraFim(linha[7]);
+				csv.setDataAula(linha[8]);
+				csv.setSalaAtribuida(linha[9]);
+	
+				if (linha[10].equals("")) {
+					linha[10] = "0";
+				} else {
+					try {
 						csv.setLotacao(Integer.parseInt(linha[10]));
+					} catch (NumberFormatException e) {
+						LOGGER.severe("Erro: não foi possível converter o valor para inteiro");
 					}
-					array.add(csv);
 				}
-			} catch (CsvValidationException e) {
-				LOGGER.severe("Erro: problemas na validação CSV");
-				
+				array.add(csv);
 			}
-			
 		} catch (FileNotFoundException e) {
-			LOGGER.severe("Erro:O ficheiro não foi encontrado! Verifique se o path está correto");
+			LOGGER.severe("Erro: O ficheiro não foi encontrado! Verifique se o path está correto");
+		} catch (CsvValidationException e) {
+			LOGGER.severe("Erro: problemas na validação CSV");
 		} catch (IOException e) {
 			LOGGER.severe("Erro: Não foi possível ler o ficheiro");
 		}
 		return array;
-	}	
+	}		
 	
-	public void convertArrayToJson(ArrayList<CSVToJSon> array) {
+	public void convertArrayToJson(List<CSVToJSon> array) {
 		//Cria um mapeamento novo para mapear dados json em java
 		ObjectMapper mapa = new ObjectMapper();
 		//Seleciona a forma como o ficheiro será escrito tornando-o mais claro para ser lido
@@ -114,20 +110,21 @@ public class CSVToJSon {
         File file = new File("horario.json");
         try {
 			writer.writeValue(file, array);
-		} catch (StreamWriteException e) {
+		} catch (JsonGenerationException e) {
 			LOGGER.severe("Erro: problemas na escrita do ficheiro ");
-		} catch (DatabindException e) {
+		} catch (JsonMappingException e) {
 			LOGGER.severe("Erro: problemas no mapeamento do ficheiro");
 		} catch (IOException e) {
-			LOGGER.severe("Erro: Mão foi possível encontrar o ficheiro ou ficheiro inválido");
-		}
+			LOGGER.severe("Erro: Não foi possível encontrar o ficheiro ou ficheiro inválido");
+		}		
         
         LOGGER.info("Sucesso: ficheiro criado com sucesso");
         
 	}
-	public void convertCSVToJSon(String path) {
+
+	public void convertCSVToJson(String path) {
 		
-		ArrayList<CSVToJSon> array = convertCSVToArray(path);
+		ArrayList<CSVToJSon> array = (ArrayList<CSVToJSon>) convertCSVToArray(path);
 		convertArrayToJson(array);
 		
 	}
@@ -198,5 +195,4 @@ public class CSVToJSon {
 	public void setLotacao(int lotacao) {
 		this.lotacao = lotacao;
 	}
-
 }

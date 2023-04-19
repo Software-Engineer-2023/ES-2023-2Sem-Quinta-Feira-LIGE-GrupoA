@@ -78,7 +78,7 @@ class CSVToJSonTest {
     void convertCSVToJSonTest(){
         ObjectMapper mapper = new ObjectMapper();
         CSVToJSon csv = new CSVToJSon();
-        csv.convertCSVToJSon("C:\\Teste\\horario_exemplo.csv");
+        csv.convertCSVToJson("C:\\Teste\\horario_exemplo.csv");
         
         File arquivo1 = new File("C:\\Users\\Proprietário\\git\\ES-2023-2Sem-Quinta-Feira-LIGE-GrupoA\\horario.json");
         File arquivo2 = new File("C:\\Teste\\horario.json");

@@ -64,7 +64,7 @@ public class FileLocationFrame extends JFrame {
         //Verifica se a String com o caminho do ficheiro inserido terminar em .csv, então converte-o em JSon
         if(location.endsWith(".csv")) {
             CSVToJSon csv = new CSVToJSon();
-            csv.convertCSVToJSon(location);
+            csv.convertCSVToJson(location);
         }
         if(location.endsWith(".json")) {
             try {
