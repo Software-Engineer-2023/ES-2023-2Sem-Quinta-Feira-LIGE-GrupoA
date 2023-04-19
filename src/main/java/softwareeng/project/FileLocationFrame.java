@@ -66,7 +66,7 @@ public class FileLocationFrame extends JFrame {
     private void okButtonClicked() {
         String location = locationTextField.getText();
         // faça algo com a localização do arquivo aqui
-        JOptionPane.showMessageDialog(this, "Localização do ficheiro selecionada: " + location);
+        JOptionPane.showMessageDialog(this, "URL of target schedule: " + location);
         //Verifica se a String com o caminho do ficheiro inserido terminar em .csv, então converte-o em JSon
         if(location.endsWith(".csv")) {
             CSVToJSon csv = new CSVToJSon();
