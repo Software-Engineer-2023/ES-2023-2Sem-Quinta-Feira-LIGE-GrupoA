@@ -86,7 +86,7 @@ public class FileLocationFrame extends JFrame {
 				try {
 					URL url = new URL(s);
 					web.ReadWeb(url);
-					web.icsToJson(url);
+					web.URLToJson(url);
 				} catch (MalformedURLException e) {
 					LOGGER.log(Level.SEVERE, "Exception occurred", e);
 				} catch (IOException e) {

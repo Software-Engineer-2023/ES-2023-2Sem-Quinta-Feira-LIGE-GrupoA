@@ -1,16 +1,18 @@
 package softwareeng.project;
 
-import java.net.*;
-import java.util.List;
-import java.io.*;
 
-import org.apache.commons.csv.*;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+import net.fortuna.ical4j.data.CalendarBuilder;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.List;
 
 
 public class Web {
@@ -57,29 +59,48 @@ public class Web {
 	         reader.close();
 	     }
 
-	public void URLToJSon(URL url) throws IOException {
+	public void URLToJson(URL url) throws IOException {
+		try {
+			// Use a URLConnection to download the content of the URL
+			URLConnection connection = url.openConnection();
 
-		URLConnection connection = url.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		JsonReader reader = new JsonReader(in);
-		JsonObject json = new JsonObject();
-		json = new com.google.gson.JsonParser().parse(reader).getAsJsonObject();
-		in.close();
+			// Read the content of the URL into a string
+			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			StringBuilder contentBuilder = new StringBuilder();
+			String line;
+			while ((line = in.readLine()) != null) {
+				contentBuilder.append(line).append("\n");
+			}
+			in.close();
+			String icsContent = contentBuilder.toString();
 
-		JsonWriter writer = new JsonWriter(new FileWriter("output.json"));
-		writer.setIndent("\t");
-		writer.beginObject();
-		for (String key : json.keySet()) {
-			writer.name(key).value(json.get(key).toString());
+			// Convert the iCalendar content to a JSON object using iCal4j
+			CalendarBuilder builder = new CalendarBuilder();
+			Calendar calendar = builder.build(new StringReader(icsContent));
+			String json = new CalendarTransformer().transformToJson(calendar);
+
+			// Print the JSON data for debugging purposes
+			System.out.println("JSON data: " + json);
+
+			// Write the JSON object to a file
+			JsonWriter writer = new JsonWriter(new FileWriter("output.json"));
+			writer.setIndent("\t");
+			writer.jsonValue(json);
+			writer.close();
+
+			// Read and print the contents of the output file for debugging purposes
+			BufferedReader fileReader = new BufferedReader(new FileReader("output.json"));
+			String line;
+			while ((line = fileReader.readLine()) != null) {
+				System.out.println("Output file contents: " + line);
+			}
+			fileReader.close();
+		} catch (MalformedURLException e) {
+			System.err.println("Invalid URL: " + e.getMessage());
+		} catch (IOException e) {
+			System.err.println("Error reading URL: " + e.getMessage());
+		} catch (ParserException e) {
+			System.err.println("Error parsing iCalendar: " + e.getMessage());
 		}
-		writer.endObject();
-		writer.close();
-
-		BufferedReader fileReader = new BufferedReader(new FileReader("output.json"));
-		String line;
-		while ((line = fileReader.readLine()) != null) {
-			System.out.println(line);
-		}
-		fileReader.close();
 	}
 }
