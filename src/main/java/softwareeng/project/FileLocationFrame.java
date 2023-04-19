@@ -80,12 +80,13 @@ public class FileLocationFrame extends JFrame {
             }
         }else if(location.startsWith("webcal")) {
         	Web web = new Web();
+            // Makes it possible to have an .ics file
         	String s = location.replace("webcal", "https");
         	
 				try {
 					URL url = new URL(s);
 					web.ReadWeb(url);
-					web.URLToCSV(url);
+					web.icsToJson(url);
 				} catch (MalformedURLException e) {
 					LOGGER.log(Level.SEVERE, "Exception occurred", e);
 				} catch (IOException e) {

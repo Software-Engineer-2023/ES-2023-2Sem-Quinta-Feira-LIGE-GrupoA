@@ -2,11 +2,9 @@ package softwareeng.project;
 
 import java.net.*;
 import java.util.List;
-
 import java.io.*;
 
 import org.apache.commons.csv.*;
-import com.fasterxml.jackson.databind.*;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -20,9 +18,7 @@ public class Web {
 	    //usamos a classe URL para criar uma conexão com a página web e a classe BufferedReader para ler o conteúdo da página linha por linha
 	    public void ReadWeb(URL url) {
 	        try {
-	          
 	            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-	           
 	            in.close();
 	            System.out.println("URL lido com sucesso.");
 	        } catch (MalformedURLException e) {
@@ -60,26 +56,30 @@ public class Web {
 	         }
 	         reader.close();
 	     }
-	    
-	    //class URLToJSon recebe um URL e transforma em JSon
-	    /*public void URLToJSon(URL url) throws IOException {
-	        
-	        URLConnection connection = url.openConnection();
-	        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-	        JsonReader reader = Json.createReader(in);
-	        JsonObject json = reader.readObject();
-	        in.close();
 
-	        JsonWriter writer = Json.createWriter(new FileWriter("output.json"));
-	        writer.writeObject(json);
-	        writer.close();
+	public void URLToJSon(URL url) throws IOException {
 
-	        BufferedReader fileReader = new BufferedReader(new FileReader("output.json"));
-	        String line;
-	        while ((line = fileReader.readLine()) != null) {
-	            System.out.println(line);
-	        }
-	        fileReader.close();
-	    }
-	    */
+		URLConnection connection = url.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		JsonReader reader = new JsonReader(in);
+		JsonObject json = new JsonObject();
+		json = new com.google.gson.JsonParser().parse(reader).getAsJsonObject();
+		in.close();
+
+		JsonWriter writer = new JsonWriter(new FileWriter("output.json"));
+		writer.setIndent("\t");
+		writer.beginObject();
+		for (String key : json.keySet()) {
+			writer.name(key).value(json.get(key).toString());
+		}
+		writer.endObject();
+		writer.close();
+
+		BufferedReader fileReader = new BufferedReader(new FileReader("output.json"));
+		String line;
+		while ((line = fileReader.readLine()) != null) {
+			System.out.println(line);
+		}
+		fileReader.close();
+	}
 }
