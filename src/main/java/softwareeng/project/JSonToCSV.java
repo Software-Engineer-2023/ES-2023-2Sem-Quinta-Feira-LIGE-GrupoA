@@ -61,25 +61,25 @@ public class JSonToCSV{
         changeCommas();
     }
 
-    private void changeCommas() {
+    private void changeCommas() throws IOException {
         final String inputFileName = "data_temp.csv";
         final String outputFileName = "data.csv";
-
+    
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFileName));
              BufferedWriter writer2 = new BufferedWriter(new FileWriter(outputFileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                line = line.replaceAll(",", ";");
+                line = line.replace(",", ";");
                 writer2.write(line);
                 writer2.newLine();
             }
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Exception occurred", e);
         } finally {
-            boolean deleted = new File(inputFileName).delete();
+            boolean deleted = java.nio.file.Files.deleteIfExists(java.nio.file.Paths.get(inputFileName));
             if (!deleted) {
                 LOGGER.info("Failed to delete temporary file");
             }
         }
-    }
+    }    
 }

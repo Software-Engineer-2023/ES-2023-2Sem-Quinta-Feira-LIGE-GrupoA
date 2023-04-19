@@ -206,10 +206,4 @@ public class CSVToJSon {
 		this.lotacao = lotacao;
 	}
 
-	
-	
-	
-	
-
 }
-
