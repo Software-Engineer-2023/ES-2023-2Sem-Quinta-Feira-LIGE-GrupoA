@@ -67,7 +67,6 @@ public class JSonToCSV{
                 BufferedReader reader = new BufferedReader(new FileReader(CSVFILENAMETEMP));
                 BufferedWriter writer2 = new BufferedWriter(new FileWriter(CSVFILENAME));
         ) {
-
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.replace(",", ";");
