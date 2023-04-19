@@ -58,7 +58,7 @@ public class CSVToJSon {
 	public CSVToJSon() { /* This is a default constructor with no paramerters */ }	
 
 	/* Method that converts a CSV file to an ArrayList. */
-	public List<CSVToJSon> convertCSVToArray(String path) {
+	public ArrayList<CSVToJSon> convertCSVToArray(String path) {
 		ArrayList<CSVToJSon> array = new ArrayList<>();
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(path))
 				.withCSVParser(new CSVParserBuilder().withSeparator(';').build())
@@ -82,7 +82,6 @@ public class CSVToJSon {
 					line[10] = "0";
 				} else {
 					csv.setLotacao(Integer.parseInt(line[10]));
-					LOGGER.severe("Error: unable to convert the value to integer.");
 				}
 				array.add(csv);
 			}
@@ -119,7 +118,7 @@ public class CSVToJSon {
 
 	public void convertCSVToJson(String path) {
 		
-		ArrayList<CSVToJSon> array = (ArrayList<CSVToJSon>) convertCSVToArray(path);
+		ArrayList<CSVToJSon> array = convertCSVToArray(path);
 		convertArrayToJson(array);
 		
 	}

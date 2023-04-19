@@ -25,7 +25,7 @@ class CSVToJSonTest {
 
 	CSVToJSon csv = new CSVToJSon();
 	
-	ArrayList<CSVToJSon> array = csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
+	ArrayList<CSVToJSon> array =csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
 	assertNotNull(array);
 	
 	assertEquals("ME", array.get(0).getCurso());
@@ -45,7 +45,7 @@ class CSVToJSonTest {
     void testarIOException() {
         try {
             CSVToJSon csv = new CSVToJSon();
-            ArrayList<CSVToJSon> array = csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
+            ArrayList<CSVToJSon> array =csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
             throw new IOException("Erro: Não foi possível ler o ficheiro");
         } catch (IOException e) {
             assertEquals("Erro: Não foi possível ler o ficheiro", e.getMessage());
@@ -56,7 +56,7 @@ class CSVToJSonTest {
     void testarFileNotFoundException() {
         try {
             CSVToJSon csv = new CSVToJSon();
-            ArrayList<CSVToJSon> array = csv.convertCSVToArray("C:\\Teste\\horarioexemplo.csv");
+            ArrayList<CSVToJSon> array = (ArrayList<CSVToJSon>) csv.convertCSVToArray("C:\\Teste\\horarioexemplo.csv");
             throw new FileNotFoundException("Erro:O ficheiro não foi encontrado! Verifique se o path está correto");
         } catch (FileNotFoundException e) {
             assertEquals("Erro:O ficheiro não foi encontrado! Verifique se o path está correto", e.getMessage());

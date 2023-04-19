@@ -71,16 +71,14 @@ public class FileLocationFrame extends JFrame {
         if(location.endsWith(".csv")) {
             CSVToJSon csv = new CSVToJSon();
             csv.convertCSVToJson(location);
-        }
-        if(location.endsWith(".json")) {
+        }else if(location.endsWith(".json")) {
             try {
                 JSonToCSV json = new JSonToCSV(location);
                 json.convertFile();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Erro ao converter o arquivo JSON para CSV: " + e.getMessage());
             }
-        }
-        if(location.startsWith("webcal")) {
+        }else if(location.startsWith("webcal")) {
         	Web web = new Web();
         	String s = location.replace("webcal", "https");
         	
@@ -93,7 +91,7 @@ public class FileLocationFrame extends JFrame {
 				} catch (IOException e) {
 					LOGGER.log(Level.SEVERE, "Exception occurred", e);
 				}
-        }else {
+        }else if(location.startsWith("https")){
         	Web web = new Web();
         	
 				try {
