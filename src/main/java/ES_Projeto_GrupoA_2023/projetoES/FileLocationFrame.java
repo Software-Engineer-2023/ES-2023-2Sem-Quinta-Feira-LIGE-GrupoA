@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import java.io.IOException;
 
 
 public class FileLocationFrame extends JFrame {
@@ -65,8 +66,12 @@ public class FileLocationFrame extends JFrame {
             csv.convertCSVToJSon(location);
         }
         if(location.endsWith(".json")) {
-            JSonToCSV json = new JSonToCSV();
-            json.convertJSonToCSV(location);
+            try {
+                JSonToCSV json = new JSonToCSV(location);
+                json.convertFile();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Erro ao converter o arquivo JSON para CSV: " + e.getMessage());
+            }
         }
         dispose();
     }

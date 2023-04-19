@@ -1,17 +1,12 @@
 package ES_Projeto_GrupoA_2023.projetoES;
 
-import java.io.*;
-import java.util.Iterator;
-
-import com.fasterxml.jackson.core.JsonGenerator.Feature;
-import com.fasterxml.jackson.core.exc.StreamWriteException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.opencsv.CSVWriter;
+
+import java.io.*;
+import java.util.Iterator;
 
 
 public class JSonToCSV{
@@ -22,7 +17,7 @@ public class JSonToCSV{
     public JSonToCSV(String fileName) throws IOException {
         JsonNode rootNode = new ObjectMapper().readTree(new File(fileName));
         elements =  rootNode.elements();
-        writer = new CSVWriter(new FileWriter(fileName));
+        writer = new CSVWriter(new FileWriter("data_temp.csv"));
         createSchema();
     }
 
@@ -60,13 +55,13 @@ public class JSonToCSV{
             writer.writeNext(line);
         }
         writer.close();
-        changeCommas(new File("src/main/resources/data_temp.csv"));
+        changeCommas(new File("data_temp.csv"));
     }
 
     private void changeCommas(File csvFile){
         try{
-            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/data_temp.csv"));
-            BufferedWriter writer2 = new BufferedWriter(new FileWriter("src/main/resources/data.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("data_temp.csv"));
+            BufferedWriter writer2 = new BufferedWriter(new FileWriter("data.csv"));
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.replaceAll(",", ";");
@@ -76,18 +71,9 @@ public class JSonToCSV{
             reader.close();
             writer2.close();
 
-            new File("src/main/resources/data_temp.csv").delete();
+            new File("data_temp.csv").delete();
         }catch (IOException e){
             e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args){
-        try {
-            JSonToCSV x = new JSonToCSV("src/main/resources/example-schedule.json");
-           x.convertFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }
