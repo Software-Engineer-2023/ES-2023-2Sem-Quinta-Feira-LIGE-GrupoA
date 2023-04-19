@@ -12,8 +12,9 @@ import java.util.Iterator;
 
 public class JSonToCSV{
 
-    private Iterator<JsonNode> elements;
-    private CSVWriter writer;
+    private static final Logger LOGGER = Logger.getLogger(JSonToCSV.class.getName());
+    private final Iterator<JsonNode> elements;
+    private final CSVWriter writer;
 
     public JSonToCSV(String fileName) throws IOException {
         JsonNode rootNode = new ObjectMapper().readTree(new File(fileName));
@@ -56,12 +57,15 @@ public class JSonToCSV{
             writer.writeNext(line);
         }
         writer.close();
-        changeCommas(new File("data_temp.csv"));
+        changeCommas();
     }
 
-    private void changeCommas(File csvFile) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("data_temp.csv"));
-             BufferedWriter writer2 = new BufferedWriter(new FileWriter("data.csv"))) {
+    private void changeCommas() {
+        final String inputFileName = "data_temp.csv";
+        final String outputFileName = "data.csv";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFileName));
+             BufferedWriter writer2 = new BufferedWriter(new FileWriter(outputFileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.replaceAll(",", ";");
@@ -71,7 +75,7 @@ public class JSonToCSV{
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            boolean deleted = new File("data_temp.csv").delete();
+            boolean deleted = new File(inputFileName).delete();
             if (!deleted) {
                 LOGGER.info("Failed to delete temporary file");
             }
