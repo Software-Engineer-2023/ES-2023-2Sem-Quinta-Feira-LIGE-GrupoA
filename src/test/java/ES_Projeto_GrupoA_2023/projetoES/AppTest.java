@@ -15,6 +15,8 @@ import java.lang.reflect.Field;
 import javax.swing.JFileChooser;
 import org.junit.Test;
 
+import softwareeng.project.FileLocationFrame;
+
 
 /**
  * Unit test for simple App.

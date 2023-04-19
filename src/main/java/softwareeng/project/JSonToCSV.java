@@ -1,9 +1,10 @@
-package ES_Projeto_GrupoA_2023.projetoES;
+package softwareeng.project;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.opencsv.CSVWriter;
+import java.util.logging.Logger;
 
 import java.io.*;
 import java.util.Iterator;
@@ -58,22 +59,22 @@ public class JSonToCSV{
         changeCommas(new File("data_temp.csv"));
     }
 
-    private void changeCommas(File csvFile){
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader("data_temp.csv"));
-            BufferedWriter writer2 = new BufferedWriter(new FileWriter("data.csv"));
+    private void changeCommas(File csvFile) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("data_temp.csv"));
+             BufferedWriter writer2 = new BufferedWriter(new FileWriter("data.csv"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.replaceAll(",", ";");
                 writer2.write(line);
                 writer2.newLine();
             }
-            reader.close();
-            writer2.close();
-
-            new File("data_temp.csv").delete();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            boolean deleted = new File("data_temp.csv").delete();
+            if (!deleted) {
+                LOGGER.info("Failed to delete temporary file");
+            }
         }
     }
 }
