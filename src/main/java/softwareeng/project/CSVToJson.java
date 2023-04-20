@@ -58,8 +58,8 @@ public class CSVToJson {
 	public CSVToJson() { /* This is a default constructor with no paramerters */ }
 
 	/* Method that converts a CSV file to an ArrayList. */
-	public ArrayList<CSVToJson> convertCSVToArray(String path) {
-		ArrayList<CSVToJson> array = new ArrayList<>();
+	public List<CSVToJson> convertCSVToArray(String path) {
+		List<CSVToJson> array = new ArrayList<>();
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(path))
 				.withCSVParser(new CSVParserBuilder().withSeparator(';').build())
 				.build()) {
@@ -77,7 +77,6 @@ public class CSVToJson {
 				csv.setHoraFim(line[7]);
 				csv.setDataAula(line[8]);
 				csv.setSalaAtribuida(line[9]);
-	
 				if (line[10].equals("")) {
 					line[10] = "0";
 				} else {
@@ -91,7 +90,7 @@ public class CSVToJson {
 			LOGGER.severe("Error: issues with CSV validation.");
 		}
 		return array;
-	}		
+	}			
 	
 	public void convertArrayToJson(List<CSVToJson> array) {
 		//Cria um mapeamento novo para mapear dados json em java
@@ -118,7 +117,7 @@ public class CSVToJson {
 
 	public void convertCSVToJson(String path) {
 		
-		ArrayList<CSVToJson> array = convertCSVToArray(path);
+		ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) convertCSVToArray(path);
 		convertArrayToJson(array);
 		
 	}
