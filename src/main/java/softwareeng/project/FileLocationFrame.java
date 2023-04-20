@@ -11,7 +11,6 @@ import javax.swing.JTextField;
 import java.io.IOException;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 
@@ -69,7 +68,7 @@ public class FileLocationFrame extends JFrame {
         JOptionPane.showMessageDialog(this, "URL of target schedule: " + location);
         //Verifica se a String com o caminho do ficheiro inserido terminar em .csv, então converte-o em JSon
         if(location.endsWith(".csv")) {
-            CSVToJSon csv = new CSVToJSon();
+            CSVToJson csv = new CSVToJson();
             csv.convertCSVToJson(location);
         }else if(location.endsWith(".json")) {
             try {
@@ -86,9 +85,7 @@ public class FileLocationFrame extends JFrame {
 				try {
 					URL url = new URL(s);
 					web.ReadWeb(url);
-					web.URLToJson(url);
-				} catch (MalformedURLException e) {
-					LOGGER.log(Level.SEVERE, "Exception occurred", e);
+					web.URLToCSV(url);
 				} catch (IOException e) {
 					LOGGER.log(Level.SEVERE, "Exception occurred", e);
 				}
@@ -99,8 +96,6 @@ public class FileLocationFrame extends JFrame {
 					URL url = new URL(location);
 					web.ReadWeb(url);
 					web.URLToCSV(url);
-				} catch (MalformedURLException e) {
-					LOGGER.log(Level.SEVERE, "Exception occurred", e);
 				} catch (IOException e) {
 					LOGGER.log(Level.SEVERE, "Exception occurred", e);
 				}

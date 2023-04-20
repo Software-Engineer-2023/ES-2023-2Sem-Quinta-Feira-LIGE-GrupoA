@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 
 public class JSonToCSV{
 
-    private Iterator<JsonNode> elements;
-    private CSVWriter writer;
+    private final Iterator<JsonNode> elements;
+    private final CSVWriter writer;
 
     private static final  String CSVFILENAMETEMP = "data_temp.csv";
     private static final  String CSVFILENAME = "data.csv";
@@ -65,7 +65,7 @@ public class JSonToCSV{
     private void changeCommas() {
         try (
                 BufferedReader reader = new BufferedReader(new FileReader(CSVFILENAMETEMP));
-                BufferedWriter writer2 = new BufferedWriter(new FileWriter(CSVFILENAME));
+                BufferedWriter writer2 = new BufferedWriter(new FileWriter(CSVFILENAME))
         ) {
 
             String line;
