@@ -1,1 +1,0 @@
-webcal://fenix.iscte-iul.pt/publico/publicPersonICalendar.do?method=iCalendar&username=jmsfo@iscte.pt&password=bEUXCsAAz3A3g2EewqUPbjUTOG83C3QHkwJ4rrVaJhzkBFKuakl6Hmmp5EkJGmCDfgALCSoTryI7BnxVi3DqKL7bCi6sRIogfNpZiKitWgvs6Hzvq0CFGbYl9bHFSDby

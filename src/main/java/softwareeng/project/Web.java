@@ -1,5 +1,7 @@
 package softwareeng.project;
 
+//TODO: Divide this class into each type of file conversion
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;

@@ -115,11 +115,12 @@ public class CSVToJson {
         
 	}
 
-	public void convertCSVToJson(String path) {
+	public boolean convertCSVToJson(String path) {
 		
 		ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) convertCSVToArray(path);
 		convertArrayToJson(array);
-		
+
+		return true;
 	}
 	
 	public String getCurso() {

@@ -25,7 +25,7 @@ public class JSonToCSV{
         createSchema();
     }
 
-    public void convertFile() throws IOException {
+    public boolean convertFile() throws IOException {
         while (elements.hasNext()) {
             ObjectNode object = (ObjectNode) elements.next();
             String[] line = new String[11];
@@ -44,6 +44,7 @@ public class JSonToCSV{
         }
         writer.close();
         changeCommas();
+        return true;
     }
 
     private void createSchema(){
