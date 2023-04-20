@@ -19,7 +19,6 @@ import junit.framework.Assert;
 import softwareeng.project.CSVToJson;
 
 class CSVToJsonTest {
-
 	@Test
 	void testConvertCSVToArrayList() {
 
