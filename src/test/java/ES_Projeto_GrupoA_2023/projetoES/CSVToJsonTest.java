@@ -25,7 +25,7 @@ class CSVToJsonTest {
 
 	CSVToJson csv = new CSVToJson();
 	
-	ArrayList<CSVToJson> array =csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
+	ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
 	assertNotNull(array);
 	
 	assertEquals("ME", array.get(0).getCurso());
@@ -45,7 +45,7 @@ class CSVToJsonTest {
     void testarIOException() {
         try {
             CSVToJson csv = new CSVToJson();
-            ArrayList<CSVToJson> array =csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
+            ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
             throw new IOException("Erro: Não foi possível ler o ficheiro");
         } catch (IOException e) {
             assertEquals("Erro: Não foi possível ler o ficheiro", e.getMessage());
@@ -67,7 +67,7 @@ class CSVToJsonTest {
     void testarCsvValidationException() {
         try {
             CSVToJson csv = new CSVToJson();
-            ArrayList<CSVToJson> array = csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
+            ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
             throw new CsvValidationException("Erro: problemas na validação CSV");
         } catch (CsvValidationException e) {
             assertEquals("Erro: problemas na validação CSV", e.getMessage());
