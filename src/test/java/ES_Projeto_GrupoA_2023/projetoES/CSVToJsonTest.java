@@ -20,7 +20,7 @@ import softwareeng.project.CSVToJson;
 
 class CSVToJsonTest {
 	@Test
-	void testConvertCSVToArrayList() {
+	void convertCSVToArrayListTest() {
 
 	CSVToJson csv = new CSVToJson();
 	
@@ -41,7 +41,7 @@ class CSVToJsonTest {
 	}
 	
     @Test
-    void testarIOException() {
+    void iOExceptionTest() {
         try {
             CSVToJson csv = new CSVToJson();
             ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
@@ -52,7 +52,7 @@ class CSVToJsonTest {
     }
 	
     @Test
-    void testarFileNotFoundException() {
+    void fileNotFoundExceptionTest() {
         try {
             CSVToJson csv = new CSVToJson();
             ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horarioexemplo.csv");
@@ -63,7 +63,7 @@ class CSVToJsonTest {
     }
    
     @Test
-    void testarCsvValidationException() {
+    void csvValidationExceptionTest() {
         try {
             CSVToJson csv = new CSVToJson();
             ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
@@ -96,6 +96,7 @@ class CSVToJsonTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
     }
     
 

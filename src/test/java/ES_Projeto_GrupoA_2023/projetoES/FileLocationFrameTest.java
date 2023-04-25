@@ -26,7 +26,7 @@ public class FileLocationFrameTest {
     @Test
     public void testBrowseButtonClicked() {
         fileLocationFrame.clickBrowseButton();
-        assertEquals("C:\\Teste\\horario-exemplo.csv", fileLocationFrame.getLocationTextField().getText());
+        assertEquals("C:\\Teste\\horario_exemplo.csv", fileLocationFrame.getLocationTextField().getText());
     }
 
 

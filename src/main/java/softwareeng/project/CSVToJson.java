@@ -20,7 +20,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class CSVToJson {
-    @JsonProperty("Curso")
+
+
+	/**
+	 * Classe responsável por converter um ficheiro csv num ficheiro Json.
+	 * Para isso, temos 11 variáveis que correspondem a todos os parâmetros do ficheiro csv.
+	 */
+	@JsonProperty("Curso")
     private String curso;
 
     @JsonProperty("Unidade Curricular")
@@ -55,10 +61,33 @@ public class CSVToJson {
 	
     private static final Logger LOGGER = Logger.getLogger("CSVToJSON");
 
-	public CSVToJson() { /* This is a default constructor with no paramerters */ }
+	/**
+	 *
+	 */
+	public CSVToJson() {
+		/**
+		 * 	 This is a default constructor with no paramerters.
+		 */
+	}
 
+	/**
+	 * @param path
+	 * @return
+	 */
 	/* Method that converts a CSV file to an ArrayList. */
 	public List<CSVToJson> convertCSVToArray(String path) {
+
+		/**
+		 * Este método converte o conteúdo do ficheiro csv em objetos do tipo CSVToJson.
+		 * A seguir guarda esses objetos um arrayList.
+		 * @param path representa o caminho do ficheiro.
+		 * @return List com o conteúdo do ficheiro.
+		 * @exception FileNotFoundException quando o ficheiro não é encontrado.
+		 * @exception CsvValidationException quando o ficheiro não é csv.
+		 * @exception IOException quando o input não está correto.
+		 */
+
+
 		List<CSVToJson> array = new ArrayList<>();
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(path))
 				.withCSVParser(new CSVParserBuilder().withSeparator(';').build())
@@ -90,9 +119,22 @@ public class CSVToJson {
 			LOGGER.severe("Error: issues with CSV validation.");
 		}
 		return array;
-	}			
-	
+	}
+
+	/**
+	 * @param array
+	 */
 	public void convertArrayToJson(List<CSVToJson> array) {
+		/**
+		 * Este método converte o ArrayList gerado anteriormente num ficheiro .json.
+		 * @param array List que contém o conteúdo de um ficheiro csv.
+		 * @exception JsonGenerationException caso a geração de json não corra bem.
+		 * @exception JsonMappingException quando o mapeamento do ficheiro falha.
+		 * @exception IOException quando o path dado não leva a lado nenhum ficheiro válido.
+		 *
+		 */
+
+
 		//Cria um mapeamento novo para mapear dados json em java
 		ObjectMapper mapa = new ObjectMapper();
 		//Seleciona a forma como o ficheiro será escrito tornando-o mais claro para ser lido
@@ -116,6 +158,12 @@ public class CSVToJson {
 	}
 
 	public boolean convertCSVToJson(String path) {
+		/**
+		 * Método responsável por converter um ficheiro Csv em json através de uma String
+		 * que mostra o caminho para o ficheiro
+		 * @param path caminho para o ficheiro
+		 * @return true
+		 */
 		
 		ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) convertCSVToArray(path);
 		convertArrayToJson(array);

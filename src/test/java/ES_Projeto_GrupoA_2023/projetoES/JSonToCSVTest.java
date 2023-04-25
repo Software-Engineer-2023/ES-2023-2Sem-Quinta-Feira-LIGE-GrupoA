@@ -19,7 +19,7 @@ public class JSonToCSVTest {
 
     @Before
     public void setUp() throws Exception {
-        jsonToCsv = new JSonToCSV("example-schedule.json");
+        jsonToCsv = new JSonToCSV("horario.json");
     }
     @Test
     public  void convertFile(){
