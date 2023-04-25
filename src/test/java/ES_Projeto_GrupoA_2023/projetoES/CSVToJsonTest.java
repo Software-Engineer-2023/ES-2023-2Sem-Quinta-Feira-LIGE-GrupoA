@@ -18,6 +18,9 @@ import com.opencsv.exceptions.CsvValidationException;
 import junit.framework.Assert;
 import softwareeng.project.CSVToJson;
 
+/**
+ * Classe de testes unitários da classe CSVToJson
+ */
 class CSVToJsonTest {
 	@Test
 	void convertCSVToArrayListTest() {

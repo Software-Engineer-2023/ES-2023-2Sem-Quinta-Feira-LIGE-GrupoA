@@ -11,7 +11,9 @@ import softwareeng.project.JSonToCSV;
 
 import java.io.File;
 import java.io.IOException;
-
+/**
+ * Classe de testes unitários da classe JSonToCSV
+ */
 public class JSonToCSVTest {
 
 

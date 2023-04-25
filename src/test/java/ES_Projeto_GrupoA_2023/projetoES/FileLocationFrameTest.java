@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import softwareeng.project.FileLocationFrame;
-
+/**
+ * Classe de testes unitários da classe FileLocationFrame
+ */
 public class FileLocationFrameTest {
 
     private FileLocationFrame fileLocationFrame;
