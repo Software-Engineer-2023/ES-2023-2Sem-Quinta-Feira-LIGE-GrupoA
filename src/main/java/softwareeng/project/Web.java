@@ -59,7 +59,26 @@ public class Web {
 		 reader.close();
 	 }
 
-	public void URLToJson(URL url) {
+	public void URLToJson(URL url) throws IOException {
+		URLConnection connection = url.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
+		//Lê o conteúdo JSON da URL e grava em um arquivo
+		BufferedWriter writer = new BufferedWriter(new FileWriter("output.json"));
+		String inputLine;
+		while ((inputLine = in.readLine()) != null) {
+			writer.write(inputLine);
+		}
+		in.close();
+		writer.close();
+
+		//Lê o arquivo JSON e imprime seu conteúdo na tela
+		BufferedReader reader = new BufferedReader(new FileReader("output.json"));
+		String line;
+		while ((line = reader.readLine()) != null) {
+			System.out.println(line);
+		}
+		reader.close();
 	}
+
 }
