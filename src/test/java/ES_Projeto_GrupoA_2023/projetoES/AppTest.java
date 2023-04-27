@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 import org.junit.Test;
 
 import softwareeng.project.FileLocationFrame;
+import softwareeng.project.MainMenu;
 
 
 /**
@@ -25,7 +26,7 @@ public class AppTest {
    
 	@Test
 	public void test() {
-		 FileLocationFrame frame = new FileLocationFrame();
+		 MainMenu frame = new MainMenu();
 	        assertTrue(frame.isVisible());
 	        
 
