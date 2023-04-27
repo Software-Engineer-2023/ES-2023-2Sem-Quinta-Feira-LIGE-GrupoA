@@ -1,0 +1,5 @@
+
+h	java:S112”"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òιόÿÿÿÿ8ζΎ»ό0
+^	java:S107O"BConstructor has 11 parameters, which is greater than 7 authorized.(¤„ΰ¤8οΎ»ό0
+O
+java:S1874",Remove this use of "Date"; it is deprecated.(ϋΦΊ£ωÿÿÿÿ8φΎ»ό0
