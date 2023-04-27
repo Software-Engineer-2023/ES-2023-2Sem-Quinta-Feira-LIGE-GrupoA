@@ -11,7 +11,9 @@ import softwareeng.project.JSonToCSV;
 
 import java.io.File;
 import java.io.IOException;
-
+/**
+ * Classe de testes unitários da classe JSonToCSV
+ */
 public class JSonToCSVTest {
 
 
@@ -19,7 +21,7 @@ public class JSonToCSVTest {
 
     @Before
     public void setUp() throws Exception {
-        jsonToCsv = new JSonToCSV("example-schedule.json");
+        jsonToCsv = new JSonToCSV("horario.json");
     }
     @Test
     public  void convertFile(){

@@ -6,7 +6,9 @@ import softwareeng.project.MainMenu;
 import javax.swing.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Classe de testes unitários da classe MainMenu
+ */
 class MainMenuTest {
 
     @Test

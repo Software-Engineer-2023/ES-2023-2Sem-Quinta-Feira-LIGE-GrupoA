@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import softwareeng.project.FileLocationFrame;
-
+/**
+ * Classe de testes unitários da classe FileLocationFrame
+ */
 public class FileLocationFrameTest {
 
     private FileLocationFrame fileLocationFrame;
@@ -26,7 +28,7 @@ public class FileLocationFrameTest {
     @Test
     public void testBrowseButtonClicked() {
         fileLocationFrame.clickBrowseButton();
-        assertEquals("C:\\Teste\\horario-exemplo.csv", fileLocationFrame.getLocationTextField().getText());
+        assertEquals("C:\\Teste\\horario_exemplo.csv", fileLocationFrame.getLocationTextField().getText());
     }
 
 
