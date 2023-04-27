@@ -59,10 +59,13 @@ public class CSVToJson {
 	private int lotacao;
 
 	private static final Logger LOGGER = Logger.getLogger("CSVToJSON");
+
 	/**
-	 * Construtor da classe CSVToJson vazio.
+	 * Constructor for CSVToJson class is intentionally left empty.
+	 * All necessary setup is done in other methods.
 	 */
 	public CSVToJson() {
+		// intentionally empty
 	}
 
 	/**
