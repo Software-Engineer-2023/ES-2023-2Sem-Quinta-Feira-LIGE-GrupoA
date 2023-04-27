@@ -1,10 +1,10 @@
 package softwareeng.project;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class App {
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
@@ -15,7 +15,7 @@ public class App {
             // Create the instance of the file selection window.
             //FileLocationFrame fileLocationFrame = new FileLocationFrame();
             MainMenu mainMenu = new MainMenu();
-            // Make the window visible to the user
+            // Make the wi  ndow visible to the user
             mainMenu.setVisible(true);
             mainMenu.getOpenSchedulesButton().addActionListener(e -> {});
             mainMenu.getConvertSchedulesButton().addActionListener(e -> {
