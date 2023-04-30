@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.URI;
 import java.nio.file.Files;
+import java.util.logging.Logger;
 
 
 
@@ -20,6 +21,7 @@ public class OpenSchedule extends JFrame {
     private JButton csvButton;
     private JButton jsonButton;
     private JButton backButton;
+    private static final Logger LOGGER = Logger.getLogger(OpenSchedule.class.getName());
 
 
     public OpenSchedule(){
@@ -30,7 +32,7 @@ public class OpenSchedule extends JFrame {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
+            LOGGER.severe("Error setting the look and feel: " + ex.getMessage());
         }
 
         setSize(350, 150);
