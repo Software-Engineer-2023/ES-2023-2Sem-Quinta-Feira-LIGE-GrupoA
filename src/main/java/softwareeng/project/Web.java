@@ -33,30 +33,30 @@ public class Web {
 	//class URLToCSV recebe um URL e transforma em CSV
 	public void URLToCSV(URL url) throws IOException{
 
-		 //usa uma conexão URLConnection para baixar o conteúdo da página
-		 URLConnection connection = url.openConnection();
-		 //lê cada linha
-		 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		 //para analisar o conteúdo CSV e criar uma lista de objetos
-		 CSVParser parser = CSVFormat.DEFAULT.parse(in);
-		 List<CSVRecord> records = parser.getRecords();
-		 in.close();
+		//usa uma conexão URLConnection para baixar o conteúdo da página
+		URLConnection connection = url.openConnection();
+		//lê cada linha
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		//para analisar o conteúdo CSV e criar uma lista de objetos
+		CSVParser parser = CSVFormat.DEFAULT.parse(in);
+		List<CSVRecord> records = parser.getRecords();
+		in.close();
 
-		 //para gravar cada registro em um arquivo CSV
-		 CSVPrinter printer = new CSVPrinter(new FileWriter("output.csv"), CSVFormat.DEFAULT);
-		 for (CSVRecord record : records) {
-			 printer.printRecord(record);
-		 }
-		 printer.close();
+		//para gravar cada registro em um arquivo CSV
+		CSVPrinter printer = new CSVPrinter(new FileWriter("output.csv"), CSVFormat.DEFAULT);
+		for (CSVRecord record : records) {
+			printer.printRecord(record);
+		}
+		printer.close();
 
-		 //o arquivo é lido e o seu conteúdo é exibido usando um objeto
-		 BufferedReader reader = new BufferedReader(new FileReader("output.csv"));
-		 String line;
-		 while ((line = reader.readLine()) != null) {
-			 System.out.println(line);
-		 }
-		 reader.close();
-	 }
+		//o arquivo é lido e o seu conteúdo é exibido usando um objeto
+		BufferedReader reader = new BufferedReader(new FileReader("output.csv"));
+		String line;
+		while ((line = reader.readLine()) != null) {
+			System.out.println(line);
+		}
+		reader.close();
+	}
 
 	public void URLToJson(URL url) throws IOException {
 		URLConnection connection = url.openConnection();

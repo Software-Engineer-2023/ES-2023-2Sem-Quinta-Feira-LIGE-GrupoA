@@ -190,7 +190,7 @@ public class LoadSchedules extends JFrame {
         });
 
 
-            insertConvertButton.addActionListener(e -> {
+        insertConvertButton.addActionListener(e -> {
             // Cria a nova janela
             JFrame convertFrame = new JFrame("Convert");
             convertFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -254,12 +254,3 @@ public class LoadSchedules extends JFrame {
 
 
 }
-
-
-
-
-
-
-
-
-

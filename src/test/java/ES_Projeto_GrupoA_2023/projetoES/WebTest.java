@@ -6,12 +6,8 @@ import softwareeng.project.Web;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Classe de testes unitários da classe Web
- */
- class WebTest {
+class WebTest {
 
     @Test
     void testReadWebWithValidUrl() {
@@ -38,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
         }
     }
 
+
     @Test
     void testURLToCSVWithInvalidUrl() {
         Web web = new Web();
@@ -50,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.*;
             e.printStackTrace();
         }
     }
+
 
 
     @Test
