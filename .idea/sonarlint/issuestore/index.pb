@@ -1,4 +1,36 @@
 
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+Z
+*src/main/java/softwareeng/project/App.java,8\1\810cc6b5dd0f884ded57e43343827871e39c0a3b
+k
+;src/test/java/ES_Projeto_GrupoA_2023/projetoES/AppTest.java,c\e\ce8906b4080fb7e61b4a0e8bc45e5fb0ffb7537a
+p
+@src/test/java/ES_Projeto_GrupoA_2023/projetoES/MainMenuTest.java,3\4\34cd05c183a64cc62b5f6257263fd242dd193a6c
+k
+;src/test/java/ES_Projeto_GrupoA_2023/projetoES/WebTest.java,1\9\194e251ef5b962c95ff671732b66a8e13086cbb8
+v
+Fsrc/test/java/ES_Projeto_GrupoA_2023/projetoES/FileDownloaderTest.java,8\2\820bdede61c2eb4cea6eb4671506c15129af744f
+y
+Isrc/test/java/ES_Projeto_GrupoA_2023/projetoES/FileLocationFrameTest.java,8\4\84e46a53301855778af25862ee7a317c422ca108
+`
+0src/main/java/softwareeng/project/CSVToJson.java,9\9\99dfeba7b011ac027ab1bcb473f43c05cb14e406
+<
+horario.json,1\6\16f2cd285f882d5bd54fb664911637ffad236ae7
+^
+.src/main/java/softwareeng/project/Horario.java,5\9\595700cb3baaf506077bfea1a8bbb62a7a2cbef4
+q
+Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/JSonToCSVTest.java,c\5\c584f10a19b38295d0b818ff210832570dd02fae
+`
+0src/main/java/softwareeng/project/JSonToCSV.java,5\f\5f49f868f3976e746e944bea3292dd538419cd3e
+o
+?src/test/java/ES_Projeto_GrupoA_2023/projetoES/SessionTest.java,5\7\57cca3dd566a738df75ba0172500fb0b89f2dc37
+q
+Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/CSVToJsonTest.java,1\8\1831162c62f1a39b8aa95be037282d696ce7e6b7
+^
+.src/main/java/softwareeng/project/Session.java,7\9\7905894439e4ecbbdd9bdfd4c716d0ed72b6f711
+o
+?src/test/java/ES_Projeto_GrupoA_2023/projetoES/HorarioTest.java,a\0\a05d10fb56408a5fb5c514e941ee692793a8a386
 p
 @src/test/java/ES_Projeto_GrupoA_2023/projetoES/MainMenuTest.java,3\4\34cd05c183a64cc62b5f6257263fd242dd193a6c
 h

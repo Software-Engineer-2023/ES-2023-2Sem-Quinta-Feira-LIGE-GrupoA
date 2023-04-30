@@ -1,0 +1,16 @@
+
+g	java:S112h"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8§˜¢œü0
+
+java:S4087X"bRemove this "close" call; closing the resource is handled automatically by the try-with-resources.(°ĞãÇ8Ê˜¢œü0
+p
+java:S4042Y"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(íıü‚şÿÿÿÿ8Ë˜¢œü0
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8Î˜¢œü0
+O
+java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ8Î˜¢œü0
+N
+java:S1128"1Remove this unused import 'com.google.gson.Gson'.(–§8Î˜¢œü0
+`
+java:S1128">Remove this unused import 'com.google.gson.reflect.TypeToken'.(İªıñøÿÿÿÿ8Î˜¢œü0
+`
+java:S1128">Remove this unused import 'com.google.gson.stream.JsonReader'.(ËÓÌ—üÿÿÿÿ8Î˜¢œü0
