@@ -9,7 +9,6 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,7 +19,6 @@ import java.util.logging.Logger;
 /**
  * Classe responsável por converter um ficheiro csv num ficheiro Json.
  * Para isso, temos 11 variáveis que correspondem a todos os parâmetros do ficheiro csv.
- * @author Proprietário
  */
 public class CSVToJson {
 	private static final Logger LOGGER = Logger.getLogger("CSVToJSON");
@@ -36,7 +34,7 @@ public class CSVToJson {
 	/**
 	 * Este método converte o conteúdo do ficheiro csv em objetos do tipo CSVToJson e guarda a informação numa List.
 	 *
-	 * @param path - representa o caminho do ficheiro.
+	 * @param path representa o caminho do ficheiro.
 	 * @return List com o conteúdo do ficheiro.
 	 * @throws FileNotFoundException  quando o ficheiro não é encontrado.
 	 * @throws CsvValidationException quando o ficheiro não é csv.
