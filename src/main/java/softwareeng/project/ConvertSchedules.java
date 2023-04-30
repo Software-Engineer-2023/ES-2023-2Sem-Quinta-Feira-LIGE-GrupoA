@@ -31,7 +31,7 @@ public class ConvertSchedules extends JFrame {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.WARNING, "Failed to set look and feel", ex);
         }
 
         // Set the size of the JFrame
