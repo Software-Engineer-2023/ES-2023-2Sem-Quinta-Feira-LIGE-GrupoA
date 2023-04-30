@@ -2,7 +2,7 @@ package softwareeng.project;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -11,11 +11,12 @@ import java.util.logging.Logger;
 public class LoadSchedules extends JFrame {
 
     private JButton backButton;
-
+    private static final String WEB_CAL = "webcal";
     private JButton insertSaveButton;
     private JButton insertConvertButton;
     private String url;
     JButton okButton = new JButton("OK");
+    JButton okButton1 = new JButton("OK");
     private static final Logger LOGGER = Logger.getLogger("LoadSchedules");
 
     public LoadSchedules() {
@@ -42,9 +43,9 @@ public class LoadSchedules extends JFrame {
     }
 
     public void convertUrl(String url) {
-        if (url.startsWith("webcal")) {
+        if (url.startsWith(WEB_CAL)) {
             Web web = new Web();
-            String s = url.replace("webcal", "https");
+            String s = url.replace(WEB_CAL, "https");
             try {
                 URL u = new URL(s);
                 web.ReadWeb(u);
@@ -68,6 +69,33 @@ public class LoadSchedules extends JFrame {
             }
         }
     }
+
+
+    public void saveUrl(String url) {
+        if (url.startsWith(WEB_CAL)) {
+            Web web = new Web();
+            String s = url.replace(WEB_CAL, "https");
+            try {
+                URL u = new URL(s);
+                web.ReadWeb(u);
+                web.downloadWebContent(u);
+            } catch (Exception ex) { // Combinação de catch para MalformedURLException e IOException
+                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+            }
+        } else {
+            Web web = new Web();
+            try {
+                URL u = new URL(url);
+                web.ReadWeb(u);
+                web.downloadWebContent(u);
+            } catch (Exception ex) { // Combinação de catch para MalformedURLException e IOException
+                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+            }
+        }
+    }
+
+
+
 
 
     private void initComponents() {
@@ -122,14 +150,47 @@ public class LoadSchedules extends JFrame {
         add(middlePanel);
     }
 
-    // Add button 3rd panel
-    JPanel thirdPanel = new JPanel();
 
     private void addListeners() {
         backButton.addActionListener(e -> backButtonClicked());
-        insertSaveButton.addActionListener(e -> insertSaveButtonClicked());
+        insertSaveButton.addActionListener(e -> {
+            // Cria a nova janela
+            JFrame saveFrame = new JFrame("Save");
+            saveFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            saveFrame.setLayout(new BorderLayout());
 
-        insertConvertButton.addActionListener(e -> {
+
+            // Adiciona o campo de texto para o URL na nova janela
+            JPanel urlPanel1 = new JPanel();
+            JLabel urlLabel1 = new JLabel("URL:");
+            JTextField urlTextField1 = new JTextField(20);
+            urlPanel1.add(urlLabel1);
+            urlPanel1.add(urlTextField1);
+            saveFrame.add(urlPanel1, BorderLayout.CENTER);
+
+            // Adiciona os botões "OK" e "Cancel" à nova janela
+            JPanel buttonPanel1 = new JPanel();
+
+            JButton cancelButton1 = new JButton("Cancel");
+            buttonPanel1.add(okButton1);
+            buttonPanel1.add(cancelButton1);
+            saveFrame.add(buttonPanel1, BorderLayout.SOUTH);
+
+            // Define o tamanho e a posição da nova janela
+            saveFrame.setSize(300, 200);
+            saveFrame.setLocationRelativeTo(null);
+            saveFrame.setVisible(true);
+
+            // Adiciona a ação dos botões "OK" e "Cancel"
+            okButton1.addActionListener(e1 -> {
+                // Lógica ao clicar no botão "OK"
+                url = urlTextField1.getText();
+                saveFrame.dispose(); // Fecha a janela de conversão
+            });
+        });
+
+
+            insertConvertButton.addActionListener(e -> {
             // Cria a nova janela
             JFrame convertFrame = new JFrame("Convert");
             convertFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -179,13 +240,12 @@ public class LoadSchedules extends JFrame {
         }
     }
 
-    private void insertSaveButtonClicked() {
-
-        System.out.println("URL inserido: " + url);
-    }
-
     public JButton getOkButton() {
         return okButton;
+    }
+
+    public JButton getOkButton1() {
+        return okButton1;
     }
     public String getUrl() {
         return url;
@@ -194,6 +254,7 @@ public class LoadSchedules extends JFrame {
 
 
 }
+
 
 
 

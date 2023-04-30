@@ -28,6 +28,10 @@ public class App {
                     String url = loadSchedules.getUrl();
                     loadSchedules.convertUrl(url);
                 });
+                loadSchedules.getOkButton1().addActionListener(e2 -> {
+                    String url1 = loadSchedules.getUrl();
+                    loadSchedules.saveUrl(url1);
+                });
             });
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error starting program", e);
