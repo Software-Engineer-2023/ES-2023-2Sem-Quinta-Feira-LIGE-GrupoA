@@ -18,9 +18,6 @@ public class App {
             mainMenu.getConvertSchedulesButton().addActionListener(e -> {
                     }
             );
-            //no stringlocation line test1
-
-
             mainMenu.getLoadSchedulesButton().addActionListener(e -> {
                 mainMenu.setVisible(false);
                 LoadSchedules loadSchedules = new LoadSchedules();
