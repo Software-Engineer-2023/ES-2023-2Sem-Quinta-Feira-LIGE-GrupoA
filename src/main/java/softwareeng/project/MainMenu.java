@@ -64,7 +64,11 @@ public class MainMenu extends JFrame {
 
     // Methods for button functionality
     public void openSchedules() {
-        JOptionPane.showMessageDialog(this, "This feature is under development! Please be patient.");
+        if(this.isVisible()){
+            dispose();
+           OpenSchedule openSchedule = new OpenSchedule();
+            openSchedule.setVisible(true);
+        }
     }
 
     public void convertSchedules() {
