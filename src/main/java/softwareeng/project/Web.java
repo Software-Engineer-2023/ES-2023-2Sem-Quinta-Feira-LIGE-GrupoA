@@ -12,7 +12,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
-import java.util.Scanner;
 
 
 public class Web {
@@ -63,7 +62,7 @@ public class Web {
 		URLConnection connection = url.openConnection();
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-		//Lê o conteúdo JSON da URL e grava em um arquivo
+		//Lê o conteúdo JSON do ficheiro
 		BufferedWriter writer = new BufferedWriter(new FileWriter("output.json"));
 		String inputLine;
 		while ((inputLine = in.readLine()) != null) {
@@ -72,7 +71,7 @@ public class Web {
 		in.close();
 		writer.close();
 
-		//Lê o arquivo JSON e imprime seu conteúdo na tela
+		//Lê o ficheiro JSON e imprime
 		BufferedReader reader = new BufferedReader(new FileReader("output.json"));
 		String line;
 		while ((line = reader.readLine()) != null) {
@@ -80,5 +79,19 @@ public class Web {
 		}
 		reader.close();
 	}
+
+	public void downloadWebContent(URL url) throws IOException {
+		URLConnection connection = url.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("web_content.txt"));
+		String inputLine;
+		while ((inputLine = in.readLine()) != null) {
+			writer.write(inputLine);
+		}
+		in.close();
+		writer.close();
+	}
+
+
 
 }

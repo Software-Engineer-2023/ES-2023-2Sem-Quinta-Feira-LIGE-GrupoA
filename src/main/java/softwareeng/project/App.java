@@ -36,6 +36,14 @@ public class App {
                 mainMenu.setVisible(false);
                 LoadSchedules loadSchedules = new LoadSchedules();
                 loadSchedules.setVisible(true);
+                loadSchedules.getOkButton().addActionListener(e1 -> {
+                    String url = loadSchedules.getUrl();
+                    loadSchedules.convertUrl(url);
+                });
+                loadSchedules.getOkButton1().addActionListener(e2 -> {
+                    String url1 = loadSchedules.getUrl();
+                    loadSchedules.saveUrl(url1);
+                });
             });
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error starting program", e);
