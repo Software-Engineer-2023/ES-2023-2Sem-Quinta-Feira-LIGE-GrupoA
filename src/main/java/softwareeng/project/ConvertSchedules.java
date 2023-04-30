@@ -9,8 +9,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -97,10 +95,8 @@ public class ConvertSchedules extends JFrame {
         csvToJsonButton.addActionListener(e -> {
             try {
                 csvToJsonButtonClicked();
-            } catch (CsvValidationException ex) {
-                throw new RuntimeException(ex);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            } catch (CsvValidationException | IOException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
             }
         });
         jsonToCsvButton.addActionListener(e -> jsonToCsvButtonClicked());
@@ -183,7 +179,7 @@ public class ConvertSchedules extends JFrame {
     }
 
 
-    private void convertCSVToJson(String filelocation) throws CsvValidationException, IOException {
+    private void convertCSVToJson(String filelocation) {
         CSVToJson csv = new CSVToJson();
         boolean success = csv.convertCSVToJson(filelocation);
         if(success){
@@ -207,10 +203,18 @@ public class ConvertSchedules extends JFrame {
         }
     }
 
+    /**
+     * This method is method because it is yet to be completed
+     */
     private void convertICSToCSV(String fileLocation) {
+        // TODO document why this method is empty
     }
 
+    /**
+     * This method is method because it is yet to be completed
+     */
     private void convertICSToJson(String fileLocation) {
+        // TODO document why this method is empty
     }
 
 
