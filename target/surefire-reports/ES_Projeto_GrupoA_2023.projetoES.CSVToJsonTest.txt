@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: ES_Projeto_GrupoA_2023.projetoES.CSVToJsonTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.728 s <<< FAILURE! - in ES_Projeto_GrupoA_2023.projetoES.CSVToJsonTest
+testConvertCSVToArrayList  Time elapsed: 0.022 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at ES_Projeto_GrupoA_2023.projetoES.CSVToJsonTest.testConvertCSVToArrayList(CSVToJsonTest.java:30)
+

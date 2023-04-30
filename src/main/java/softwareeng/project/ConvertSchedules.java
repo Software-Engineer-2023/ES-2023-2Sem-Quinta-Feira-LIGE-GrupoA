@@ -194,39 +194,56 @@ public class ConvertSchedules extends JFrame {
         }
     }
 
-    //TODO: Doesn't work as intended
+
     private void convertICSToCSV(String fileLocation) {
-        try {
-            URL url;
-            if (fileLocation.startsWith("http")) {
-                url = new URL(fileLocation);
-            } else {
-                url = new File(fileLocation).toURI().toURL();
-            }
+        String location = "webcal://fenix.iscte-iul.pt/publico/publicPersonICalendar.do?method=iCalendar&username=rageo@iscte.pt&password=zLgFKoKyGjZf1Ago80qtjmy8f0eS5uDCJQZSq2MNDGbZlTcMLw7pXDjThCYU52bDlIZsBYjNgXsIGLGUYPs8HHDfk9YnHQIZtkZXHgyBlk1nvaoTbqw4S2BG4V70CcTl";
+
+        if(location.startsWith("webcal")) {
             Web web = new Web();
-            web.ReadWeb(url);
-            web.URLToCSV(url);
-        } catch (MalformedURLException e) {
-            LOGGER.log(Level.SEVERE, "Invalid URL", e);
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Exception occurred", e);
+            String s = location.replace("webcal", "https");
+
+            try {
+                URL url = new URL(s);
+                web.ReadWeb(url);
+                web.URLToCSV(url);
+            } catch (MalformedURLException ex) {
+                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+            } catch (IOException ex) {
+                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+            }
+        } else {
+            Web web = new Web();
+
+            try {
+                URL url = new URL(location);
+                web.ReadWeb(url);
+                web.URLToCSV(url);
+            } catch (MalformedURLException ex) {
+                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+            } catch (IOException ex) {
+                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+            }
         }
     }
 
-    //TODO: Isn't done
+
+
     private void convertICSToJson(String fileLocation) {
-        try {
-            URL url;
-            if (fileLocation.startsWith("http")) {
-                url = new URL(fileLocation);
-            } else {
-                url = new File(fileLocation).toURI().toURL();
-            }
+        String location = "webcal://fenix.iscte-iul.pt/publico/publicPersonICalendar.do?method=iCalendar&username=rageo@iscte.pt&password=zLgFKoKyGjZf1Ago80qtjmy8f0eS5uDCJQZSq2MNDGbZlTcMLw7pXDjThCYU52bDlIZsBYjNgXsIGLGUYPs8HHDfk9YnHQIZtkZXHgyBlk1nvaoTbqw4S2BG4V70CcTl";
+
+        if(location.startsWith("webcal")) {
             Web web = new Web();
-            web.ReadWeb(url);
-            web.URLToJson(url);
-        } catch (MalformedURLException e) {
-            LOGGER.log(Level.SEVERE, "Invalid URL", e);
+            String s = location.replace("webcal", "https");
+
+            try {
+                URL url = new URL(s);
+                web.ReadWeb(url);
+                web.URLToJson(url);
+            } catch (MalformedURLException ex) {
+                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+            } catch (IOException ex) {
+                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+            }
         }
     }
 
