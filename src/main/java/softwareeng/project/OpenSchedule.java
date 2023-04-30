@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 public class OpenSchedule extends JFrame {
 
-    private File htmlFile = new File("pageJson.html");
+    private final File htmlFile = new File("pageJson.html");
     private JButton csvButton;
     private JButton jsonButton;
     private JButton backButton;
@@ -165,7 +165,7 @@ public class OpenSchedule extends JFrame {
             jsonString = new String(Files.readAllBytes(jsonFile.toPath()));
             String htmlString = new String(Files.readAllBytes(htmlFile.toPath()));
             htmlString = htmlString.replace("$jsonData", jsonString);
-            File tempHtmlFile = File.createTempFile("schedule", ".html");
+            File tempHtmlFile = File.createTempFile("schedule", ".html", new File(System.getProperty("user.home")));
             Files.write(tempHtmlFile.toPath(), htmlString.getBytes());
             Desktop.getDesktop().browse(URI.create("localhost:63342/ES-2023-2Sem-Quinta-Feira-LIGE-GrupoA/pageJson.html"));
             System.out.println("teste123");
