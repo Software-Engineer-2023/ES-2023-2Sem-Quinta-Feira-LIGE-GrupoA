@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class ConvertSchedules extends JFrame {
     private JButton csvToJsonButton;
     private JButton jsonToCsvButton;
@@ -207,52 +208,9 @@ public class ConvertSchedules extends JFrame {
     }
 
     private void convertICSToCSV(String fileLocation) {
-        String location = "webcal://fenix.iscte-iul.pt/publico/publicPersonICalendar.do?method=iCalendar&username=rageo@iscte.pt&password=zLgFKoKyGjZf1Ago80qtjmy8f0eS5uDCJQZSq2MNDGbZlTcMLw7pXDjThCYU52bDlIZsBYjNgXsIGLGUYPs8HHDfk9YnHQIZtkZXHgyBlk1nvaoTbqw4S2BG4V70CcTl";
-
-        Web web = new Web();
-        if(location.startsWith("webcal")) {
-            String s = location.replace("webcal", "https");
-
-            try {
-                URL url = new URL(s);
-                web.ReadWeb(url);
-                web.URLToCSV(url);
-            } catch (MalformedURLException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
-            } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
-            }
-        } else {
-
-            try {
-                URL url = new URL(location);
-                web.ReadWeb(url);
-                web.URLToCSV(url);
-            } catch (MalformedURLException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
-            } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
-            }
-        }
     }
 
     private void convertICSToJson(String fileLocation) {
-        String location = "webcal://fenix.iscte-iul.pt/publico/publicPersonICalendar.do?method=iCalendar&username=rageo@iscte.pt&password=zLgFKoKyGjZf1Ago80qtjmy8f0eS5uDCJQZSq2MNDGbZlTcMLw7pXDjThCYU52bDlIZsBYjNgXsIGLGUYPs8HHDfk9YnHQIZtkZXHgyBlk1nvaoTbqw4S2BG4V70CcTl";
-
-        if(location.startsWith("webcal")) {
-            Web web = new Web();
-            String s = location.replace("webcal", "https");
-
-            try {
-                URL url = new URL(s);
-                web.ReadWeb(url);
-                web.URLToJson(url);
-            } catch (MalformedURLException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
-            } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
-            }
-        }
     }
 
 
