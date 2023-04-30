@@ -1,8 +1,6 @@
 
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-Z
-*src/main/java/softwareeng/project/App.java,8\1\810cc6b5dd0f884ded57e43343827871e39c0a3b
 k
 ;src/test/java/ES_Projeto_GrupoA_2023/projetoES/AppTest.java,c\e\ce8906b4080fb7e61b4a0e8bc45e5fb0ffb7537a
 p
@@ -31,8 +29,6 @@ Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/CSVToJsonTest.java,1\8\1831162c
 .src/main/java/softwareeng/project/Session.java,7\9\7905894439e4ecbbdd9bdfd4c716d0ed72b6f711
 o
 ?src/test/java/ES_Projeto_GrupoA_2023/projetoES/HorarioTest.java,a\0\a05d10fb56408a5fb5c514e941ee692793a8a386
-p
-@src/test/java/ES_Projeto_GrupoA_2023/projetoES/MainMenuTest.java,3\4\34cd05c183a64cc62b5f6257263fd242dd193a6c
 h
 8src/main/java/softwareeng/project/FileLocationFrame.java,e\4\e4f1a3328ef304f7ef891ebb91ce460e78641776
 Z
