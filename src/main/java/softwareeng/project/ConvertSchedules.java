@@ -1,5 +1,7 @@
 package softwareeng.project;
 
+import com.opencsv.exceptions.CsvValidationException;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -19,6 +21,7 @@ public class ConvertSchedules extends JFrame {
     private JButton icsToCsvButton;
     private JButton backButton;
     private static final Logger LOGGER = Logger.getLogger("FileLocationFrame");
+    private static final String ERROR_MESSAGE = "Error";
 
     public ConvertSchedules() {
         super("Convert Schedules");
@@ -43,6 +46,7 @@ public class ConvertSchedules extends JFrame {
 
         // Add a window listener to dispose the JFrame on close
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 dispose();
             }
@@ -89,7 +93,15 @@ public class ConvertSchedules extends JFrame {
     }
 
     private void addListeners() {
-        csvToJsonButton.addActionListener(e -> csvToJsonButtonClicked());
+        csvToJsonButton.addActionListener(e -> {
+            try {
+                csvToJsonButtonClicked();
+            } catch (CsvValidationException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         jsonToCsvButton.addActionListener(e -> jsonToCsvButtonClicked());
         icsToJsonButton.addActionListener(e -> icsToJsonButtonClicked());
         icsToCsvButton.addActionListener(e -> icsToCsvButtonClicked());
@@ -97,7 +109,7 @@ public class ConvertSchedules extends JFrame {
     }
 
 
-    private void csvToJsonButtonClicked() {
+    private void csvToJsonButtonClicked() throws CsvValidationException, IOException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv"));
@@ -109,7 +121,7 @@ public class ConvertSchedules extends JFrame {
             if (selectedFile.getName().endsWith(".csv")) {
                 convertCSVToJson(path);
             } else {
-                JOptionPane.showMessageDialog(this, "The selected file is not a CSV file.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "The selected file is not a CSV file.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
                 csvToJsonButtonClicked(); // restart the file chooser
             }
         }
@@ -127,7 +139,7 @@ public class ConvertSchedules extends JFrame {
             if (selectedFile.getName().endsWith(".json")) {
                 convertJsonToCSV(path);
             } else {
-                JOptionPane.showMessageDialog(this, "The selected file is not a JSON file.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "The selected file is not a JSON file.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
                 jsonToCsvButtonClicked(); // restart the file chooser
             }
         }
@@ -145,7 +157,7 @@ public class ConvertSchedules extends JFrame {
             if (selectedFile.getName().endsWith(".ics")) {
                 convertICSToCSV(path);
             } else {
-                JOptionPane.showMessageDialog(this, "The selected file is not an ICS file.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "The selected file is not an ICS file.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
                 icsToCsvButtonClicked(); // restart the file chooser
             }
         }
@@ -163,20 +175,20 @@ public class ConvertSchedules extends JFrame {
             if (selectedFile.getName().endsWith(".ics")) {
                 convertICSToJson(path);
             } else {
-                JOptionPane.showMessageDialog(this, "The selected file is not an ICS file.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "The selected file is not an ICS file.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
                 icsToJsonButtonClicked(); // restart the file chooser
             }
         }
     }
 
 
-    private void convertCSVToJson(String filelocation){
+    private void convertCSVToJson(String filelocation) throws CsvValidationException, IOException {
         CSVToJson csv = new CSVToJson();
         boolean success = csv.convertCSVToJson(filelocation);
         if(success){
             JOptionPane.showMessageDialog(this, "CSV file converted to JSON successfully!");
         } else {
-            JOptionPane.showMessageDialog(this, "There was an error converting the CSV file to JSON.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "There was an error converting the CSV file to JSON.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -187,19 +199,22 @@ public class ConvertSchedules extends JFrame {
             if(success){
                 JOptionPane.showMessageDialog(this, "JSON file converted to CSV successfully!");
             } else {
-                JOptionPane.showMessageDialog(this, "There was an error converting the JSON file to CSV.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "There was an error converting the JSON file to CSV.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "There was an error converting the JSON file to CSV: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "There was an error converting the JSON file to CSV: " + e.getMessage(), ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
         }
     }
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     private void convertICSToCSV(String fileLocation) {
         String location = "webcal://fenix.iscte-iul.pt/publico/publicPersonICalendar.do?method=iCalendar&username=rageo@iscte.pt&password=zLgFKoKyGjZf1Ago80qtjmy8f0eS5uDCJQZSq2MNDGbZlTcMLw7pXDjThCYU52bDlIZsBYjNgXsIGLGUYPs8HHDfk9YnHQIZtkZXHgyBlk1nvaoTbqw4S2BG4V70CcTl";
 
+        Web web = new Web();
         if(location.startsWith("webcal")) {
-            Web web = new Web();
             String s = location.replace("webcal", "https");
 
             try {
@@ -212,7 +227,6 @@ public class ConvertSchedules extends JFrame {
                 LOGGER.log(Level.SEVERE, "Exception occurred", ex);
             }
         } else {
-            Web web = new Web();
 
             try {
                 URL url = new URL(location);
@@ -226,8 +240,11 @@ public class ConvertSchedules extends JFrame {
         }
     }
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
     private void convertICSToJson(String fileLocation) {
         String location = "webcal://fenix.iscte-iul.pt/publico/publicPersonICalendar.do?method=iCalendar&username=rageo@iscte.pt&password=zLgFKoKyGjZf1Ago80qtjmy8f0eS5uDCJQZSq2MNDGbZlTcMLw7pXDjThCYU52bDlIZsBYjNgXsIGLGUYPs8HHDfk9YnHQIZtkZXHgyBlk1nvaoTbqw4S2BG4V70CcTl";
 
