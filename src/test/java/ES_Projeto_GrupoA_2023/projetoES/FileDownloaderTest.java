@@ -6,7 +6,9 @@ import softwareeng.project.FileDownloader;
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Classe de testes unitários da classe FileDownloader
+ */
 class FileDownloaderTest {
 
     @Test

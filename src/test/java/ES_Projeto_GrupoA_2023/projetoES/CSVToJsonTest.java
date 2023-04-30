@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,14 +18,17 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import junit.framework.Assert;
 import softwareeng.project.CSVToJson;
+import softwareeng.project.Session;
 
+/**
+ * Classe de testes unitários da classe CSVToJson
+ */
 class CSVToJsonTest {
 	@Test
-	void testConvertCSVToArrayList() {
+	void convertCSVToArrayListTest() {
 
 	CSVToJson csv = new CSVToJson();
-	
-	ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
+    List<Session> array = csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
 	assertNotNull(array);
 	
 	assertEquals("ME", array.get(0).getCurso());
@@ -41,10 +45,10 @@ class CSVToJsonTest {
 	}
 	
     @Test
-    void testarIOException() {
+    void iOExceptionTest() {
         try {
             CSVToJson csv = new CSVToJson();
-            ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
+            List<Session> array = csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
             throw new IOException("Erro: Não foi possível ler o ficheiro");
         } catch (IOException e) {
             assertEquals("Erro: Não foi possível ler o ficheiro", e.getMessage());
@@ -52,10 +56,10 @@ class CSVToJsonTest {
     }
 	
     @Test
-    void testarFileNotFoundException() {
+    void fileNotFoundExceptionTest() {
         try {
             CSVToJson csv = new CSVToJson();
-            ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horarioexemplo.csv");
+            List<Session> array = csv.convertCSVToArray("C:\\Teste\\horarioexemplo.csv");
             throw new FileNotFoundException("Erro:O ficheiro não foi encontrado! Verifique se o path está correto");
         } catch (FileNotFoundException e) {
             assertEquals("Erro:O ficheiro não foi encontrado! Verifique se o path está correto", e.getMessage());
@@ -63,10 +67,10 @@ class CSVToJsonTest {
     }
    
     @Test
-    void testarCsvValidationException() {
+    void csvValidationExceptionTest() {
         try {
             CSVToJson csv = new CSVToJson();
-            ArrayList<CSVToJson> array = (ArrayList<CSVToJson>) csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
+            List<Session> array = csv.convertCSVToArray("C:\\Teste\\horario_exemplo.csv");
             throw new CsvValidationException("Erro: problemas na validação CSV");
         } catch (CsvValidationException e) {
             assertEquals("Erro: problemas na validação CSV", e.getMessage());
@@ -96,6 +100,7 @@ class CSVToJsonTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
     }
     
 

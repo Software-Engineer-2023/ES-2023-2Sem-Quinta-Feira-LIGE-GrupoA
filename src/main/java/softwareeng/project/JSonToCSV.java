@@ -1,12 +1,21 @@
 package softwareeng.project;
 
 import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVWriter;
+
+import java.util.List;
 import java.util.logging.Logger;
 
 public class JSonToCSV{
@@ -17,6 +26,7 @@ public class JSonToCSV{
     private static final  String CSVFILENAMETEMP = "data_temp.csv";
     private static final  String CSVFILENAME = "data.csv";
     private static final Logger LOGGER = Logger.getLogger("JSONTOCSV");
+
 
     public JSonToCSV(String fileName) throws IOException {
         JsonNode rootNode = new ObjectMapper().readTree(new File(fileName));
@@ -84,4 +94,22 @@ public class JSonToCSV{
             LOGGER.info("Erro na leitura ou na escrita do novo ficheiro CSV");
         }
     }
+
+    public static List<Session> convertJsonToArray(String path) {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Session> sessions = null;
+        try {
+            sessions = mapper.readValue(new File(path), new TypeReference<List<Session>>() {});
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return sessions;
+    }
+
+
+
+
+
+
+
 }

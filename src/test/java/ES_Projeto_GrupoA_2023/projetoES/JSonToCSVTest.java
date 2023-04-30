@@ -7,11 +7,20 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import softwareeng.project.JSonToCSV;
+import softwareeng.project.Session;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static softwareeng.project.JSonToCSV.convertJsonToArray;
+
+/**
+ * Classe de testes unitários da classe JSonToCSV
+ */
 public class JSonToCSVTest {
 
 
@@ -19,7 +28,7 @@ public class JSonToCSVTest {
 
     @Before
     public void setUp() throws Exception {
-        jsonToCsv = new JSonToCSV("example-schedule.json");
+        jsonToCsv = new JSonToCSV("horario.json");
     }
     @Test
     public  void convertFile(){
@@ -46,4 +55,14 @@ public class JSonToCSVTest {
             throw new RuntimeException(e);
         }
     }
+
+
+    @Test
+    public void convertJsonToArrayTest(){
+        List<Session> session = convertJsonToArray("horario.json");
+        assertEquals("ME", session.get(0).getCurso());
+
+    }
+
+
 }
