@@ -12,31 +12,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainMenuTest {
 
     @Test
-    void openSchedulesTest() {
-        MainMenu mm= new MainMenu();
-        mm.openSchedules();
-        assertEquals("This feature is under development! Please be patient.", JOptionPane.getRootFrame().getMostRecentFocusOwner().toString());
-
-    }
-    @Test
-    void convertSchedulesTest() {
-        MainMenu mm = new MainMenu();
-        mm.getConvertSchedulesButton().doClick();
-        assertTrue(mm.isVisible());
-        assertFalse(mm.getOpenSchedulesButton().isVisible());
-        assertFalse(mm.getConvertSchedulesButton().isVisible());
-        assertFalse(mm.getLoadSchedulesButton().isVisible());
-
+    public void OpenSchedulesTest() {
+        MainMenu menu = new MainMenu();
+        JButton openButton = menu.getOpenSchedulesButton();
+        openButton.doClick();
+        assertFalse(menu.isVisible());
     }
 
     @Test
-    void loadSchedules() {
-        MainMenu mm = new MainMenu();
-        mm.getLoadSchedulesButton().doClick();
-        assertTrue(mm.isVisible());
-        assertFalse(mm.getOpenSchedulesButton().isVisible());
-        assertFalse(mm.getConvertSchedulesButton().isVisible());
-        assertFalse(mm.getLoadSchedulesButton().isVisible());
+    public void ConvertSchedulesTest() {
+        MainMenu menu = new MainMenu();
+        JButton convertButton = menu.getConvertSchedulesButton();
+        convertButton.doClick();
+        assertFalse(menu.isVisible());
+    }
+
+    @Test
+    public void LoadSchedulesTest() {
+        MainMenu menu = new MainMenu();
+        JButton loadButton = menu.getLoadSchedulesButton();
+        loadButton.doClick();
+        assertFalse(menu.isVisible());
     }
 
 }
