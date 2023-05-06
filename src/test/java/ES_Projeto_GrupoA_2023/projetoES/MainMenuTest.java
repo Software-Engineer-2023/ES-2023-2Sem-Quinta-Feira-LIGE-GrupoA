@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainMenuTest {
 
     @Test
-    public void OpenSchedulesTest() {
+    void OpenSchedulesTest() {
         MainMenu menu = new MainMenu();
         JButton openButton = menu.getOpenSchedulesButton();
         openButton.doClick();
@@ -20,7 +20,7 @@ class MainMenuTest {
     }
 
     @Test
-    public void ConvertSchedulesTest() {
+    void ConvertSchedulesTest() {
         MainMenu menu = new MainMenu();
         JButton convertButton = menu.getConvertSchedulesButton();
         convertButton.doClick();
@@ -28,7 +28,7 @@ class MainMenuTest {
     }
 
     @Test
-    public void LoadSchedulesTest() {
+    void LoadSchedulesTest() {
         MainMenu menu = new MainMenu();
         JButton loadButton = menu.getLoadSchedulesButton();
         loadButton.doClick();

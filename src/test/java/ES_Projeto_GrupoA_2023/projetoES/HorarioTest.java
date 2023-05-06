@@ -1,61 +1,90 @@
 package ES_Projeto_GrupoA_2023.projetoES;
 
 import org.junit.jupiter.api.Test;
-import softwareeng.project.Aluno;
-import softwareeng.project.CSVToJson;
 import softwareeng.project.Horario;
 import softwareeng.project.Session;
 
+import java.io.File;
+
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static softwareeng.project.JSonToCSV.convertJsonToArray;
 
-
-/**
- * Classe de testes unitários da classe HorarioTest
- */
 class HorarioTest {
 
-    Horario h = new Horario(new Aluno("Miguel",99860, "ME","MEA1"),"horario.json");
-    @Test
-    void getHorario(){
-        List<Session> list = h.getHorario();
-        assertEquals("ME",h.getAluno().getCurso() );
-        assertEquals("MEA1", h.getAluno().getTurma());
-        assertEquals("Microeconomia (2º Ciclo)", list.get(0).getUc());
-    }
-    @Test
-    void getCrowedSession() {
-        List<Session> sessions = h.getCrowedSessions();
-        assertEquals("ME", sessions.get(0).getCurso());
-        assertEquals(36, sessions.get(0).getInscritos());
-        assertEquals(34, sessions.get(0).getLotacao());
-    }
+    private final Horario horario = new Horario("horario.json");
+
+
 
     @Test
-    void getOverlappingSessions(){
-        Map<Date, List<Session>> sessions = h.getOverlappingSessions();
-        Calendar calendar = new GregorianCalendar(2022, Calendar.DECEMBER, 2, 13, 0, 0);
-        Date d = calendar.getTime();
-        assertTrue(sessions.containsKey(d));
-    }
-
-    @Test
-    void getAluno(){
-        assertEquals("Miguel", h.getAluno().getNome());
-    }
-    @Test
-    void setAluno(){
-        h.setAluno(new Aluno("Fred",66445,"LIGE", "AE1"));
-        assertEquals("Fred", h.getAluno().getNome());
-    }
-
-    @Test
-    void getWeek(){
-        List<Session> list = h.getHorario();
-        List<Session> week = h.getWeek(list, 1);
-        assertEquals("Crescimento Económico (2º Ciclo)", week.get(0).getUc());
+    void getWeek() {
+        horario.getWeek("data.csv", 2);
+        File file = new File("horarioSemana.json");
+        assertTrue(file.exists());
+        List<Session> session = convertJsonToArray(file.getName());
+        assertEquals("MM", session.get(0).getCurso());
 
     }
 
+    @Test
+    void getOverlappingSessions() {
+        Map<Date, List<Session>> map = horario.getOverlappingSessions("horarioSemana.json");
+        String dateString = "Fri Sep 09 17:30:00 WEST 2022";
+        DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+        Date date = null;
+        try {
+            date = format.parse(dateString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        assertTrue(map.containsKey(date));
+
+
+
+
+    }
+
+    @Test
+    void getUCsFromHorario() {
+
+        List<String> ucs = horario.getUCsFromHorario();
+        assertTrue(ucs.contains("Análise de Dados em Ciências Sociais - Descritiva"));
+
+    }
+
+    @Test
+    void convertFileToArray() {
+        List<Session> s = horario.converFileToArray("horario.json");
+        assertEquals("ME", s.get(0).getCurso());
+        assertEquals("Teoria dos Jogos e dos Contratos",s.get(0).getUc());
+        assertEquals("01789TP01", s.get(0).getTurno());
+        assertEquals("MEA1", s.get(0).getTurma());
+
+
+    }
+
+    @Test
+    void horarioFile() {
+        List<String> ucs = new ArrayList<>();
+        ucs.add("Métodos Numéricos");
+        ucs.add("Investimentos Financeiros (Mf)");
+        ucs.add("Econometria dos Mercados Financeiros");
+
+        horario.horarioFile(ucs);
+        File file = new File("horarioPessoal.json");
+        assertTrue(file.exists());
+
+        List<Session> sessions = horario.converFileToArray(file.getName());
+        for(Session aux : sessions){
+            assertTrue(ucs.contains(aux.getUc()));
+        }
+
+    }
 }

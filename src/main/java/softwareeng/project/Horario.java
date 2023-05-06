@@ -1,9 +1,4 @@
 package softwareeng.project;
-
-import com.google.gson.Gson;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -12,94 +7,44 @@ import java.util.logging.Logger;
  */
 public class Horario {
 
-    private Aluno a;
     private String path;
     private static final Logger LOGGER = Logger.getLogger("Horario");
 
-    public Horario(Aluno a, String path) {
-        this.a = a;
+    public Horario(String path) {
         this.path = path;
     }
 
     /**
-     * Devolve o Aluno do horário
-     * @return aluno
+     * Método que lê um ficheiro de um horário e, através do número da semana
+     * mostra as aulas dessa semana
+     * @param path caminho para o ficheiro que irá ser o horário
+     * @param semana representa a semana que queremos ver o horário
      */
-    public Aluno getAluno() {
-        return a;
-    }
-
-    /**
-     * Altera o valor do Aluno do horário
-     * @param a
-     */
-    public void setAluno(Aluno a){
-        this.a = a;
-    }
-    /**
-     * Método que converte um ficheiro csv ou json numa lista.
-     * De seguida filtra as aulas que pertencem a determinado curso, turma e semana.
-     *
-     * @return list com todas as UCs da semana
-     */
-    public List<Session> getHorario() {
-        List<Session> list = a.converFileToArray(path);
-        Iterator<Session> iterator = list.iterator();
-            while (iterator.hasNext()) {
-                Session aux = iterator.next();
-                if (!aux.getCurso().contains(a.getCurso()) || !aux.getTurma().contains(a.getTurma())) {
-                    iterator.remove();
-                }
-            }
+    public void getWeek(String path, int semana) {
+        List<Session> list = converFileToArray(path);
         list.sort(Comparator.comparing(Session::getDate));
-        //list = getWeek(list);
-        return list;
-    }
-
-    /**
-     * Depois de a list ficar ordenada e, a partir do primeiro dia da list,
-     * vamos calcular a x semana para obtermos as aulas dessa semana.
-     *
-     * @param list que apenas contém todas as aulas de determinada semana
-     * @return list com as aulas da semana
-     */
-    public List<Session> getWeek(List<Session> list, int semana) {
         int week = 7 * (semana - 1);
         Date data = list.get(0).getDate();
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(data);
         calendario.add(Calendar.DAY_OF_MONTH, week);
-        Date nova = calendario.getTime(); //Segunda feira dessa semana
-        calendario.add(Calendar.DAY_OF_MONTH, 6);
-        Date fim = calendario.getTime(); // Segunda feira da próxima semana
+        int weekSessionDay = calendario.get(Calendar.WEEK_OF_YEAR);
+
+        List<Session> s = new ArrayList<>();
+
         Iterator<Session> iterator = list.iterator();
         while (iterator.hasNext()) {
             Session aux = iterator.next();
-            if (aux.getDate().compareTo(nova) <= 0 || aux.getDate().compareTo(fim) > 0) {
-                iterator.remove();
+            calendario.setTime(aux.getDate());
+            int semanaAux = calendario.get(Calendar.WEEK_OF_YEAR);
+            if(semanaAux == weekSessionDay){
+                s.add(aux);
+            }else if ( semanaAux > weekSessionDay){
+                break;
             }
         }
-        return list;
-    }
-
-    /**
-     * Método que verifica se as aulas presentes no horário de um aluno estão sobrelotadas.
-     * Aquelas que não estiverem sobrelotadas são eliminadas da List
-     * @return List com aulas sobrelotadas
-     */
-    public List<Session> getCrowedSessions() {
-        List<Session> sessions = getHorario();
-        Iterator<Session> iterator = sessions.iterator();
-        while (iterator.hasNext()) {
-            Session aux = iterator.next();
-            if (aux.getInscritos() <= aux.getLotacao()) {
-                iterator.remove();
-            }
-        }
-        for(Session s: sessions){
-            System.out.println(s.toString());
-        }
-            return sessions;
+        CSVToJson csv = new CSVToJson();
+        csv.convertArrayToJson(s, "horarioSemana.json");
     }
 
     /**
@@ -108,15 +53,16 @@ public class Horario {
      * cria uma nova entry no map, caso sejam iguais adiciona ao map essa mesma aula.
      * No final devolve o map com as entrys que possuem a List associada com size() superior a 1, ou seja,
      * há mais de uma aula com o mesmo horário
+     * @param path caminho para um ficheiro
      * @return map que contém as aulas sobrepostas
      */
-    public Map<Date, List<Session>> getOverlappingSessions() {
+    public Map<Date, List<Session>> getOverlappingSessions(String path) {
         Map<Date, List<Session>> map = new HashMap<>();
-        List<Session> list = getHorario();
+        List<Session> list = converFileToArray(path);
         for (Session sessao : list) {
             Date data = sessao.getDate();
             if (!map.containsKey(data)) {
-                map.put(data, new ArrayList<Session>());
+                map.put(data, new ArrayList<>());
             }
             map.get(data).add(sessao);
         }
@@ -129,21 +75,69 @@ public class Horario {
         }
         return map;
     }
+
+
+
     /**
-     * Método constroi um horário apenas com as aulas de uma determinada Unidade Curricular
-     * @param uc representa uma unidade curricular
-     * @return List com todas as aulas de uma determinada unidade curricular
+     * Devolve uma lista das Ucs que estão no horário
+     * @return ucs que é uma lista com todas as ucs de um horario
      */
-    public List<Session> getHorarioPorUnidadeCurricular(String uc) {
-        List<Session> session = getHorario();
-        Iterator<Session> iterator= session.iterator();
-        while(iterator.hasNext()) {
+    public List<String> getUCsFromHorario() {
+        List<String> ucs = new ArrayList<>();
+        List<Session> horario = converFileToArray(path);
+        Iterator<Session> iterator = horario.iterator();
+        while (iterator.hasNext()) {
             Session aux = iterator.next();
-            if (!aux.getCurso().contains(a.getCurso()) || !aux.getTurma().contains(a.getTurma()) || !aux.getUc().contains(uc)) {
-                iterator.remove();
+            if (!ucs.contains(aux.getUc())) {
+                ucs.add(aux.getUc());
             }
         }
-        session.sort(Comparator.comparing(Session:: getDate));
-        return session;
+        return ucs;
     }
+
+    /**
+     * Converte um ficheiro para List<Session>
+     * @param path caminho do ficheiro
+     * @return list com todas as aulas do ficheiro
+     */
+    public List<Session> converFileToArray(String path){
+        List<Session> list = new ArrayList<>();
+        if(path.endsWith("csv")){
+            CSVToJson csv1 = new CSVToJson();
+            list = csv1.convertCSVToArray(path);
+
+        }else if(path.endsWith("json")){
+            list = JSonToCSV.convertJsonToArray(path);
+        }else {
+            LOGGER.severe("Não foi possível encontrar ficheiro");
+        }
+        return list;
+    }
+
+    /**
+     * Recebe uma lista que contém o nome das Ucs que o utilizador escolheu.
+     * Assim irá filtrar uma List com todas as aulas presentes no ficheiro.
+     * No final irá criar um ficheiro com todas as aulas das Ucs recebidas.
+     * @param ucs List de ucs selecionadas pelo utilizador
+     */
+    public void horarioFile(List<String> ucs){
+        List<Session> horario = converFileToArray(path);
+
+        Iterator<Session> iterator = horario.iterator();
+        while (iterator.hasNext()) {
+            Session aux = iterator.next();
+            if (!ucs.contains(aux.getUc())){
+                iterator.remove();
+            }
+
+        }
+        horario.sort(Comparator.comparing(Session::getDate));
+        CSVToJson csv = new CSVToJson();
+        csv.convertArrayToJson(horario,"horarioPessoal.json");
+
+    }
+
+
+
+
 }
