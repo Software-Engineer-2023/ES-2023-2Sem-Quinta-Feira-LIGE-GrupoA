@@ -9,6 +9,7 @@ public class MainMenu extends JFrame {
     private final JButton openSchedulesButton;
     private final JButton convertSchedulesButton;
     private final JButton loadSchedulesButton;
+    private final JButton SelectUcsButton;
     private static final Logger LOGGER = Logger.getLogger("FileLocationFrame");
 
     public MainMenu() {
@@ -24,18 +25,22 @@ public class MainMenu extends JFrame {
         openSchedulesButton = new JButton("Open Schedules");
         convertSchedulesButton = new JButton("Convert Schedules");
         loadSchedulesButton = new JButton("Load Schedules");
-
+        SelectUcsButton = new JButton ("Selecionar UCs");
+        
         openSchedulesButton.setBorderPainted(false);
         convertSchedulesButton.setBorderPainted(false);
         loadSchedulesButton.setBorderPainted(false);
+        SelectUcsButton.setBorderPainted(false);
 
         openSchedulesButton.setFocusPainted(false);
         convertSchedulesButton.setFocusPainted(false);
         loadSchedulesButton.setFocusPainted(false);
+        SelectUcsButton.setFocusPainted(false);
 
         openSchedulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         convertSchedulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loadSchedulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        SelectUcsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // Set icons for buttons
         int buttonSize = 48;
@@ -45,16 +50,20 @@ public class MainMenu extends JFrame {
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
         loadSchedulesButton.setIcon(new ImageIcon(new ImageIcon("icons/load.png")
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
+        SelectUcsButton.setIcon(new ImageIcon(new ImageIcon("icons/load.png")
+                .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
 
         // Add action listeners using lambda expressions
         openSchedulesButton.addActionListener(e -> openSchedules());
         convertSchedulesButton.addActionListener(e -> convertSchedules());
         loadSchedulesButton.addActionListener(e -> loadSchedules());
+        SelectUcsButton.addActionListener(e -> SelectUcs());
 
         JPanel panel = new JPanel();
         panel.add(openSchedulesButton);
         panel.add(convertSchedulesButton);
         panel.add(loadSchedulesButton);
+        panel.add(SelectUcsButton);
 
         getContentPane().add(panel);
         pack();
@@ -86,7 +95,15 @@ public class MainMenu extends JFrame {
             loadSchedules.setVisible(true);
         }
     }
-
+    
+    public void SelectUcs() {
+        if(this.isVisible()){
+            dispose();
+            SelectUcs selectUcs = new SelectUcs();
+            selectUcs.setVisible(true);
+        }
+    }
+    
     public JButton getOpenSchedulesButton() {
         return openSchedulesButton;
     }
@@ -97,5 +114,9 @@ public class MainMenu extends JFrame {
 
     public JButton getLoadSchedulesButton() {
         return loadSchedulesButton;
+    }
+    
+    public JButton getSelectUcsButton() {
+        return SelectUcsButton;
     }
 }
