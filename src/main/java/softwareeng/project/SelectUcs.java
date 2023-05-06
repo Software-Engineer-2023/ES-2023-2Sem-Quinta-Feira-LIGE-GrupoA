@@ -73,7 +73,6 @@ public class SelectUcs extends JFrame{
 		
 	}
 	
-	
 
 	private void layoutComponents() {
 		// Use a Box layout instead of a GridLayout
