@@ -8,20 +8,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.URI;
 import java.nio.file.Files;
 import java.util.logging.Logger;
 
 
-
 public class OpenSchedule extends JFrame {
-
-    private final File htmlFile = new File("pageJson.html");
     private JButton csvButton;
     private JButton jsonButton;
     private JButton backButton;
-    private static final Logger LOGGER = Logger.getLogger(OpenSchedule.class.getName());
+
+    private static final Logger LOGGER = Logger.getLogger("OpenSchedule");
 
 
     public OpenSchedule(){
@@ -32,7 +28,7 @@ public class OpenSchedule extends JFrame {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            LOGGER.severe("Error setting the look and feel: " + ex.getMessage());
+            ex.printStackTrace();
         }
 
         setSize(350, 150);
@@ -47,6 +43,7 @@ public class OpenSchedule extends JFrame {
 
         // Add a window listener to dispose the JFrame on close
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 dispose();
             }
@@ -62,8 +59,7 @@ public class OpenSchedule extends JFrame {
         jsonButton.setFocusPainted(false);
         csvButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jsonButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        backButton = new JButton();
-        backButton.setBorderPainted(false);
+        backButton = new JButton();        backButton.setBorderPainted(false);
         backButton.setFocusPainted(false);
         backButton.setBackground(new Color(0, 0, 0, 0)); // Set transparent background
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -112,11 +108,10 @@ public class OpenSchedule extends JFrame {
 
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            String path = fileChooser.getSelectedFile().getPath();
             File selectedFile = fileChooser.getSelectedFile();
 
             if (selectedFile.getName().endsWith(".csv")) {
-                    openCSVOnHtml(selectedFile);
+                openCSV(selectedFile);
             } else {
                 JOptionPane.showMessageDialog(this, "The selected file is not a CSV file.", "Error", JOptionPane.ERROR_MESSAGE);
                 openCSVSchedule(); // restart the file chooser
@@ -131,10 +126,9 @@ public class OpenSchedule extends JFrame {
 
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            String path = fileChooser.getSelectedFile().getPath();
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile.getName().endsWith(".json")) {
-                    openJsonOnHtml(selectedFile);
+                openJson(selectedFile);
             } else {
                 JOptionPane.showMessageDialog(this, "The selected file is not a json file.", "Error", JOptionPane.ERROR_MESSAGE);
                 openJSonSchedule(); // restart the file chooser
@@ -142,39 +136,54 @@ public class OpenSchedule extends JFrame {
         }
     }
 
-    private void openCSVOnHtml(File csvFile){
-        try {
-            Desktop.getDesktop().browse(htmlFile.toURI());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void createConection(){
+    private void openCSV(File csvFile){
+        String csvData = null;
+        JFrame csvFrame = new JFrame("content of " + csvFile);
+        csvFrame.setSize(700,300);
+        csvFrame.setLocationRelativeTo(null);
 
         try {
-            ServerSocket serverSocket = new ServerSocket(63342);
+            csvData = new String(Files.readAllBytes(csvFile.toPath()));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOGGER.info("Não é possivel ler o arquivo .csv selecionado!");
         }
-    }
-    private void openJsonOnHtml(File jsonFile)  {
 
-        String jsonString = null;
-        try {
-            jsonString = new String(Files.readAllBytes(jsonFile.toPath()));
-            String htmlString = new String(Files.readAllBytes(htmlFile.toPath()));
-            htmlString = htmlString.replace("$jsonData", jsonString);
-            File tempHtmlFile = File.createTempFile("schedule", ".html", new File(System.getProperty("user.home")));
-            Files.write(tempHtmlFile.toPath(), htmlString.getBytes());
-            Desktop.getDesktop().browse(URI.create("localhost:63342/ES-2023-2Sem-Quinta-Feira-LIGE-GrupoA/pageJson.html"));
-            System.out.println("teste123");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        JPanel panel = new JPanel(new GridLayout(1, 1));
+        JTextArea  jsonText = new JTextArea(csvData);
+        panel.add(jsonText);
+
+        JScrollPane scrollPane = new JScrollPane(panel);
+        csvFrame.add(scrollPane);
+        csvFrame.add(panel);
+
+        csvFrame.setVisible(true);
+
     }
 
 
+    private void openJson(File jsonFile)  {
+        String jsonData = null;
+        JFrame jsonInfo = new JFrame("Content of " + jsonFile.getName());
+        jsonInfo.setSize(500,500);
+        jsonInfo.setLocationRelativeTo(null);
+
+        try {
+            jsonData = new String(Files.readAllBytes(jsonFile.toPath()));
+        } catch (IOException e) {
+            LOGGER.info("Não é possivel ler o arquivo .json selecionado!");
+        }
+
+        JPanel panel = new JPanel(new GridLayout(1, 1));
+        JTextArea  jsonText = new JTextArea(jsonData);
+        panel.add(jsonText);
+
+        JScrollPane scrollPane = new JScrollPane(panel);
+        jsonInfo.add(scrollPane);
+        jsonInfo.add(panel);
+
+        jsonInfo.setVisible(true);
+
+    }
 
     private void backToMainMenu() {
         MainMenu mainMenu = new MainMenu();
