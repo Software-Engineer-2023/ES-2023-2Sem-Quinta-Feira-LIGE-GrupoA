@@ -71,11 +71,12 @@ public class CSVToJson {
 
 	/**
 	 * @param array List que contém o conteúdo de um ficheiro csv.
+	 * @param nome Nome dado ao ficheiro criado
 	 * @throws JsonGenerationException caso a geração de json não corra bem.
 	 * @throws JsonMappingException    quando o mapeamento do ficheiro falha.
 	 * @throws IOException             quando o path dado não leva a lado nenhum ficheiro.
 	 */
-	public void convertArrayToJson(List<Session> array) {
+	public void convertArrayToJson(List<Session> array,String nome) {
 		//Cria um mapeamento novo para mapear dados json em java
 		ObjectMapper mapa = new ObjectMapper();
 		//Seleciona a forma como o ficheiro será escrito tornando-o mais claro para ser lido
@@ -83,7 +84,7 @@ public class CSVToJson {
 		//Escreve os dados json num ficheiro
 		ObjectWriter writer = mapa.writerWithDefaultPrettyPrinter();
 
-		File file = new File("horario.json");
+		File file = new File(nome);
 		try {
 			writer.writeValue(file, array);
 		} catch (JsonGenerationException e) {
@@ -105,9 +106,9 @@ public class CSVToJson {
 	 * @param path o caminho completo do ficheiro CSV a ser convertido
 	 * @return true se a conversão for bem sucedida, false caso contrário
 	 */
-	public boolean convertCSVToJson(String path) {
+	public boolean convertCSVToJson(String path,String nome) {
 		List<Session> array = convertCSVToArray(path);
-		convertArrayToJson(array);
+		convertArrayToJson(array,nome);
 
 		return true;
 		}

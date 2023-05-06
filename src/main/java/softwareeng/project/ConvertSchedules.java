@@ -116,7 +116,7 @@ public class ConvertSchedules extends JFrame {
             String path = fileChooser.getSelectedFile().getPath();
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile.getName().endsWith(".csv")) {
-                convertCSVToJson(path);
+                convertCSVToJson(path,"horario.json");
             } else {
                 JOptionPane.showMessageDialog(this, "The selected file is not a CSV file.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
                 csvToJsonButtonClicked(); // restart the file chooser
@@ -179,9 +179,9 @@ public class ConvertSchedules extends JFrame {
     }
 
 
-    private void convertCSVToJson(String filelocation) {
+    private void convertCSVToJson(String filelocation,String nome) {
         CSVToJson csv = new CSVToJson();
-        boolean success = csv.convertCSVToJson(filelocation);
+        boolean success = csv.convertCSVToJson(filelocation,nome);
         if(success){
             JOptionPane.showMessageDialog(this, "CSV file converted to JSON successfully!");
         } else {

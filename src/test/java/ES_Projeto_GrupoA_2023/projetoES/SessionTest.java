@@ -143,12 +143,12 @@ class SessionTest {
         Date a = s.getDate();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String data = s.getDataAula() + " " + s.getHoraInicio();
-        Date date = null;
         try {
-            date = formato.parse(data);
+           Date date = formato.parse(data);
+            assertEquals(date,a);
+
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(date,a);
     }
 }
