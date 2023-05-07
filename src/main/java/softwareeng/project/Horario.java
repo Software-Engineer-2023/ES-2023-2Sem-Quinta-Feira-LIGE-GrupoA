@@ -24,7 +24,7 @@ public class Horario {
         int count = 1;
         List<Session> list = converFileToArray(path);
         list.sort(Comparator.comparing(Session::getDate));
-        System.out.println(list.get(list.size()-1));
+
         Date data = list.get(0).getDate();
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(data);
@@ -35,6 +35,8 @@ public class Horario {
             calendario.setTime(aux.getDate());
             int semanaAux = calendario.get(Calendar.WEEK_OF_YEAR);
             if(semanaAux != weekSessionDay && !aux.getDataAula().equals("") && !aux.getHoraInicio().equals("")) {
+                System.out.println("Valor Do count = " + count);
+                System.out.println("semanaAux " + semanaAux + " weeksessionday: " + weekSessionDay);
                 count ++;
                 calendario.setTime(aux.getDate());
                 weekSessionDay = calendario.get(Calendar.WEEK_OF_YEAR);
@@ -44,13 +46,6 @@ public class Horario {
         return count;
     }
 
-
-    public void ordenaFile(){
-        List<Session> session = converFileToArray("horario.json");
-        session.sort(Comparator.comparing(Session::getDate));
-        CSVToJson csv = new CSVToJson();
-        csv.convertArrayToJson(session, "horarioOrdenado.json");
-    }
 
 
 
@@ -68,6 +63,7 @@ public class Horario {
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(data);
         calendario.add(Calendar.DAY_OF_MONTH, week);
+        int ano = calendario.getTime().getYear()+1900;
         int weekSessionDay = calendario.get(Calendar.WEEK_OF_YEAR);
 
         List<Session> s = new ArrayList<>();
@@ -79,10 +75,12 @@ public class Horario {
             int semanaAux = calendario.get(Calendar.WEEK_OF_YEAR);
             if(semanaAux == weekSessionDay){
                 s.add(aux);
-            }else if ( semanaAux > weekSessionDay){
+            }else if ( semanaAux > weekSessionDay && (calendario.getTime().getYear() + 1900) == ano){
                 break;
             }
         }
+
+
         CSVToJson csv = new CSVToJson();
         csv.convertArrayToJson(s, "horarioSemana.json");
     }

@@ -38,6 +38,11 @@ public class OpenSchedule extends JFrame {
         super("Open Schedule");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        ImageIcon icon = new ImageIcon("icons/semana.png");
+        Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        setIconImage(scaledIcon.getImage());
+
         // Set the look and feel
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -153,12 +158,8 @@ public class OpenSchedule extends JFrame {
                             List<Session> session = h.converFileToArray("horarioSemana.json");
                             if (session.isEmpty()) {
                                 JOptionPane.showMessageDialog(buttonPanel, "Não possui aulas marcadas nessa semana");
-
-
                             } else {
-
                                 textField.setText(session.get(0).toString());
-
                             }
                         }
                     });

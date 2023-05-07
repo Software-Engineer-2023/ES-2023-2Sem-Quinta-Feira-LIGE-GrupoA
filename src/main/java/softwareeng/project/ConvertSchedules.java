@@ -33,6 +33,11 @@ public class ConvertSchedules extends JFrame {
         super("Convert Schedules");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        ImageIcon icon = new ImageIcon("icons/semana.png");
+        Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        setIconImage(scaledIcon.getImage());
+
         // Set the look and feel
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
