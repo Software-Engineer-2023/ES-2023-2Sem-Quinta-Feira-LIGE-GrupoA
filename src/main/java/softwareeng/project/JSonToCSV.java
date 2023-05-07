@@ -24,7 +24,11 @@ public class JSonToCSV{
     private static final  String CSVFILENAME = "data.csv";
     private static final Logger LOGGER = Logger.getLogger("JSONTOCSV");
 
-
+    /**
+     * Construtor da classe JSonToCSV
+     * @param fileName nome do ficheiro
+     * @throws IOException
+     */
     public JSonToCSV(String fileName) throws IOException {
         JsonNode rootNode = new ObjectMapper().readTree(new File(fileName));
         elements =  rootNode.elements();
@@ -33,7 +37,6 @@ public class JSonToCSV{
     }
 
     /**
-
     *Converte o conteúdo de um arquivo JSON em um arquivo CSV, escrevendo as informações nas colunas apropriadas.
     *@return true se a conversão for bem-sucedida, false caso contrário
     *@throws IOException se ocorrer um erro ao ler ou escrever os arquivos
