@@ -29,3 +29,13 @@ A
 0src/main/java/softwareeng/project/JSonToCSV.java,5\f\5f49f868f3976e746e944bea3292dd538419cd3e
 J
 rafetelvino@gmail.com.json,d\0\d05b6e783dabfc8ef85ef00c55d2cc1719b667da
+Z
+*src/main/java/softwareeng/project/App.java,8\1\810cc6b5dd0f884ded57e43343827871e39c0a3b
+`
+0src/main/java/softwareeng/project/SelectUcs.java,5\5\552b2407dd03027b46e2f82ef5a508f368805183
+g
+7src/main/java/softwareeng/project/ConvertSchedules.java,8\d\8d6d621e403cfd1113fc62490df6e256ede1e47a
+c
+3src/main/java/softwareeng/project/OpenSchedule.java,5\8\58f53fa8d367a8e62272160bfb257ccb623c41e6
+Z
+*src/main/java/softwareeng/project/Web.java,4\1\410378366bca26189901e56329207a82181aecb3
