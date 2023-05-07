@@ -31,63 +31,49 @@ public class IcsToJson {
     }
 
     /**
-     This method is responsible for converting an ics file to json. If the conversion is successful, a message will be sent depending on whether the file has already been created or not.
-
+     * This method is responsible for converting an ics file to json.
+     * If the conversion is successful, a message will be sent
+     * depending on whether the file has already been created or not.
      */
     public boolean convertFile() throws IOException, ParseException {
+        List<JsonObject> events = new ArrayList<>();
+        JsonObject event = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            List<JsonObject> events = new ArrayList<>();
-            JsonObject event = null;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("BEGIN:VEVENT")) {
                     event = new JsonObject();
-                } else if (line.startsWith("DTSTART")) {
-                    Date start = parseDate(line);
-                    if (event != null) {
-                        event.addProperty("start", start.getTime());
+                } else if (event != null) {
+                    if (line.startsWith("DTSTART")) {
+                        event.addProperty("start", parseDate(line).getTime());
+                    } else if (line.startsWith("DTEND")) {
+                        event.addProperty("end", parseDate(line).getTime());
+                    } else if (line.startsWith("SUMMARY")) {
+                        event.addProperty("summary", parseString(line));
+                    } else if (line.startsWith("LOCATION")) {
+                        event.addProperty("location", parseString(line));
+                    } else if (line.startsWith("END:VEVENT")) {
+                        events.add(event);
+                        event = null;
                     }
-                } else if (line.startsWith("DTEND")) {
-                    Date end = parseDate(line);
-                    if (event != null) {
-                        event.addProperty("end", end.getTime());
-                    }
-                } else if (line.startsWith("SUMMARY")) {
-                    String summary = parseString(line);
-                    if (event != null) {
-                        event.addProperty("summary", summary);
-                    }
-                } else if (line.startsWith("LOCATION")) {
-                    String location = parseString(line);
-                    if (event != null) {
-                        event.addProperty("location", location);
-                    }
-                } else if (line.startsWith("END:VEVENT")) {
-                    events.add(event);
-                    event = null;
                 }
             }
-
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            JsonArray jsonArray = gson.toJsonTree(events).getAsJsonArray();
-
-            String jsonFilePath = filePath.replace(".ics", ".json");
-            File jsonFile = new File(jsonFilePath);
-            if (jsonFile.createNewFile()) {
-                try (FileWriter writer = new FileWriter(jsonFile)) {
-                    gson.toJson(jsonArray, writer);
-                }
-                LOGGER.log(Level.INFO, "New file created: {0}", jsonFile.getName());
-                return true;
-            } else {
-                LOGGER.log(Level.INFO, "File already exists.");
-                return false;
-            }
-        } catch (IOException | ParseException e) {
-            String message = "Error while converting file: " + e.getMessage();
-            LOGGER.log(Level.SEVERE, message, e);
         }
-        return false;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonArray jsonArray = gson.toJsonTree(events).getAsJsonArray();
+
+        String jsonFilePath = filePath.replace(".ics", ".json");
+        File jsonFile = new File(jsonFilePath);
+        if (jsonFile.createNewFile()) {
+            try (FileWriter writer = new FileWriter(jsonFile)) {
+                gson.toJson(jsonArray, writer);
+            }
+            LOGGER.log(Level.INFO, "New file created: {0}", jsonFile.getName());
+            return true;
+        } else {
+            LOGGER.log(Level.INFO, "File already exists.");
+            return false;
+        }
     }
 
     private Date parseDate(String line) throws ParseException {
