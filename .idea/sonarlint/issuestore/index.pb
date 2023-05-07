@@ -9,16 +9,12 @@ k
 ;src/test/java/ES_Projeto_GrupoA_2023/projetoES/WebTest.java,1\9\194e251ef5b962c95ff671732b66a8e13086cbb8
 `
 0src/main/java/softwareeng/project/CSVToJson.java,9\9\99dfeba7b011ac027ab1bcb473f43c05cb14e406
-<
-horario.json,1\6\16f2cd285f882d5bd54fb664911637ffad236ae7
 q
 Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/JSonToCSVTest.java,c\5\c584f10a19b38295d0b818ff210832570dd02fae
 o
 ?src/test/java/ES_Projeto_GrupoA_2023/projetoES/SessionTest.java,5\7\57cca3dd566a738df75ba0172500fb0b89f2dc37
 q
 Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/CSVToJsonTest.java,1\8\1831162c62f1a39b8aa95be037282d696ce7e6b7
-^
-.src/main/java/softwareeng/project/Session.java,7\9\7905894439e4ecbbdd9bdfd4c716d0ed72b6f711
 o
 ?src/test/java/ES_Projeto_GrupoA_2023/projetoES/HorarioTest.java,a\0\a05d10fb56408a5fb5c514e941ee692793a8a386
 A

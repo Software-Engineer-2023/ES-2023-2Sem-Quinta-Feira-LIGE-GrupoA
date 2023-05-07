@@ -179,7 +179,7 @@ public class Web {
 				diaSemana = "Sex";
 				break;
 			case 7:
-				diaSemana = "Sab";
+				diaSemana = "Sáb";
 				break;
 			default:
 				break;

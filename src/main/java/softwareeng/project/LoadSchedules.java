@@ -28,7 +28,7 @@ public class LoadSchedules extends JFrame {
      * Construtor da tela LoadSchedules
      */
     public LoadSchedules() {
-        super("Schedule PLUS");
+        super("Load Schedules");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         ImageIcon icon = new ImageIcon("icons/semana.png");

@@ -34,7 +34,6 @@ public class MainMenu extends JFrame {
         convertSchedulesButton = new JButton("Convert Schedules");
         loadSchedulesButton = new JButton("Load Schedules");
         JButton selectUcsButton = new JButton("Selecionar UCs");
-
         openSchedulesButton.setBorderPainted(false);
         convertSchedulesButton.setBorderPainted(false);
         loadSchedulesButton.setBorderPainted(false);

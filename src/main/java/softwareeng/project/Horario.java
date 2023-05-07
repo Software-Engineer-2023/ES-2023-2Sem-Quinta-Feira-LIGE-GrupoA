@@ -36,8 +36,6 @@ public class Horario {
             calendario.setTime(aux.getDate());
             int semanaAux = calendario.get(Calendar.WEEK_OF_YEAR);
             if(semanaAux != weekSessionDay && !aux.getDataAula().equals("") && !aux.getHoraInicio().equals("")) {
-                System.out.println("Valor Do count = " + count);
-                System.out.println("semanaAux " + semanaAux + " weeksessionday: " + weekSessionDay);
                 count ++;
                 calendario.setTime(aux.getDate());
                 weekSessionDay = calendario.get(Calendar.WEEK_OF_YEAR);
@@ -114,6 +112,21 @@ public class Horario {
         }
         return map;
     }
+
+
+    public Map<Date, List<Session>> getSessionsMap(List<Session> list){
+
+        Map<Date,List<Session>> map = new HashMap<>();
+        for (Session sessao : list) {
+            Date data = sessao.getDate();
+            if (!map.containsKey(data)) {
+                map.put(data, new ArrayList<>());
+            }
+            map.get(data).add(sessao);
+        }
+        return map;
+    }
+
 
 
 
