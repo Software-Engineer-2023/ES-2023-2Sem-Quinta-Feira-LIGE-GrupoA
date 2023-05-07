@@ -7,8 +7,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,7 +104,13 @@ public class ConvertSchedules extends JFrame {
         });
         jsonToCsvButton.addActionListener(e -> jsonToCsvButtonClicked());
         icsToJsonButton.addActionListener(e -> icsToJsonButtonClicked());
-        icsToCsvButton.addActionListener(e -> icsToCsvButtonClicked());
+        icsToCsvButton.addActionListener(e -> {
+            try {
+                icsToCsvButtonClicked();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         backButton.addActionListener(e -> backToMainMenu());
     }
 
@@ -142,7 +151,7 @@ public class ConvertSchedules extends JFrame {
         }
     }
 
-    private void icsToCsvButtonClicked() {
+    private void icsToCsvButtonClicked() throws IOException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setFileFilter(new FileNameExtensionFilter("ICS files", "ics"));
@@ -152,7 +161,7 @@ public class ConvertSchedules extends JFrame {
             String path = fileChooser.getSelectedFile().getPath();
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile.getName().endsWith(".ics")) {
-                convertICSToCSV(path);
+                convertIcsToCSV(path);
             } else {
                 JOptionPane.showMessageDialog(this, "The selected file is not an ICS file.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
                 icsToCsvButtonClicked(); // restart the file chooser
@@ -189,6 +198,31 @@ public class ConvertSchedules extends JFrame {
         }
     }
 
+    private void convertIcsToCSV(String filelocation) {
+        try {
+            IcsToCSV ics = new IcsToCSV(filelocation);
+            boolean success = ics.convertFile();
+            if(success){
+                BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\carol\\OneDrive\\Ambiente de Trabalho\\rafetelvino@gmail.com.csv"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line); // Imprime cada linha na console
+                }
+                reader.close();
+                JOptionPane.showMessageDialog(this, "ICS file converted to CSV successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "There was an error converting the ICS file to CSV.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "There was an error converting the ICS file to CSV: " + e.getMessage(), ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+
+
+
+
     private void convertJsonToCSV(String filelocation) {
         try {
             JSonToCSV json = new JSonToCSV(filelocation);
@@ -203,18 +237,32 @@ public class ConvertSchedules extends JFrame {
         }
     }
 
-    /**
-     * This method is method because it is yet to be completed
-     */
-    private void convertICSToCSV(String fileLocation) {
-        // TODO document why this method is empty
-    }
 
     /**
      * This method is method because it is yet to be completed
      */
     private void convertICSToJson(String fileLocation) {
-        // TODO document why this method is empty
+        try {
+            IcsToJson ics = new IcsToJson(fileLocation);
+
+            boolean success = ics.convertFile();
+            if(success){
+                BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\carol\\OneDrive\\Ambiente de Trabalho\\rafetelvino@gmail.com.csv"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line); // Imprime cada linha na console
+                }
+                reader.close();
+                JOptionPane.showMessageDialog(this, "ICS file converted to JSON successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "There was an error converting the ICS file to JSON.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "There was an error converting the ICS file to json: " + e.getMessage(), ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
