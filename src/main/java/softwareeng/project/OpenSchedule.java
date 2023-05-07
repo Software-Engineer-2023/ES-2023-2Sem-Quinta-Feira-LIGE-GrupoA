@@ -1,8 +1,5 @@
 package softwareeng.project;
 
-
-import com.opencsv.exceptions.CsvValidationException;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -15,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
-
 
 public class OpenSchedule extends JFrame {
 
