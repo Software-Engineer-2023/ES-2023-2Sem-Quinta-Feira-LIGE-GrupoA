@@ -31,7 +31,7 @@ public class JSonToCSVTest {
         try {
             jsonToCsv.convertFile();
             ObjectMapper mapper = new ObjectMapper();
-            File arquivo1 = new File("data.csv");
+            File arquivo1 = new File("data123.csv");
             File arquivo2 = new File("dataTest.csv");
             Object obj1;
             try {

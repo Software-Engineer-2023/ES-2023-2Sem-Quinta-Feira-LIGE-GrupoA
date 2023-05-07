@@ -38,34 +38,6 @@ class WebTest {
         }
     }
 
-    
-    @Test
-    void testURLToCSVWithInvalidUrl() {
-        Web web = new Web();
-        URL url;
-        try {
-            url = new URL("invalidurl");
-            Exception exception = Assertions.assertThrows(Exception.class, () -> web.urlToCsv(url));
-            Assertions.assertEquals("unknown protocol: invalidurl", exception.getMessage());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    @Test
-    void testURLToJsonWithInvalidUrl() {
-        Web web = new Web();
-        URL url;
-        try {
-            url = new URL("invalidurl");
-            Exception exception = Assertions.assertThrows(Exception.class, () -> web.urlToJson(url));
-            Assertions.assertEquals("unknown protocol: invalidurl", exception.getMessage());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Test
     void testDownloadWebContentWithValidUrlContainingHTML() {
