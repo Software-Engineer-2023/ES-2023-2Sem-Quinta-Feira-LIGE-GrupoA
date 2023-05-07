@@ -1,12 +1,11 @@
 package softwareeng.project;
 
-import javax.sql.rowset.RowSetWarning;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
 public class CustomTable extends DefaultTableCellRenderer {
-            private String containValue;
+            private final String containValue;
 
     public CustomTable(String containValue) {
         this.containValue = containValue;

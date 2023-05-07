@@ -36,9 +36,6 @@ public class CSVToJson {
 	 *
 	 * @param path representa o caminho do ficheiro.
 	 * @return List com o conteúdo do ficheiro.
-	 * @throws FileNotFoundException  quando o ficheiro não é encontrado.
-	 * @throws CsvValidationException quando o ficheiro não é csv.
-	 * @throws IOException            quando o input não está correto.
 	 */
 	public List<Session> convertCSVToArray(String path){
 		List<Session> array = new ArrayList<>();
@@ -72,9 +69,6 @@ public class CSVToJson {
 	/**
 	 * @param array List que contém o conteúdo de um ficheiro csv.
 	 * @param nome Nome dado ao ficheiro criado
-	 * @throws JsonGenerationException caso a geração de json não corra bem.
-	 * @throws JsonMappingException    quando o mapeamento do ficheiro falha.
-	 * @throws IOException             quando o path dado não leva a lado nenhum ficheiro.
 	 */
 	public void convertArrayToJson(List<Session> array,String nome) {
 		//Cria um mapeamento novo para mapear dados json em java
