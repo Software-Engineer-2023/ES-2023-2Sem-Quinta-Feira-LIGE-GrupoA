@@ -178,7 +178,7 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
-     *      * metodo responsavel por adicionar a ação de converter um ficheiro ics em csv
+     * metodo responsavel por adicionar a ação de converter um ficheiro ics em csv
      * @throws IOException
      */
 
@@ -237,7 +237,7 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
-     *      * metodo responsavel por adicionar a ação de converter um ficheiro ics em csv
+     * metodo responsavel por adicionar a ação de converter um ficheiro ics em csv
      * @param filelocation
      */
     private void convertIcsToCSV(String filelocation) {
@@ -262,7 +262,7 @@ public class ConvertSchedules extends JFrame {
 
 
     /**
-     *      * metodo responsavel por adicionar a ação de converter um ficheiro json em csv
+     * metodo responsavel por adicionar a ação de converter um ficheiro json em csv
      * @param filelocation
      */
     private void convertJsonToCSV(String filelocation) {

@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *Esta classe representa a janela principal da aplicação Schedule PLUS e é responsável por exibir os botões que permitem ao usuário acessar diferentes funcionalidades do programa, como abrir horários, converter horários, carregar horários e selecionar UCs. Ela também define a aparência dos botões e os ícones que os representam, além de definir as ações executadas quando cada botão é pressionado.
+ *Esta classe representa a janela principal da aplicação Schedule PLUS e é responsável por exibir os botões que permitem ao utilizador acessar diferentes funcionalidades do programa, como abrir horários, converter horários, carregar horários e selecionar UCs. Ela também define a aparência dos botões e os ícones que os representam, além de definir as ações executadas quando cada botão é pressionado.
  */
 
 public class MainMenu extends JFrame {
