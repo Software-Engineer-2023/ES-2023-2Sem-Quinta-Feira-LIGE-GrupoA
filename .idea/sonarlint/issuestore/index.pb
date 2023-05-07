@@ -7,8 +7,6 @@ p
 @src/test/java/ES_Projeto_GrupoA_2023/projetoES/MainMenuTest.java,3\4\34cd05c183a64cc62b5f6257263fd242dd193a6c
 k
 ;src/test/java/ES_Projeto_GrupoA_2023/projetoES/WebTest.java,1\9\194e251ef5b962c95ff671732b66a8e13086cbb8
-v
-Fsrc/test/java/ES_Projeto_GrupoA_2023/projetoES/FileDownloaderTest.java,8\2\820bdede61c2eb4cea6eb4671506c15129af744f
 `
 0src/main/java/softwareeng/project/CSVToJson.java,9\9\99dfeba7b011ac027ab1bcb473f43c05cb14e406
 <

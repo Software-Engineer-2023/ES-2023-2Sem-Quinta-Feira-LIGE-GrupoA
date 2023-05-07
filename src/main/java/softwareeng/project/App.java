@@ -4,19 +4,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Esta classe é a classe que executa uma interface gráfica do usuário para seleção e conversão de horários.
+ * This class is the one that executes the main graphical user interface and the runs the app.
  */
-
 public class App {
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
 
     public static void main(String[] args) {
         try {
             LOGGER.log(Level.CONFIG, "Program started.");
-            // Create the instance of the file selection window.
             MainMenu mainMenu = new MainMenu();
-
-            // Make the window visible to the user
             mainMenu.setVisible(true);
             mainMenu.getOpenSchedulesButton().addActionListener(e -> {});
             mainMenu.getConvertSchedulesButton().addActionListener(e -> {
