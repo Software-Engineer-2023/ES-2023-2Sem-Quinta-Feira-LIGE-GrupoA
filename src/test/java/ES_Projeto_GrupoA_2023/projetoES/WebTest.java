@@ -19,7 +19,7 @@ class WebTest {
         URL url;
         try {
             url = new URL("https://www.example.com");
-            Assertions.assertDoesNotThrow(() -> web.ReadWeb(url));
+            Assertions.assertDoesNotThrow(() -> web.readWeb(url));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -31,7 +31,7 @@ class WebTest {
         URL url;
         try {
             url = new URL("invalidurl");
-            Exception exception = Assertions.assertThrows(Exception.class, () -> web.ReadWeb(url));
+            Exception exception = Assertions.assertThrows(Exception.class, () -> web.readWeb(url));
             Assertions.assertEquals("URL inválido: no protocol: invalidurl", exception.getMessage());
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -45,7 +45,7 @@ class WebTest {
         URL url;
         try {
             url = new URL("invalidurl");
-            Exception exception = Assertions.assertThrows(Exception.class, () -> web.URLToCSV(url));
+            Exception exception = Assertions.assertThrows(Exception.class, () -> web.urlToCsv(url));
             Assertions.assertEquals("unknown protocol: invalidurl", exception.getMessage());
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ class WebTest {
         URL url;
         try {
             url = new URL("invalidurl");
-            Exception exception = Assertions.assertThrows(Exception.class, () -> web.URLToJson(url));
+            Exception exception = Assertions.assertThrows(Exception.class, () -> web.urlToJson(url));
             Assertions.assertEquals("unknown protocol: invalidurl", exception.getMessage());
         } catch (MalformedURLException e) {
             e.printStackTrace();

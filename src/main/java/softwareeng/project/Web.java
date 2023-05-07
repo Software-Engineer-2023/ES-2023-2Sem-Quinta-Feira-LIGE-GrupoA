@@ -7,21 +7,18 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.StandardSocketOptions;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.FieldPosition;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -29,11 +26,13 @@ import java.util.List;
 */
 public class Web {
 
+	private static final Logger LOGGER = Logger.getLogger("Web");
+
 	/**
 	*Lê o conteúdo da página da URL fornecida e imprime uma mensagem de sucesso se a leitura for bem sucedida.
 	*@param url a URL da página a ser lida
 	*/
-	public void ReadWeb(URL url) {
+	public void readWeb(URL url) {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 			in.close();
@@ -50,10 +49,8 @@ public class Web {
 	 * @param url objeto URL contendo o endereço a ser lido
 	 * @throws IOException se houver algum erro de I/O durante a leitura da URL
 	 */
-	public String URLToList(URL url) throws IOException {
-
+	public String urlTolist(URL url) throws IOException {
 		URLConnection connection = url.openConnection();
-		//lê cada linha
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		//para analisar o conteúdo CSV e criar uma lista de objetos
 		CSVParser parser = CSVFormat.DEFAULT.parse(in);
@@ -79,12 +76,16 @@ public class Web {
 					lines.add(line);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.WARNING, "Ran into an IOException: ", e);
 		}
 
-		if (new File("outputTemp.csv").delete()) {
-		} else {
+		File file = new File("outputTemp.csv");
 
+		boolean fileDeleted = file.delete();
+		if (fileDeleted) {
+			System.out.println("File deleted successfully");
+		} else {
+			System.out.println("Failed to delete file");
 		}
 
 		StringBuilder stringBuilder = new StringBuilder();
@@ -93,8 +94,7 @@ public class Web {
 		String s1 = stringBuilder.toString();
 		String info = s1.replaceAll( "\"\" ", "");
 
-		StringTOJson(info);
-
+		stringToJson(info);
 
 		return info;
 	}
@@ -104,13 +104,13 @@ public class Web {
 	*Converte uma String no formato de horário em JSON.
 	*@param fileContent a String a ser convertida em JSON.
 	*/
-	public void StringTOJson(String fileContent) {
+	public void stringToJson(String fileContent) {
 		System.out.println("teste1");
 
 		String[] subString1 = fileContent.split("SUMMARY:");
 		List<Session> array = new ArrayList<>();
 		for(String s : subString1){
-			if(!(s.startsWith("Exame:") || s.startsWith("Teste:") || s.startsWith("Avaliação Contínua:") || s.indexOf("-") == -1)){
+			if(!(s.startsWith("Exame:") || s.startsWith("Teste:") || s.startsWith("Avaliação Contínua:") || !s.contains("-"))){
 				//System.out.println(s);
 				try {
 					Session session = createSession(s);
@@ -130,8 +130,8 @@ public class Web {
 	*@param fileContent String contendo o conteúdo do arquivo Horario a ser convertido.
 	*@throws RuntimeException caso ocorra um erro durante a conversão.
 	*/
-	public void StringToCsv(String fileContent){
-		StringTOJson(fileContent);
+	public void stringToCsv(String fileContent){
+		stringToJson(fileContent);
 		try {
 			new JSonToCSV("horario.json");
 		} catch (IOException e) {
@@ -181,6 +181,8 @@ public class Web {
 			case 7:
 				diaSemana = "Sáb";
 				break;
+			default:
+				break;
 		}
 		String horaInicio = subString2[1];
 		String horaFim = subString3[1];
@@ -193,16 +195,6 @@ public class Web {
 		int lotacao = 0;
 
 		return new Session(curso, uc, turno, turma, inscritos, diaSemana, horaInicio+":00", horaFim+":00", dataAula.replace('-','/'), salaAtribuida, lotacao);
-	}
-
-
-
-	public void URLToCSV(URL url) throws IOException{
-
-	}
-
-	public void URLToJson(URL url) throws IOException {
-
 	}
 
 	/**

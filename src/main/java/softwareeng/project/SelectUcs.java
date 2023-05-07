@@ -154,6 +154,7 @@ public class SelectUcs extends JFrame{
 			}
 		});
 	}
+
 //TODO terminar isto
 	/**
 	 * Este método permite selecionar um ficheiro do nosso computador e, de seguida, lê o seu conteúdo e mostra todas as
@@ -262,18 +263,23 @@ public class SelectUcs extends JFrame{
 
 
 	/**
-	 * Realiza as ações de quando o backButton é clicado
+	 * Performs the actions when the backButton is clicked
 	 */
 	private void backButtonClicked() {
-        if (this.isVisible()) {
-            dispose();
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.setVisible(true);
+		if (this.isVisible()) {
+			dispose();
+			MainMenu mainMenu = new MainMenu();
+			mainMenu.setVisible(true);
 			File file = new File("horarioPessoal.json");
 			if(file.exists() && !showScheduleButton.isVisible()){
-				file.delete();
+				boolean fileDeleted = file.delete();
+				if (fileDeleted) {
+					System.out.println("File deleted successfully");
+				} else {
+					System.out.println("Failed to delete file");
+				}
 			}
-        }
-    }
+		}
+	}
 }
 

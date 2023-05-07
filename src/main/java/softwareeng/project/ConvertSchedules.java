@@ -7,19 +7,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Classe responsavel por converter os horarios de ics para json, ics para csv, json para csv e csv para json
+ * Class responsible for converting ICS to JSON, ICS to CSV, JSON to CSV, and CSV to JSON
  */
-
-
 public class ConvertSchedules extends JFrame {
     private JButton csvToJsonButton;
     private JButton jsonToCsvButton;
@@ -33,22 +29,21 @@ public class ConvertSchedules extends JFrame {
         super("Convert Schedules");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        ImageIcon icon = new ImageIcon("icons/semana.png");
+        ImageIcon icon = new ImageIcon("icons/week.png");
         Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         setIconImage(scaledIcon.getImage());
 
-        // Set the look and feel
+        // This piece of code is used to set the UI's look and feel to the systems default
+        // making it look more modern and updated.
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            LOGGER.log(Level.WARNING, "Failed to set look and feel", ex);
+            LOGGER.log(Level.SEVERE, "Failed to set the look and feel", ex);
         }
 
-        // Set the size of the JFrame
-        setSize(500, 200);
 
-        // Set the layout and add components
+        setSize(500, 200);
         setLayout(new GridLayout(3, 1));
         initComponents();
         layoutComponents();
@@ -65,13 +60,13 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
-     * metodo responsavel pela criaçao dos componentes nomeadamente os botoes
+     * Method responsible for initializing the UI components
      */
     private void initComponents() {
-        csvToJsonButton = new JButton("CSV to Json");
-        jsonToCsvButton = new JButton("Json to CSV");
-        icsToJsonButton = new JButton("ics to Json");
-        icsToCsvButton = new JButton("ics to CSV");
+        csvToJsonButton = new JButton("CSV to JSON");
+        jsonToCsvButton = new JButton("JSON to CSV");
+        icsToJsonButton = new JButton("ICS to Json");
+        icsToCsvButton = new JButton("ICS to CSV");
         backButton = new JButton();
         backButton.setBorderPainted(false);
         backButton.setFocusPainted(false);
@@ -83,22 +78,22 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
-     * metodo responsavel por localizar os componentes na Jframe
+     * Method responsible for locating the JFrame components
      */
     private void layoutComponents() {
-        // Add the first row of buttons
+        // Adds the first row of buttons
         JPanel rowOnePanel = new JPanel(new GridLayout(1, 2));
         rowOnePanel.add(csvToJsonButton);
         rowOnePanel.add(jsonToCsvButton);
         add(rowOnePanel);
 
-        // Add the second row of buttons
+        // Adds the second row of buttons
         JPanel rowTwoPanel = new JPanel(new GridLayout(1, 2));
         rowTwoPanel.add(icsToJsonButton);
         rowTwoPanel.add(icsToCsvButton);
         add(rowTwoPanel);
 
-        // Add the third row with the back button
+        // Adds the third row with the back button
         JPanel rowThreePanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -110,7 +105,7 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
-     * metodo responsavel por adicionar a cada botao uma determinada açao
+     * Method responsible for adding each action to its button
      */
     private void addListeners() {
         csvToJsonButton.addActionListener(e -> {
@@ -126,16 +121,14 @@ public class ConvertSchedules extends JFrame {
             try {
                 icsToCsvButtonClicked();
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                LOGGER.log(Level.WARNING, "There was a problem when clicking the conversion button: ", ex);
             }
         });
         backButton.addActionListener(e -> backToMainMenu());
     }
 
     /**
-     * metodo responsavel por adicionar a ação de converter um ficheiro csv em json.
-     * @throws CsvValidationException
-     * @throws IOException
+     * Method responsible for adding the action to the conversion of csv to json
      */
     private void csvToJsonButtonClicked() throws CsvValidationException, IOException {
         JFileChooser fileChooser = new JFileChooser();
@@ -147,7 +140,7 @@ public class ConvertSchedules extends JFrame {
             String path = fileChooser.getSelectedFile().getPath();
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile.getName().endsWith(".csv")) {
-                convertCSVToJson(path,"horario.json");
+                convertCSVToJson(path);
             } else {
                 JOptionPane.showMessageDialog(this, "The selected file is not a CSV file.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
                 csvToJsonButtonClicked(); // restart the file chooser
@@ -156,7 +149,7 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
-     * metodo responsavel por adicionar a ação de converter um ficheiro json em csv
+     * Method responsible for adding the action to the conversion of json to csv
      */
 
     private void jsonToCsvButtonClicked() {
@@ -178,8 +171,12 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
+<<<<<<< Updated upstream
      * metodo responsavel por adicionar a ação de converter um ficheiro ics em csv
      * @throws IOException
+=======
+     *  Method responsible for adding the action to the conversion of ics to csv
+>>>>>>> Stashed changes
      */
 
     private void icsToCsvButtonClicked() throws IOException {
@@ -201,9 +198,8 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
-     * metodo responsavel por adicionar a ação de converter um ficheiro ics em json
+     *  Method responsible for adding the action to the conversion of ics to json
      */
-
     private void icsToJsonButtonClicked() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -223,13 +219,11 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
-     * metodo responsavel por adicionar a ação de converter um ficheiro csv em json
-     * @param filelocation
-     * @param nome
+     *  Action to be performed when button "CSV to JSON" clicked
      */
-    private void convertCSVToJson(String filelocation,String nome) {
+    private void convertCSVToJson(String filelocation) {
         CSVToJson csv = new CSVToJson();
-        boolean success = csv.convertCSVToJson(filelocation,nome);
+        boolean success = csv.convertCSVToJson(filelocation, "schedule.json");
         if(success){
             JOptionPane.showMessageDialog(this, "CSV file converted to JSON successfully!");
         } else {
@@ -238,20 +232,18 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
+<<<<<<< Updated upstream
      * metodo responsavel por adicionar a ação de converter um ficheiro ics em csv
      * @param filelocation
+=======
+     *  Action to be performed when button "ics to CSV" clicked
+>>>>>>> Stashed changes
      */
     private void convertIcsToCSV(String filelocation) {
         try {
             IcsToCSV ics = new IcsToCSV(filelocation);
             boolean success = ics.convertFile();
             if(success){
-                BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\carol\\OneDrive\\Ambiente de Trabalho\\rafetelvino@gmail.com.csv"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line); // Imprime cada linha na console
-                }
-                reader.close();
                 JOptionPane.showMessageDialog(this, "ICS file converted to CSV successfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "There was an error converting the ICS file to CSV.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
@@ -263,8 +255,12 @@ public class ConvertSchedules extends JFrame {
 
 
     /**
+<<<<<<< Updated upstream
      * metodo responsavel por adicionar a ação de converter um ficheiro json em csv
      * @param filelocation
+=======
+     *   Action to be performed when button "JSON to CSV" clicked
+>>>>>>> Stashed changes
      */
     private void convertJsonToCSV(String filelocation) {
         try {
@@ -282,7 +278,7 @@ public class ConvertSchedules extends JFrame {
 
 
     /**
-     * metodo responsavel por converter um ficheiro ics em json
+     * Action to be performed when button "ics to JSON" clicked
      */
     private void convertICSToJson(String fileLocation) {
         try {
@@ -290,12 +286,6 @@ public class ConvertSchedules extends JFrame {
 
             boolean success = ics.convertFile();
             if(success){
-                BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\carol\\OneDrive\\Ambiente de Trabalho\\rafetelvino@gmail.com.csv"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line); // Imprime cada linha na console
-                }
-                reader.close();
                 JOptionPane.showMessageDialog(this, "ICS file converted to JSON successfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "There was an error converting the ICS file to JSON.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
@@ -303,14 +293,14 @@ public class ConvertSchedules extends JFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "There was an error converting the ICS file to json: " + e.getMessage(), ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            LOGGER.log(Level.WARNING, "There was a problem when clicking the conversion button: ", e);
         }
 
     }
 
 
     /**
-     * metodo responsavel por permitir ao utilizador que retroceda no menu e volte ao menu principal
+     * Method responsible for allowing the user to go back to main menu
      */
     private void backToMainMenu() {
         MainMenu mainMenu = new MainMenu();

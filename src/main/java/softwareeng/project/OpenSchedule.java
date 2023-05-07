@@ -1,19 +1,15 @@
 package softwareeng.project;
 
 
-import com.opencsv.exceptions.CsvValidationException;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -21,12 +17,7 @@ public class OpenSchedule extends JFrame {
 
     private JButton selectFileButton;
 
-    private Horario h;
-
-    private String filename;
     private JButton backButton;
-
-    private JPanel panel;
 
     private static final Logger LOGGER = Logger.getLogger("OpenSchedule");
 
@@ -37,7 +28,7 @@ public class OpenSchedule extends JFrame {
         super("Open Schedule");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        ImageIcon icon = new ImageIcon("icons/semana.png");
+        ImageIcon icon = new ImageIcon("icons/week.png");
         Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         setIconImage(scaledIcon.getImage());
@@ -45,9 +36,8 @@ public class OpenSchedule extends JFrame {
         // Set the look and feel
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            LOGGER.log(Level.SEVERE, "Failed to set the look and feel", ex);
         }
 
         setSize(350, 150);
@@ -104,19 +94,14 @@ public class OpenSchedule extends JFrame {
     }
 
     private void addListeners() {
-
-        selectFileButton.addActionListener(e -> {
-            try {
-                selectFileButtonClicked();
-            } catch (CsvValidationException | IOException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        selectFileButton.addActionListener(e -> selectFileButtonClicked());
         backButton.addActionListener(e -> backToMainMenu());
     }
 
 
-    private void selectFileButtonClicked() throws CsvValidationException, IOException {
+    private void selectFileButtonClicked() {
+        String filename;
+        Horario h;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -129,14 +114,13 @@ public class OpenSchedule extends JFrame {
 
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            String path = fileChooser.getSelectedFile().getPath();
+
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile.getName().endsWith(".csv") || selectedFile.getName().endsWith(".json")) {
                 selectFileButton.setVisible(false);
                 filename = selectedFile.getName();
                 h = new Horario(filename);
                 h.getWeek(selectedFile.getName(), 1);
-                //Exibir horário
 
                 List<Session> session = h.converFileToArray("horarioSemana.json");
 
@@ -164,6 +148,10 @@ public class OpenSchedule extends JFrame {
 
                 JScrollPane sp = new JScrollPane(table);
                 add(sp);
+                JPanel panel = new JPanel(); // declare panel as a local variable
+                JTextField textField = new JTextField(session.get(0).toString()); // Temporário
+                panel.add(textField);
+                add(panel);
 
                 int numberWeeks = h.countWeeks(filename);
                 JPanel buttonPanel = new JPanel();
@@ -180,17 +168,27 @@ public class OpenSchedule extends JFrame {
                                 Object dados[][] = getTable(rows,columns,session);
                                 tableModel.setDataVector(dados,columns);
                             }
+                    button.addActionListener(e -> {
+                        String buttonText = button.getText();
+                        h.getWeek(filename, Integer.parseInt(buttonText));
+                        List<Session> session1 = h.converFileToArray("horarioSemana.json");
+                        if (session1.isEmpty()) {
+                            JOptionPane.showMessageDialog(buttonPanel, "Não possui aulas marcadas nessa semana");
+                        } else {
+                            textField.setText(session1.get(0).toString());
                         }
                     });
                     buttonPanel.add(button);
                 }
-                add(buttonPanel, BorderLayout.SOUTH);
+                add(buttonPanel);
+                revalidate();
+                repaint();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid file type selected", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
             }
-
         }
 
     }
-
 
     private Object[][] getTable(String[] rows, String[] columns, List<Session> session) {
         Object[][] data = new Object[rows.length][columns.length];
@@ -266,8 +264,7 @@ public class OpenSchedule extends JFrame {
 
         return data;
     }
-
-
+    
     private void backToMainMenu() {
         MainMenu mainMenu = new MainMenu();
         mainMenu.setVisible(true);

@@ -7,14 +7,10 @@ p
 @src/test/java/ES_Projeto_GrupoA_2023/projetoES/MainMenuTest.java,3\4\34cd05c183a64cc62b5f6257263fd242dd193a6c
 k
 ;src/test/java/ES_Projeto_GrupoA_2023/projetoES/WebTest.java,1\9\194e251ef5b962c95ff671732b66a8e13086cbb8
-v
-Fsrc/test/java/ES_Projeto_GrupoA_2023/projetoES/FileDownloaderTest.java,8\2\820bdede61c2eb4cea6eb4671506c15129af744f
 `
 0src/main/java/softwareeng/project/CSVToJson.java,9\9\99dfeba7b011ac027ab1bcb473f43c05cb14e406
 q
 Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/JSonToCSVTest.java,c\5\c584f10a19b38295d0b818ff210832570dd02fae
-`
-0src/main/java/softwareeng/project/JSonToCSV.java,5\f\5f49f868f3976e746e944bea3292dd538419cd3e
 o
 ?src/test/java/ES_Projeto_GrupoA_2023/projetoES/SessionTest.java,5\7\57cca3dd566a738df75ba0172500fb0b89f2dc37
 q
@@ -23,3 +19,11 @@ o
 ?src/test/java/ES_Projeto_GrupoA_2023/projetoES/HorarioTest.java,a\0\a05d10fb56408a5fb5c514e941ee692793a8a386
 A
 src/site/site.xml,3\1\31b5075d1ae9311bee2f6b569b57251f9bdfc024
+`
+0src/main/java/softwareeng/project/JSonToCSV.java,5\f\5f49f868f3976e746e944bea3292dd538419cd3e
+J
+rafetelvino@gmail.com.json,d\0\d05b6e783dabfc8ef85ef00c55d2cc1719b667da
+g
+7src/main/java/softwareeng/project/ConvertSchedules.java,8\d\8d6d621e403cfd1113fc62490df6e256ede1e47a
+`
+0src/main/java/softwareeng/project/SelectUcs.java,5\5\552b2407dd03027b46e2f82ef5a508f368805183
