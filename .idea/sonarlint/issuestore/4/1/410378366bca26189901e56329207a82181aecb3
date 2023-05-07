@@ -1,0 +1,38 @@
+
+g	java:S112w"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8¯ô‡»ÿ0
+h	java:S112Š"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8°ô‡»ÿ0
+q
+java:S1192="ODefine a constant instead of duplicating this literal "outputTemp.csv" 3 times.(•ãÄ³øÿÿÿÿ8±ô‡»ÿ0
+h
+java:S1192À"JDefine a constant instead of duplicating this literal "LOCATION:" 3 times.(½ªÛ¬8±ô‡»ÿ0
+o
+java:S2095Ð"LUse try-with-resources or close this "BufferedWriter" in a "finally" clause.(–§¯¾ÿÿÿÿÿ8ÉÍÀ¼ÿ0
+j
+java:S2095="HUse try-with-resources or close this "CSVPrinter" in a "finally" clause.(•ãÄ³øÿÿÿÿ8Ñõ‡»ÿ0
+O
+java:S1135"2Complete the task associated to this TODO comment.(Ê»Á8Òõ‡»ÿ0
+Z	java:S106'"9Replace this use of System.out or System.err by a logger.(¸ï¤üÿÿÿÿ8Øõ‡»ÿ0
+Z	java:S106)"9Replace this use of System.out or System.err by a logger.(®”¼¡üÿÿÿÿ8Øõ‡»ÿ0
+Z	java:S106+"9Replace this use of System.out or System.err by a logger.(Ðô«µûÿÿÿÿ8Ùõ‡»ÿ0
+\
+java:S6213>":Rename this variable to not match a restricted identifier.(ê¯Ò÷þÿÿÿÿ8Ýõ‡»ÿ0
+n
+java:S1871J"LThis branch's code block is the same as the block for the branch on line 72.(ã‚¾£üÿÿÿÿ8àõ‡»ÿ0
+n
+java:S1871L"LThis branch's code block is the same as the block for the branch on line 72.(ã‚¾£üÿÿÿÿ8ßõ‡»ÿ0
+p
+java:S4042T"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(¦ë’Ìúÿÿÿÿ8äõ‡»ÿ0
+T	java:S106V"9Replace this use of System.out or System.err by a logger.(‚»åo8äõ‡»ÿ0
+U	java:S106X"9Replace this use of System.out or System.err by a logger.(Ë¥ä˜8äõ‡»ÿ0
+e
+java:S5361_"HReplace this call to "replaceAll()" by a call to the "replace()" method.(È¦‚©8æõ‡»ÿ0
+Z	java:S106l"9Replace this use of System.out or System.err by a logger.(ú·ôªýÿÿÿÿ8çõ‡»ÿ0
+]	java:S125r"<This block of commented-out lines of code should be removed.(¿‹±òýÿÿÿÿ8éõ‡»ÿ0
+U	java:S106{"9Replace this use of System.out or System.err by a logger.(üÔø£8ëõ‡»ÿ0
+U	java:S106|"9Replace this use of System.out or System.err by a logger.(Ï®§¡8ëõ‡»ÿ0
+R
+java:S1874½"/Remove this use of "getYear"; it is deprecated.(¬«ÁÍüÿÿÿÿ8öõ‡»ÿ0
+R
+java:S1874¾"/Remove this use of "getDate"; it is deprecated.(¢ðÆÖþÿÿÿÿ8÷õ‡»ÿ0
+S
+java:S1874¾"0Remove this use of "getMonth"; it is deprecated.(¢ðÆÖþÿÿÿÿ8÷õ‡»ÿ0

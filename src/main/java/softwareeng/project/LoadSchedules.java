@@ -65,10 +65,9 @@ public class LoadSchedules extends JFrame {
             String s = url.replace(WEB_CAL, "https");
             try {
                 URL u = new URL(s);
-                web.ReadWeb(u);
+                web.readWeb(u);
                 //ALTEREI AQUI
-                web.URLToList(u);
-                web.URLToList(u);
+                web.urlTolist(u);
             } catch (MalformedURLException ex) {
                 LOGGER.log(Level.SEVERE, "MaformedURLException occurred", ex);
             } catch (IOException ex) {
@@ -77,8 +76,8 @@ public class LoadSchedules extends JFrame {
         } else {
             try {
                 URL u = new URL(url);
-                web.ReadWeb(u);
-                web.URLToList(u);
+                web.readWeb(u);
+                web.urlTolist(u);
             } catch (MalformedURLException ex) {
                 LOGGER.log(Level.SEVERE, EXCEPTION, ex);
             } catch (IOException ex) {
@@ -98,7 +97,7 @@ public class LoadSchedules extends JFrame {
             String s = url.replace(WEB_CAL, "https");
             try {
                 URL u = new URL(s);
-                web.ReadWeb(u);
+                web.readWeb(u);
                 web.downloadWebContent(u);
             } catch (Exception ex) { // Combinação de catch para MalformedURLException e IOException
                 LOGGER.log(Level.SEVERE, EXCEPTION, ex);
@@ -106,7 +105,7 @@ public class LoadSchedules extends JFrame {
         } else {
             try {
                 URL u = new URL(url);
-                web.ReadWeb(u);
+                web.readWeb(u);
                 web.downloadWebContent(u);
             } catch (Exception ex) { // Combinação de catch para MalformedURLException e IOException
                 LOGGER.log(Level.SEVERE, EXCEPTION, ex);

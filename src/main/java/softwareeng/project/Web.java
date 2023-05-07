@@ -32,7 +32,7 @@ public class Web {
 	*Lê o conteúdo da página da URL fornecida e imprime uma mensagem de sucesso se a leitura for bem sucedida.
 	*@param url a URL da página a ser lida
 	*/
-	public void ReadWeb(URL url) {
+	public void readWeb(URL url) {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 			in.close();
@@ -49,11 +49,8 @@ public class Web {
 	 * @param url objeto URL contendo o endereço a ser lido
 	 * @throws IOException se houver algum erro de I/O durante a leitura da URL
 	 */
-	public String URLToList(URL url) throws IOException {
-
-
+	public String urlTolist(URL url) throws IOException {
 		URLConnection connection = url.openConnection();
-		//lê cada linha
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		//para analisar o conteúdo CSV e criar uma lista de objetos
 		CSVParser parser = CSVFormat.DEFAULT.parse(in);
@@ -97,8 +94,7 @@ public class Web {
 		String s1 = stringBuilder.toString();
 		String info = s1.replaceAll( "\"\" ", "");
 
-		StringTOJson(info);
-
+		stringToJson(info);
 
 		return info;
 	}
@@ -108,13 +104,13 @@ public class Web {
 	*Converte uma String no formato de horário em JSON.
 	*@param fileContent a String a ser convertida em JSON.
 	*/
-	public void StringTOJson(String fileContent) {
+	public void stringToJson(String fileContent) {
 		System.out.println("teste1");
 
 		String[] subString1 = fileContent.split("SUMMARY:");
 		List<Session> array = new ArrayList<>();
 		for(String s : subString1){
-			if(!(s.startsWith("Exame:") || s.startsWith("Teste:") || s.startsWith("Avaliação Contínua:") || s.indexOf("-") == -1)){
+			if(!(s.startsWith("Exame:") || s.startsWith("Teste:") || s.startsWith("Avaliação Contínua:") || !s.contains("-"))){
 				//System.out.println(s);
 				try {
 					Session session = createSession(s);
@@ -134,8 +130,8 @@ public class Web {
 	*@param fileContent String contendo o conteúdo do arquivo Horario a ser convertido.
 	*@throws RuntimeException caso ocorra um erro durante a conversão.
 	*/
-	public void StringToCsv(String fileContent){
-		StringTOJson(fileContent);
+	public void stringToCsv(String fileContent){
+		stringToJson(fileContent);
 		try {
 			new JSonToCSV("horario.json");
 		} catch (IOException e) {
@@ -169,16 +165,24 @@ public class Web {
 		switch (numDiaSemana){
 			case 2:
 				diaSemana = "Seg";
+				break;
 			case 3:
 				diaSemana = "Ter";
+				break;
 			case 4:
 				diaSemana = "Qua";
+				break;
 			case 5:
 				diaSemana = "Qui";
+				break;
 			case 6:
 				diaSemana = "Sex";
+				break;
 			case 7:
 				diaSemana = "Sab";
+				break;
+			default:
+				break;
 		}
 		String horaInicio = subString2[1];
 		String horaFim = subString3[1];
@@ -191,16 +195,6 @@ public class Web {
 		int lotacao = 0;
 
 		return new Session(curso, uc, turno, turma, inscritos, diaSemana, horaInicio+":00", horaFim+":00", dataAula.replace('-','/'), salaAtribuida, lotacao);
-	}
-
-
-
-	public void URLToCSV(URL url) throws IOException{
-
-	}
-
-	public void URLToJson(URL url) throws IOException {
-
 	}
 
 	/**
