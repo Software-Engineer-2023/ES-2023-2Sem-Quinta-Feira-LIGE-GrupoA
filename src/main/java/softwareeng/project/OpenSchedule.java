@@ -1,10 +1,12 @@
 package softwareeng.project;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.exceptions.CsvValidationException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +34,7 @@ public class OpenSchedule extends JFrame {
     private static final String ERROR_MESSAGE = "Error";
 
 
-    public OpenSchedule(){
+    public OpenSchedule() {
         super("Open Schedule");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -44,7 +46,8 @@ public class OpenSchedule extends JFrame {
         // Set the look and feel
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
 
@@ -67,7 +70,7 @@ public class OpenSchedule extends JFrame {
         });
     }
 
-    private void  initComponents(){
+    private void initComponents() {
         int buttonSize = 48;
         selectFileButton = new JButton("Convert your File");
         selectFileButton.setBorderPainted(false);
@@ -75,7 +78,8 @@ public class OpenSchedule extends JFrame {
         selectFileButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         selectFileButton.setIcon(new ImageIcon(new ImageIcon("icons/convertHorario.png")
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
-        backButton = new JButton();        backButton.setBorderPainted(false);
+        backButton = new JButton();
+        backButton.setBorderPainted(false);
         backButton.setFocusPainted(false);
         backButton.setBackground(new Color(0, 0, 0, 0)); // Set transparent background
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -135,39 +139,111 @@ public class OpenSchedule extends JFrame {
                 h.getWeek(selectedFile.getName(), 1);
                 //Exibir horário
 
-                List<Session> session = h.converFileToArray("horarioSemana.json");
+                List<Session> session = h.converFileToArray(filename);
 
-
-
+                JFrame test = new JFrame("Schedule");
                 panel = new JPanel();
-                JTextField textField = new JTextField(session.get(0).toString()); // Temporário
-                panel.add(textField);
-                add(panel);
+                String[] columns = {"Horas", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
+                String[] rows = {"08:00-09:30", "09:30-11:00", "11:00-12:30", "13:00-14:30", "14:30-16:00", "16:00-17:30", "18:00-19:30", "19:30-21:00", "21:00-22:30"};
 
-
-                int numberWeeks = h.countWeeks(filename);
-                JPanel buttonPanel = new JPanel();
-                for (int count = 1; count <= numberWeeks; count++) {
-                    JButton button = new JButton(Integer.toString(count));
-                    button.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            String buttonText = button.getText();
-                            h.getWeek(filename, Integer.parseInt(buttonText));
-                            List<Session> session = h.converFileToArray("horarioSemana.json");
-                            if (session.isEmpty()) {
-                                JOptionPane.showMessageDialog(buttonPanel, "Não possui aulas marcadas nessa semana");
-                            } else {
-                                textField.setText(session.get(0).toString());
-                            }
-                        }
-                    });
-                    buttonPanel.add(button);
+                Object[][] data = new Object[rows.length][columns.length];
+                for(int i = 0; i < rows.length; i++){
+                    data[i][0] = rows[i];
                 }
-                add(buttonPanel, BorderLayout.SOUTH);
-            }
+                int linha = 0;
+                int coluna =0;
+                for(Session s : session){
+                    String horaI = s.getHoraInicio();
+                    String dia = s.getDiaSemana();
+                    switch (horaI){
+                        case "08:00:00":
+                            linha = 0;
+                            break;
+                        case "09:30:00":
+                            linha = 1;
+                            break;
+                        case "11:00:00":
+                            linha = 2;
+                            break;
+                        case "13:00:00":
+                            linha = 3;
+                            break;
+                        case "14:30:00":
+                            linha = 4;
+                            break;
+                        case "16:00:00":
+                            linha = 5;
+                            break;
+                        case "18:00:00":
+                            linha = 6;
+                            break;
+                        case "19:30:00":
+                            linha = 7;
+                            break;
+                        case "21:00:00":
+                            linha = 8;
+                            break;
+                    }
+                    switch (dia){
+                        case "Seg":
+                            coluna = 1;
+                            break;
+                        case "Ter":
+                            coluna = 2;
+                            break;
+                        case "Qua":
+                            coluna = 3;
+                            break;
+                        case "Qui":
+                            coluna = 4;
+                            break;
+                        case "Sex":
+                            coluna = 5;
+                            break;
+                        case "Sáb":
+                            coluna = 6;
+                            break;
+                    }
 
+                    if(data[linha][coluna] != null){
+                        String a = (String) data[linha][coluna];
+                        data[linha][coluna] = a + "\n" + s.getUc();
+                        System.out.println(data[linha][coluna]);
+                    }else{
+                        data[linha][coluna] = s.getUc();
+                    }
+
+
+                }
+                JTable table = new JTable(data, columns);
+                JScrollPane sp = new JScrollPane(table);
+                test.add(sp);
+                test.setVisible(true);
+
+            int numberWeeks = h.countWeeks(filename);
+            JPanel buttonPanel = new JPanel();
+            for (int count = 1; count <= numberWeeks; count++) {
+                JButton button = new JButton(Integer.toString(count));
+                button.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        String buttonText = button.getText();
+                        h.getWeek(filename, Integer.parseInt(buttonText));
+                        List<Session> session = h.converFileToArray("horarioSemana.json");
+                        if (session.isEmpty()) {
+                            JOptionPane.showMessageDialog(buttonPanel, "Não possui aulas marcadas nessa semana");
+                        } else {
+
+                        }
+                    }
+                });
+                buttonPanel.add(button);
+            }
+            add(buttonPanel, BorderLayout.SOUTH);
         }
+
     }
+
+}
 
 
 

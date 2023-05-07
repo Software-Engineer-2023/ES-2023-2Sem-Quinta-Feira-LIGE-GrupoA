@@ -165,16 +165,22 @@ public class Web {
 		switch (numDiaSemana){
 			case 2:
 				diaSemana = "Seg";
+				break;
 			case 3:
 				diaSemana = "Ter";
+				break;
 			case 4:
 				diaSemana = "Qua";
+				break;
 			case 5:
 				diaSemana = "Qui";
+				break;
 			case 6:
 				diaSemana = "Sex";
+				break;
 			case 7:
-				diaSemana = "Sab";
+				diaSemana = "Sáb";
+				break;
 		}
 		String horaInicio = subString2[1];
 		String horaFim = subString3[1];

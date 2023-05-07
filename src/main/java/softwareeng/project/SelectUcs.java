@@ -43,7 +43,7 @@ public class SelectUcs extends JFrame{
 	 * Define o tamanho da JFrame e inicializa os outros componentes
 	 */
 	public SelectUcs() {
-    	super("Schedule PLUS");
+    	super("Select Ucs");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 		ImageIcon icon = new ImageIcon("icons/semana.png");
 		Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
@@ -238,8 +238,8 @@ public class SelectUcs extends JFrame{
 	private void showScheduleButton(){
 		if(this.isVisible()){
 			dispose();
-			LoadSchedules loadSchedules = new LoadSchedules();
-			loadSchedules.setVisible(true);
+			OpenSchedule openSchedule = new OpenSchedule();
+			openSchedule.setVisible(true);
 		}
 
 	}
