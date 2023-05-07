@@ -105,8 +105,9 @@ public class Web {
 				}
 			}
 		}
+		System.out.println("Tamanho do session " + array.size());
 		System.out.println("teste2");
-		new CSVToJson().convertArrayToJson(array,fileContent);
+		new CSVToJson().convertArrayToJson(array,"horarioWebcall.json");
 	}
 
 	public void StringToCsv(String fileContent){
@@ -130,7 +131,7 @@ public class Web {
 		String[] subString2 = temp1.split(" ");
 		String[] subString3 = temp2.split(" ");
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = sdf.parse(subString2[0]);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -152,14 +153,15 @@ public class Web {
 		}
 		String horaInicio = subString2[1];
 		String horaFim = subString3[1];
-		String dataAula =subString2[0];
+		int year = date.getYear() + 1900;
+		String dataAula =date.getDate() + "/" + date.getMonth() + "/" + year;
 		String salaAtribuida = "";
 		if(!s.endsWith("LOCATION:")){
 			 salaAtribuida =  s.substring(s.indexOf("LOCATION:") + 9, s.indexOf("\\,", s.indexOf("LOCATION:") + 9));
 		}
 		int lotacao = 0;
 
-		return new Session(curso, uc, turno, turma, inscritos, diaSemana, horaInicio, horaFim, dataAula, salaAtribuida, lotacao);
+		return new Session(curso, uc, turno, turma, inscritos, diaSemana, horaInicio+":00", horaFim+":00", dataAula.replace('-','/'), salaAtribuida, lotacao);
 	}
 
 

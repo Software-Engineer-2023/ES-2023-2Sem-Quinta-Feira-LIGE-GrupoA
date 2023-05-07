@@ -23,6 +23,11 @@ public class LoadSchedules extends JFrame {
         super("Schedule PLUS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        ImageIcon icon = new ImageIcon("icons/schedule.png");
+        Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        setIconImage(scaledIcon.getImage());
+
         // Set the look and feel
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -101,55 +106,47 @@ public class LoadSchedules extends JFrame {
 
 
     private void initComponents() {
-
+        int buttonSize = 48;
         backButton = new JButton();
         insertSaveButton = new JButton("Insert & Save");
         insertConvertButton = new JButton("Insert & Convert");
+
+        insertSaveButton.setBorderPainted(false);
+        insertSaveButton.setFocusPainted(false);
+        insertSaveButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        insertSaveButton.setIcon(new ImageIcon(new ImageIcon("icons/save.png")
+                .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
+
+        insertConvertButton.setBorderPainted(false);
+        insertConvertButton.setFocusPainted(false);
+        insertConvertButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        insertConvertButton.setIcon(new ImageIcon(new ImageIcon("icons/convert.png")
+                .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
+
         backButton.setBorderPainted(false);
         backButton.setFocusPainted(false);
         backButton.setBackground(new Color(0, 0, 0, 0)); // Set transparent background
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        int buttonSize = 48;
         backButton.setIcon(new ImageIcon(new ImageIcon("icons/back.png")
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
-        JPanel buttonPanel = new JPanel(new GridBagLayout()); // Create panel for button
+    }
+
+    private void layoutComponents() {
+        // Add the first row of buttons
+        JPanel rowOnePanel = new JPanel(new GridLayout(1, 2));
+        rowOnePanel.add(insertSaveButton);
+        rowOnePanel.add(insertConvertButton);
+        add(rowOnePanel);
+
+        // Add the third row with the back button
+        JPanel rowThreePanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        buttonPanel.add(backButton, gbc);
-        buttonPanel.add(insertSaveButton, gbc);
-        buttonPanel.add(insertConvertButton, gbc);
-        add(buttonPanel);
-
-    }
-
-    private void layoutComponents() {
-        // Use a Box layout instead of a GridLayout
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
-        // Add the location label and text field to the first panel
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-        topPanel.add(Box.createHorizontalGlue());
-
-        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-
-        topPanel.add(Box.createHorizontalGlue());
-        add(topPanel);
-
-        // Add the button panel to the second panel
-        JPanel middlePanel = new JPanel();
-        middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.X_AXIS));
-        middlePanel.add(Box.createHorizontalGlue());
-        middlePanel.add(backButton);
-        middlePanel.add(Box.createHorizontalGlue());
-        middlePanel.add(insertSaveButton);
-        middlePanel.add(Box.createHorizontalGlue());
-        middlePanel.add(insertConvertButton);
-        middlePanel.add(Box.createHorizontalGlue());
-        add(middlePanel);
+        rowThreePanel.add(backButton, gbc);
+        add(rowThreePanel);
     }
 
 
