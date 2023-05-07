@@ -1,15 +1,0 @@
-
-?
-java:S1604™"(Make this anonymous inner class a lambda(Èú†
-j
-java:S1450"TRemove the "panel" field and declare it as a local variable in the relevant methods.(›Ã¶‰
-9
-java:S1948"#Make "h" transient or serializable.(ëÖæÛ
-O
-java:S1854‚"8Remove this useless assignment to local variable "path".(ú¯‡İ
-¢
-java:S1130u"†Remove the declaration of thrown exception 'com.opencsv.exceptions.CsvValidationException', as it cannot be thrown from method's body.(Ó®Å´úÿÿÿÿ
-‡
-java:S1130u"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(Ó®Å´úÿÿÿÿ
-@
-java:S1481‚")Remove this unused "path" local variable.(ú¯‡İ

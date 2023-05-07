@@ -1,17 +1,12 @@
 package softwareeng.project;
 
 
-import com.opencsv.exceptions.CsvValidationException;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,12 +16,10 @@ public class OpenSchedule extends JFrame {
 
     private JButton selectFileButton;
 
-    private Horario h;
+    private transient Horario h;
 
     private String filename;
     private JButton backButton;
-
-    private JPanel panel;
 
     private static final Logger LOGGER = Logger.getLogger("OpenSchedule");
 
@@ -102,19 +95,12 @@ public class OpenSchedule extends JFrame {
     }
 
     private void addListeners() {
-
-        selectFileButton.addActionListener(e -> {
-            try {
-                selectFileButtonClicked();
-            } catch (CsvValidationException | IOException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        selectFileButton.addActionListener(e -> selectFileButtonClicked());
         backButton.addActionListener(e -> backToMainMenu());
     }
 
 
-    private void selectFileButtonClicked() throws CsvValidationException, IOException {
+    private void selectFileButtonClicked() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -127,7 +113,7 @@ public class OpenSchedule extends JFrame {
 
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            String path = fileChooser.getSelectedFile().getPath();
+
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile.getName().endsWith(".csv") || selectedFile.getName().endsWith(".json")) {
                 selectFileButton.setVisible(false);
@@ -138,40 +124,35 @@ public class OpenSchedule extends JFrame {
 
                 List<Session> session = h.converFileToArray("horarioSemana.json");
 
-
-
-                panel = new JPanel();
+                JPanel panel = new JPanel(); // declare panel as a local variable
                 JTextField textField = new JTextField(session.get(0).toString()); // Temporário
                 panel.add(textField);
                 add(panel);
-
 
                 int numberWeeks = h.countWeeks(filename);
                 JPanel buttonPanel = new JPanel();
                 for (int count = 1; count <= numberWeeks; count++) {
                     JButton button = new JButton(Integer.toString(count));
-                    button.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            String buttonText = button.getText();
-                            h.getWeek(filename, Integer.parseInt(buttonText));
-                            List<Session> session = h.converFileToArray("horarioSemana.json");
-                            if (session.isEmpty()) {
-                                JOptionPane.showMessageDialog(buttonPanel, "Não possui aulas marcadas nessa semana");
-                            } else {
-                                textField.setText(session.get(0).toString());
-                            }
+                    button.addActionListener(e -> {
+                        String buttonText = button.getText();
+                        h.getWeek(filename, Integer.parseInt(buttonText));
+                        List<Session> session1 = h.converFileToArray("horarioSemana.json");
+                        if (session1.isEmpty()) {
+                            JOptionPane.showMessageDialog(buttonPanel, "Não possui aulas marcadas nessa semana");
+                        } else {
+                            textField.setText(session1.get(0).toString());
                         }
                     });
                     buttonPanel.add(button);
                 }
-                add(buttonPanel, BorderLayout.SOUTH);
+                add(buttonPanel);
+                revalidate();
+                repaint();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid file type selected", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
             }
-
         }
     }
-
-
-
 
     private void backToMainMenu() {
         MainMenu mainMenu = new MainMenu();
