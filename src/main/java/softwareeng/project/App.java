@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 /**
  * Esta classe é a classe que executa uma interface gráfica do usuário para seleção e conversão de horários.
  */
- 
 
 public class App {
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());

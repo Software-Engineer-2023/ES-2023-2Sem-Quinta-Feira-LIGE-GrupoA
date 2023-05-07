@@ -257,7 +257,6 @@ public class LoadSchedules extends JFrame {
         });
     }
 
-
     /**
      *Método responsável por fechar a janela atual e exibir a janela do Menu Principal quando o botão "backButton" é clicado.
      */

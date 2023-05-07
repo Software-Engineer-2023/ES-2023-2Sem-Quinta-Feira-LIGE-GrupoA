@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 /**
  * esta classe é responsavel por converter um ficheiro Json em Csv
  */
-
 public class JSonToCSV{
 
     private final Iterator<JsonNode> elements;

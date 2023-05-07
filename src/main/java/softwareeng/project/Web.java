@@ -138,7 +138,6 @@ public class Web {
 		}
 	}
 
-
 	/**
 	 * Método que cria um objeto Session a partir da String de entrada.
 	 * @param s String contendo as informações da aula
