@@ -83,53 +83,6 @@ public class Horario {
         CSVToJson csv = new CSVToJson();
         csv.convertArrayToJson(s, "horarioSemana.json");
     }
-
-    /**
-     * Método que começa por passar um ficheiro para list
-     * De seguida, pega nessa list e vai analisar as datas de início de aulas, caso sejam diferentes
-     * cria uma nova entry no map, caso sejam iguais adiciona ao map essa mesma aula.
-     * No final devolve o map com as entrys que possuem a List associada com size() superior a 1, ou seja,
-     * há mais de uma aula com o mesmo horário
-     * @param path caminho para um ficheiro
-     * @return map que contém as aulas sobrepostas
-     */
-    public Map<Date, List<Session>> getOverlappingSessions(String path) {
-        Map<Date, List<Session>> map = new HashMap<>();
-        List<Session> list = converFileToArray(path);
-        for (Session sessao : list) {
-            Date data = sessao.getDate();
-            if (!map.containsKey(data)) {
-                map.put(data, new ArrayList<>());
-            }
-            map.get(data).add(sessao);
-        }
-        Iterator<Map.Entry<Date, List<Session>>> iter = map.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry<Date, List<Session>> entry = iter.next();
-            if (entry.getValue().size() == 1) {
-                iter.remove();
-            }
-        }
-        return map;
-    }
-
-
-    public Map<Date, List<Session>> getSessionsMap(List<Session> list){
-
-        Map<Date,List<Session>> map = new HashMap<>();
-        for (Session sessao : list) {
-            Date data = sessao.getDate();
-            if (!map.containsKey(data)) {
-                map.put(data, new ArrayList<>());
-            }
-            map.get(data).add(sessao);
-        }
-        return map;
-    }
-
-
-
-
     /**
      * Devolve uma lista das Ucs que estão no horário
      * @return ucs que é uma lista com todas as ucs de um horario

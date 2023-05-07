@@ -23,34 +23,13 @@ class HorarioTest {
 
     @Test
     void getWeek() {
-        horario.getWeek("data.csv", 2);
+        horario.getWeek("dataTest.csv", 2);
         File file = new File("horarioSemana.json");
         assertTrue(file.exists());
         List<Session> session = convertJsonToArray(file.getName());
         assertEquals("MM", session.get(0).getCurso());
 
     }
-
-    @Test
-    void getOverlappingSessions() {
-        Map<Date, List<Session>> map = horario.getOverlappingSessions("horarioSemana.json");
-        String dateString = "Fri Sep 09 17:30:00 WEST 2022";
-        DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
-        Date date = null;
-        try {
-            date = format.parse(dateString);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        assertTrue(map.containsKey(date));
-
-
-
-
-    }
-
     @Test
     void getUCsFromHorario() {
 
@@ -61,9 +40,9 @@ class HorarioTest {
 
     @Test
     void convertFileToArray() {
-        List<Session> s = horario.converFileToArray("data.csv");
+        List<Session> s = horario.converFileToArray("dataTest.csv");
         assertEquals("ME", s.get(0).getCurso());
-        assertEquals("Teoria dos Jogos e dos Contratos",s.get(0).getUc());
+        assertEquals("Teoria dos Jogos e dos Contratos",s.get(1).getUc());
         assertEquals("01789TP01", s.get(0).getTurno());
         assertEquals("MEA1", s.get(0).getTurma());
 
