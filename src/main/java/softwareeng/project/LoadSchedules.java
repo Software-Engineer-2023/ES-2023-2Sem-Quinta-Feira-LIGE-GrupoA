@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 */
 public class LoadSchedules extends JFrame {
 
+    private static final String EXCEPTION = "Exception occurred";
+
     private JButton backButton;
     private static final String WEB_CAL = "webcal";
     private JButton insertSaveButton;
@@ -56,12 +58,10 @@ public class LoadSchedules extends JFrame {
     /**
      * Converte uma URL para CSV e JSON, se possível.
      * @param url a URL que será convertida
-     * @throws MalformedURLException se a URL fornecida estiver malformada
-     * @throws IOException se ocorrer um erro ao ler ou gravar dados da URL
      */
     public void convertUrl(String url) {
+        Web web = new Web();
         if (url.startsWith(WEB_CAL)) {
-            Web web = new Web();
             String s = url.replace(WEB_CAL, "https");
             try {
                 URL u = new URL(s);
@@ -70,21 +70,19 @@ public class LoadSchedules extends JFrame {
                 web.URLToList(u);
                 web.URLToList(u);
             } catch (MalformedURLException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+                LOGGER.log(Level.SEVERE, "MaformedURLException occurred", ex);
             } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+                LOGGER.log(Level.SEVERE, EXCEPTION, ex);
             }
         } else {
-            Web web = new Web();
             try {
                 URL u = new URL(url);
                 web.ReadWeb(u);
-                //ALTEREI AQUI
                 web.URLToList(u);
             } catch (MalformedURLException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+                LOGGER.log(Level.SEVERE, EXCEPTION, ex);
             } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, "Exception occurred");
+                LOGGER.log(Level.SEVERE, EXCEPTION);
             }
         }
     }
@@ -93,28 +91,25 @@ public class LoadSchedules extends JFrame {
     /**
      *Salva o conteudo do URL para um ficheiro local.
      *@param url O URL para fazer o download e salvar.
-     *@throws MalformedURLException if the URL is malformed
-     *@throws IOException if an I/O error occurs while reading or writing to the file
      */
     public void saveUrl(String url) {
+        Web web = new Web();
         if (url.startsWith(WEB_CAL)) {
-            Web web = new Web();
             String s = url.replace(WEB_CAL, "https");
             try {
                 URL u = new URL(s);
                 web.ReadWeb(u);
                 web.downloadWebContent(u);
             } catch (Exception ex) { // Combinação de catch para MalformedURLException e IOException
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+                LOGGER.log(Level.SEVERE, EXCEPTION, ex);
             }
         } else {
-            Web web = new Web();
             try {
                 URL u = new URL(url);
                 web.ReadWeb(u);
                 web.downloadWebContent(u);
             } catch (Exception ex) { // Combinação de catch para MalformedURLException e IOException
-                LOGGER.log(Level.SEVERE, "Exception occurred", ex);
+                LOGGER.log(Level.SEVERE, EXCEPTION, ex);
             }
         }
     }
@@ -242,15 +237,11 @@ public class LoadSchedules extends JFrame {
 
             // Adiciona a ação dos botões "OK" e "Cancel"
             okButton.addActionListener(e1 -> {
-                // Lógica ao clicar no botão "OK"
                 url = urlTextField.getText();
-                convertFrame.dispose(); // Fecha a janela de conversão
+                convertFrame.dispose();
             });
 
-            cancelButton.addActionListener(e1 -> {
-
-                convertFrame.dispose(); // Fecha a janela de conversão
-            });
+            cancelButton.addActionListener(e1 -> convertFrame.dispose());
         });
     }
 
