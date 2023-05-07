@@ -7,15 +7,10 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.StandardSocketOptions;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.FieldPosition;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,9 +77,13 @@ public class Web {
 			e.printStackTrace();
 		}
 
-		if (new File("outputTemp.csv").delete()) {
-		} else {
+		File file = new File("outputTemp.csv");
 
+		boolean fileDeleted = file.delete();
+		if (fileDeleted) {
+			System.out.println("File deleted successfully");
+		} else {
+			System.out.println("Failed to delete file");
 		}
 
 		StringBuilder stringBuilder = new StringBuilder();
