@@ -33,11 +33,7 @@ public class IcsToJson {
     /**
      This method is responsible for converting an ics file to json. If the conversion is successful, a message will be sent depending on whether the file has already been created or not.
 
-     @return
-     @throws IOException
-     @throws ParseException
      */
-
     public boolean convertFile() throws IOException, ParseException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -47,19 +43,25 @@ public class IcsToJson {
                 if (line.startsWith("BEGIN:VEVENT")) {
                     event = new JsonObject();
                 } else if (line.startsWith("DTSTART")) {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
-                    Date start = format.parse(line.substring(line.indexOf(':') + 1));
-                    event.addProperty("start", start.getTime());
+                    Date start = parseDate(line);
+                    if (event != null) {
+                        event.addProperty("start", start.getTime());
+                    }
                 } else if (line.startsWith("DTEND")) {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
-                    Date end = format.parse(line.substring(line.indexOf(':') + 1));
-                    event.addProperty("end", end.getTime());
+                    Date end = parseDate(line);
+                    if (event != null) {
+                        event.addProperty("end", end.getTime());
+                    }
                 } else if (line.startsWith("SUMMARY")) {
-                    String summary = line.substring(line.indexOf(':') + 1);
-                    event.addProperty("summary", summary);
+                    String summary = parseString(line);
+                    if (event != null) {
+                        event.addProperty("summary", summary);
+                    }
                 } else if (line.startsWith("LOCATION")) {
-                    String location = line.substring(line.indexOf(':') + 1);
-                    event.addProperty("location", location);
+                    String location = parseString(line);
+                    if (event != null) {
+                        event.addProperty("location", location);
+                    }
                 } else if (line.startsWith("END:VEVENT")) {
                     events.add(event);
                     event = null;
@@ -82,8 +84,19 @@ public class IcsToJson {
                 return false;
             }
         } catch (IOException | ParseException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
-            throw e;
+            String message = "Error while converting file: " + e.getMessage();
+            LOGGER.log(Level.SEVERE, message, e);
         }
+        return false;
     }
+
+    private Date parseDate(String line) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
+        return format.parse(line.substring(line.indexOf(':') + 1));
+    }
+
+    private String parseString(String line) {
+        return line.substring(line.indexOf(':') + 1);
+    }
+
 }

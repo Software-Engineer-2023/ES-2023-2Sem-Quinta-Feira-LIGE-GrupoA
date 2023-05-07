@@ -10,7 +10,6 @@ import java.net.URL;
 /**
  * Classe de testes unitários da classe Web
  */
-
 class WebTest {
 
     @Test
