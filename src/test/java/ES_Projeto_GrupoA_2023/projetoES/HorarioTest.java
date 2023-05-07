@@ -61,7 +61,7 @@ class HorarioTest {
 
     @Test
     void convertFileToArray() {
-        List<Session> s = horario.converFileToArray("horario.json");
+        List<Session> s = horario.converFileToArray("data.csv");
         assertEquals("ME", s.get(0).getCurso());
         assertEquals("Teoria dos Jogos e dos Contratos",s.get(0).getUc());
         assertEquals("01789TP01", s.get(0).getTurno());
@@ -87,4 +87,13 @@ class HorarioTest {
         }
 
     }
+
+
+    @Test
+    void countWeeks(){
+        System.out.println(horario.countWeeks("horarioPessoal.json"));
+        assertEquals(5,horario.countWeeks("horarioPessoal123.json"));
+    }
+
+
 }

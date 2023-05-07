@@ -9,14 +9,20 @@ public class MainMenu extends JFrame {
     private final JButton openSchedulesButton;
     private final JButton convertSchedulesButton;
     private final JButton loadSchedulesButton;
-    private final JButton SelectUcsButton;
+    private final JButton selectUcsButton;
+
+    private final JButton weekScheduleButton;
     private static final Logger LOGGER = Logger.getLogger("FileLocationFrame");
 
     public MainMenu() {
         super("Schedule PLUS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // Set the look and feel
+        ImageIcon icon = new ImageIcon("icons/antonio.png");
+        Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        setIconImage(scaledIcon.getImage());
+
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -25,22 +31,26 @@ public class MainMenu extends JFrame {
         openSchedulesButton = new JButton("Open Schedules");
         convertSchedulesButton = new JButton("Convert Schedules");
         loadSchedulesButton = new JButton("Load Schedules");
-        SelectUcsButton = new JButton ("Selecionar UCs");
+        selectUcsButton = new JButton ("Selecionar UCs");
+        weekScheduleButton = new JButton("Horário Semanal");
         
         openSchedulesButton.setBorderPainted(false);
         convertSchedulesButton.setBorderPainted(false);
         loadSchedulesButton.setBorderPainted(false);
-        SelectUcsButton.setBorderPainted(false);
+        selectUcsButton.setBorderPainted(false);
+        weekScheduleButton.setBorderPainted(false);
 
         openSchedulesButton.setFocusPainted(false);
         convertSchedulesButton.setFocusPainted(false);
         loadSchedulesButton.setFocusPainted(false);
-        SelectUcsButton.setFocusPainted(false);
+        selectUcsButton.setFocusPainted(false);
+        weekScheduleButton.setFocusPainted(false);
 
         openSchedulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         convertSchedulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loadSchedulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        SelectUcsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        selectUcsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        weekScheduleButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // Set icons for buttons
         int buttonSize = 48;
@@ -50,25 +60,37 @@ public class MainMenu extends JFrame {
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
         loadSchedulesButton.setIcon(new ImageIcon(new ImageIcon("icons/load.png")
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
-        SelectUcsButton.setIcon(new ImageIcon(new ImageIcon("icons/horario.png")
+        selectUcsButton.setIcon(new ImageIcon(new ImageIcon("icons/horario.png")
+                .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
+        weekScheduleButton.setIcon(new ImageIcon(new ImageIcon("icons/semana.png")
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
 
         // Add action listeners using lambda expressions
         openSchedulesButton.addActionListener(e -> openSchedules());
         convertSchedulesButton.addActionListener(e -> convertSchedules());
         loadSchedulesButton.addActionListener(e -> loadSchedules());
-        SelectUcsButton.addActionListener(e -> SelectUcs());
+        selectUcsButton.addActionListener(e -> SelectUcs());
+        weekScheduleButton.addActionListener(e -> weekSchedule());
 
         JPanel panel = new JPanel();
         panel.add(openSchedulesButton);
         panel.add(convertSchedulesButton);
         panel.add(loadSchedulesButton);
-        panel.add(SelectUcsButton);
+        panel.add(selectUcsButton);
+        panel.add(weekScheduleButton);
 
         getContentPane().add(panel);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private void weekSchedule() {
+        if(this.isVisible()){
+            dispose();
+            WeekSchedule week = new WeekSchedule();
+            week.setVisible(true);
+        }
     }
 
     // Methods for button functionality
@@ -117,7 +139,7 @@ public class MainMenu extends JFrame {
     }
     
     public JButton getSelectUcsButton() {
-        return SelectUcsButton;
+        return selectUcsButton;
     }
 }
 
