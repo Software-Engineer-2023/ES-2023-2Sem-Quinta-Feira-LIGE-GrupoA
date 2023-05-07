@@ -1,6 +1,5 @@
 package softwareeng.project;
 
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -10,7 +9,6 @@ import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public class OpenSchedule extends JFrame {
 
