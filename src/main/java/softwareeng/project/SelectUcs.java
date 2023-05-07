@@ -3,9 +3,6 @@ package softwareeng.project;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +45,10 @@ public class SelectUcs extends JFrame{
 	public SelectUcs() {
     	super("Schedule PLUS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+		ImageIcon icon = new ImageIcon("icons/semana.png");
+		Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
+		ImageIcon scaledIcon = new ImageIcon(scaledImage);
+		setIconImage(scaledIcon.getImage());
         // Set the look and feel
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -236,6 +236,11 @@ public class SelectUcs extends JFrame{
 
 
 	private void showScheduleButton(){
+		if(this.isVisible()){
+			dispose();
+			LoadSchedules loadSchedules = new LoadSchedules();
+			loadSchedules.setVisible(true);
+		}
 
 	}
 

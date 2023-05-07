@@ -22,11 +22,14 @@ public class LoadSchedules extends JFrame {
     JButton okButton1 = new JButton("OK");
     private static final Logger LOGGER = Logger.getLogger("LoadSchedules");
 
+    /**
+     * Construtor da tela LoadSchedules
+     */
     public LoadSchedules() {
         super("Schedule PLUS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        ImageIcon icon = new ImageIcon("icons/schedule.png");
+        ImageIcon icon = new ImageIcon("icons/semana.png");
         Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         setIconImage(scaledIcon.getImage());
@@ -156,13 +159,15 @@ public class LoadSchedules extends JFrame {
         rowOnePanel.add(insertConvertButton);
         add(rowOnePanel);
 
-        // Add the third row with the back button
+// Add the third row with the back button
         JPanel rowThreePanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        rowThreePanel.add(backButton, gbc);
+        add(rowThreePanel);
     }
 
 

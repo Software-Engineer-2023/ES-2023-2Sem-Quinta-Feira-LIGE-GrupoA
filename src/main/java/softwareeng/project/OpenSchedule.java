@@ -17,8 +17,6 @@ import java.util.logging.Logger;
 
 
 public class OpenSchedule extends JFrame {
-    private JButton csvButton;
-    private JButton jsonButton;
 
     private JButton selectFileButton;
 
