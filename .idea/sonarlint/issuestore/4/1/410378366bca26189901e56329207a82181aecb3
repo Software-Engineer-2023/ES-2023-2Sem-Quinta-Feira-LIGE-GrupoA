@@ -1,18 +1,0 @@
-
-n
-java:S20955"LUse try-with-resources or close this "BufferedReader" in a "finally" clause.(×¡Ú¥øÿÿÿÿ8§ş¿òù0
-j
-java:S2095."HUse try-with-resources or close this "CSVPrinter" in a "finally" clause.(äìÆóøÿÿÿÿ8§ş¿òù0
-O
-java:S1135"2Complete the task associated to this TODO comment.(Ê»Á8¨ş¿òù0
-
-java:S1186="€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ûËîã8ªş¿òù0
-j	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×óİ–8¬ş¿òù0
-Z	java:S106"9Replace this use of System.out or System.err by a logger.(¸ï¤üÿÿÿÿ8±ş¿òù0
-Z	java:S106"9Replace this use of System.out or System.err by a logger.(®”¼¡üÿÿÿÿ8±ş¿òù0
-Z	java:S106"9Replace this use of System.out or System.err by a logger.(Ğô«µûÿÿÿÿ8²ş¿òù0
-o	java:S100""NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤àºèşÿÿÿÿ8³ş¿òù0
-\
-java:S6213/":Rename this variable to not match a restricted identifier.(ê¯Ò÷şÿÿÿÿ8¹ş¿òù0
-Z	java:S1068"9Replace this use of System.out or System.err by a logger.(ñ—¸½úÿÿÿÿ8¼ş¿òù0
-j	java:S100="NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûËîã8½ş¿òù0

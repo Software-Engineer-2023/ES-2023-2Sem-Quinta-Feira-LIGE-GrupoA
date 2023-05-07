@@ -11,10 +11,6 @@ v
 Fsrc/test/java/ES_Projeto_GrupoA_2023/projetoES/FileDownloaderTest.java,8\2\820bdede61c2eb4cea6eb4671506c15129af744f
 `
 0src/main/java/softwareeng/project/CSVToJson.java,9\9\99dfeba7b011ac027ab1bcb473f43c05cb14e406
-<
-horario.json,1\6\16f2cd285f882d5bd54fb664911637ffad236ae7
-^
-.src/main/java/softwareeng/project/Horario.java,5\9\595700cb3baaf506077bfea1a8bbb62a7a2cbef4
 q
 Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/JSonToCSVTest.java,c\5\c584f10a19b38295d0b818ff210832570dd02fae
 `
@@ -23,11 +19,7 @@ o
 ?src/test/java/ES_Projeto_GrupoA_2023/projetoES/SessionTest.java,5\7\57cca3dd566a738df75ba0172500fb0b89f2dc37
 q
 Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/CSVToJsonTest.java,1\8\1831162c62f1a39b8aa95be037282d696ce7e6b7
-^
-.src/main/java/softwareeng/project/Session.java,7\9\7905894439e4ecbbdd9bdfd4c716d0ed72b6f711
 o
 ?src/test/java/ES_Projeto_GrupoA_2023/projetoES/HorarioTest.java,a\0\a05d10fb56408a5fb5c514e941ee692793a8a386
-Z
-*src/main/java/softwareeng/project/Web.java,4\1\410378366bca26189901e56329207a82181aecb3
 A
 src/site/site.xml,3\1\31b5075d1ae9311bee2f6b569b57251f9bdfc024
