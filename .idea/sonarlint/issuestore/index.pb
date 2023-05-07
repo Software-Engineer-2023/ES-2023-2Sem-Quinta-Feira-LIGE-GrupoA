@@ -15,8 +15,6 @@ k
 .src/main/java/softwareeng/project/Horario.java,5\9\595700cb3baaf506077bfea1a8bbb62a7a2cbef4
 q
 Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/JSonToCSVTest.java,c\5\c584f10a19b38295d0b818ff210832570dd02fae
-`
-0src/main/java/softwareeng/project/JSonToCSV.java,5\f\5f49f868f3976e746e944bea3292dd538419cd3e
 o
 ?src/test/java/ES_Projeto_GrupoA_2023/projetoES/SessionTest.java,5\7\57cca3dd566a738df75ba0172500fb0b89f2dc37
 q

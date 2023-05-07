@@ -21,7 +21,7 @@ public class MainMenu extends JFrame {
         super("Schedule PLUS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        ImageIcon icon = new ImageIcon("icons/semana.png");
+        ImageIcon icon = new ImageIcon("icons/week.png");
         Image scaledImage = icon.getImage().getScaledInstance(2000, 2000, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         setIconImage(scaledIcon.getImage());
