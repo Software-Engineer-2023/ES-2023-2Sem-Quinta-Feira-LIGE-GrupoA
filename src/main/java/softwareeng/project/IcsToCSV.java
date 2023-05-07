@@ -5,12 +5,22 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Esta classe é responsavel por fazer a conversao de um ficheiro ics em csv
+ */
+
 public class IcsToCSV {
     private String filePath;
 
     public IcsToCSV(String filePath) {
         this.filePath = filePath;
     }
+
+    /**
+     * neste metodo vamos ler um ficheiro ics linha a linha e converte-lo para um ficheiro csv
+     * @return
+     * @throws IOException
+     */
 
     public boolean convertFile() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath));
