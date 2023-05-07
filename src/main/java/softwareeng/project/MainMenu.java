@@ -5,6 +5,9 @@ import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *Esta classe representa a janela principal da aplicação Schedule PLUS e é responsável por exibir os botões que permitem ao usuário acessar diferentes funcionalidades do programa, como abrir horários, converter horários, carregar horários e selecionar UCs. Ela também define a aparência dos botões e os ícones que os representam, além de definir as ações executadas quando cada botão é pressionado.
+ */
 public class MainMenu extends JFrame {
     private final JButton openSchedulesButton;
     private final JButton convertSchedulesButton;
@@ -78,6 +81,9 @@ public class MainMenu extends JFrame {
 
 
     // Methods for button functionality
+    /**
+     * Este método abre a janela de seleção de arquivos de horários quando o botão "Open Schedules" é clicado e também fecha a janela atual do menu principal.
+     */
     public void openSchedules() {
         if(this.isVisible()){
             dispose();
@@ -86,6 +92,10 @@ public class MainMenu extends JFrame {
         }
     }
 
+    /**
+     *Este método abre a janela de conversão de arquivos de horários quando o botão "Convert Schedules" é clicado.
+     *Ele também fecha a janela atual do menu principal.
+     */
     public void convertSchedules() {
         if(this.isVisible()){
             dispose();
@@ -93,7 +103,11 @@ public class MainMenu extends JFrame {
             convertSchedules.setVisible(true);
         }
     }
-
+    
+    /**
+     *Este método abre a janela de carregamento de horários quando o botão "Load Schedules" é clicado.
+     *Ele também fecha a janela atual do menu principal.
+     */
     public void loadSchedules() {
         if(this.isVisible()){
             dispose();
@@ -102,6 +116,10 @@ public class MainMenu extends JFrame {
         }
     }
     
+    /**
+     *Este método abre a janela para seleção de unidades curriculares (UCs) quando o botão "Selecionar UCs" é clicado.
+     *Ele também fecha a janela atual do menu principal.
+     */
     public void SelectUcs() {
         if(this.isVisible()){
             dispose();
@@ -110,18 +128,34 @@ public class MainMenu extends JFrame {
         }
     }
     
+    /**
+     *Este método retorna o botão "Open Schedules" criado na classe MainMenu.
+     *@return o botão "OpenSchedules"
+     */
     public JButton getOpenSchedulesButton() {
         return openSchedulesButton;
     }
 
+    /**
+     *Este método retorna o botão que permite converter horários para um formato diferente.
+     *@return o botão "ConvertSchedules"
+     */
     public JButton getConvertSchedulesButton() {
         return convertSchedulesButton;
     }
 
+    /**
+     *Este método retorna o botão "Load Schedules" da classe atual.
+     *@return o botão "LoadSchedules" da classe atual
+     */
     public JButton getLoadSchedulesButton() {
         return loadSchedulesButton;
     }
     
+    /**
+     *Este método retorna o botão "Select UCs" do menu principal.
+     *@return o botão "Select UCs"
+     */
     public JButton getSelectUcsButton() {
         return selectUcsButton;
     }

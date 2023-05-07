@@ -1,8 +1,8 @@
 package softwareeng.project;
 
 import java.io.*;
+import java.text.ParseException;
 import java.util.Iterator;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +11,10 @@ import com.opencsv.CSVWriter;
 
 import java.util.List;
 import java.util.logging.Logger;
+
+/**
+ * esta classe é responsavel por converter um ficheiro Json em Csv
+ */
 
 public class JSonToCSV{
 
@@ -29,6 +33,12 @@ public class JSonToCSV{
         createSchema();
     }
 
+    /**
+
+    *Converte o conteúdo de um arquivo JSON em um arquivo CSV, escrevendo as informações nas colunas apropriadas.
+    *@return true se a conversão for bem-sucedida, false caso contrário
+    *@throws IOException se ocorrer um erro ao ler ou escrever os arquivos
+    */
     public boolean convertFile() throws IOException {
         while (elements.hasNext()) {
             ObjectNode object = (ObjectNode) elements.next();
@@ -51,6 +61,9 @@ public class JSonToCSV{
         return true;
     }
 
+    /**
+    *Este método cria a linha de cabeçalho para o arquivo CSV que será gerado,definindo os campos que serão presentes na tabela.
+    */
     private void createSchema(){
         String[] line = new String[11];
         line[0] = "Curso";
@@ -67,6 +80,9 @@ public class JSonToCSV{
         writer.writeNext(line);
     }
 
+    /**
+    *Este método realiza a substituição de todas as vírgulas por ponto e vírgula em um arquivo CSV temporário,em seguida, cria um novo arquivo CSV sem as vírgulas e exclui o arquivo temporário.
+    */
     private void changeCommas() {
         try (
                 BufferedReader reader = new BufferedReader(new FileReader(CSVFILENAMETEMP));
@@ -89,6 +105,13 @@ public class JSonToCSV{
         }
     }
 
+    
+    /**
+     * Converte um arquivo JSON em uma lista de objetos Session.
+     * @param path o caminho para o arquivo JSON a ser convertido.
+     * @return uma lista de objetos Session.
+     * @throws RuntimeException se ocorrer um erro durante a leitura do arquivo JSON.
+     */
     public static List<Session> convertJsonToArray(String path) {
         ObjectMapper mapper = new ObjectMapper();
         List<Session> sessions = null;
@@ -99,11 +122,6 @@ public class JSonToCSV{
         }
         return sessions;
     }
-
-
-
-
-
 
 
 }
