@@ -15,7 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JScrollPane;
 
 /**
- * Classe SelectUcs que vai permitir criar o horário do utilizador através da escolha das Ucs que seleciona
+ SelectUcs class that allows the user to create their schedule by selecting the curricular units they want.
  */
 public class SelectUcs extends JFrame{
 	
@@ -39,8 +39,8 @@ public class SelectUcs extends JFrame{
 	private static final String ERROR_MESSAGE = "Error";
 
 	/**
-	 * Construtor da classe SelectUcs
-	 * Define o tamanho da JFrame e inicializa os outros componentes
+	 *Constructor of the SelectUcs class
+	 * Sets the size of the JFrame and initializes the other components.
 	 */
 	public SelectUcs() {
     	super("Select Ucs");
@@ -70,7 +70,7 @@ public class SelectUcs extends JFrame{
         }
 
 	/**
-	 * Método responsável por inicializar os botões e posicioná-los
+	 *Method responsible for initializing the buttons and positioning them.
 	 */
 	private void initComponents() {
 		int buttonSize = 48;
@@ -113,7 +113,7 @@ public class SelectUcs extends JFrame{
 	}
 
 	/**
-	 * Adiciona os botoes anteriormente criados e tratados a JPanels e, por fim, adiciona-os à JFrame
+	 Adds the previously created and processed buttons to JPanels and finally adds them to the JFrame.
 	 */
 	private void layoutComponents() {
 	    setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -142,7 +142,7 @@ public class SelectUcs extends JFrame{
 	}
 
 	/**
-	 * Adiciona Listeners aos botões backButton e selectFileButton
+	 Adds Listeners to the backButton and selectFileButton buttons.
 	 */
 	private void addListeners() {
 		backButton.addActionListener(e -> backButtonClicked());
@@ -155,14 +155,12 @@ public class SelectUcs extends JFrame{
 		});
 	}
 
-//TODO terminar isto
 	/**
-	 * Este método permite selecionar um ficheiro do nosso computador e, de seguida, lê o seu conteúdo e mostra todas as
-	 * ucs desse mesmo ficheiro com uma checkbox cada.
-	 * Nesta fase, o JPanel checkBoxPanel tem um Listener associado a si para que detete sempre que uma checkbox é selecionada.
-	 * Quando uma checkbox é selecionada, o botão finixhButton é mostrado na tela e assim já é possível terminar as escolhas.
-	 * @throws CsvValidationException quando o ficheiro csv é inválido
-	 * @throws IOException quando nao é possível ler o ficheiro selecionado
+	 This method allows the user to select a file from their computer, reads its content and shows all the curricular units of that file with a checkbox each.
+	 At this stage, the checkBoxPanel JPanel has a Listener associated with it so that it always detects when a checkbox is selected.
+	 When a checkbox is selected, the finixhButton button is displayed on the screen and it is then possible to finish the choices.
+	 @throws CsvValidationException when the csv file is invalid
+	 @throws IOException when it is not possible to read the selected file.
 	 */
 	private void selectFileButtonClicked() throws CsvValidationException, IOException {
 		JFileChooser fileChooser = new JFileChooser();
@@ -219,7 +217,8 @@ public class SelectUcs extends JFrame{
 	}
 
 	/**
-	 * Método responsável por fazer acoes quando o botão finishButton é carregado
+	 Method responsible for performing actions when the finishButton is clicked.
+
 	 */
 	private void finishButtonClicked(){
 		h.horarioFile(selectedUCs);
@@ -246,7 +245,7 @@ public class SelectUcs extends JFrame{
 	}
 
 	/**
-	 * Cria o botão finishButton
+Creates button FinishButton
 	 */
 	private void createFinishButton() {
 		int buttonSize = 48;

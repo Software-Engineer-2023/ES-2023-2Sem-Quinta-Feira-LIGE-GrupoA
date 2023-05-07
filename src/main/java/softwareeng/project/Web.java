@@ -22,15 +22,14 @@ import java.util.logging.Logger;
 
 
 /**
-*Classe para ler, baixar e converter conteúdo de páginas web.
+*Class to read, download, and convert content from web pages.
 */
 public class Web {
 
 	private static final Logger LOGGER = Logger.getLogger("Web");
 
 	/**
-	*Lê o conteúdo da página da URL fornecida e imprime uma mensagem de sucesso se a leitura for bem sucedida.
-	*@param url a URL da página a ser lida
+	*Reads the content of the provided URL page and prints a success message if the reading is successful.
 	*/
 	public void readWeb(URL url) {
 		try {
@@ -45,19 +44,18 @@ public class Web {
 	}
 
 	/**
-	 * Método que lê o conteúdo da URL passada, converte para CSV, filtra as informações desejadas,converte para um objeto JSON e salva em um arquivo JSON.
-	 * @param url objeto URL contendo o endereço a ser lido
-	 * @throws IOException se houver algum erro de I/O durante a leitura da URL
+	 * Method that reads the content from the provided URL, converts it to CSV, filters the desired information, converts it to a JSON object, and saves it to a JSON file.
+	 * * @param url URL object containing the address to be read
+	 * * @throws IOException if there is any I/O error during the URL reading process
+	 *
 	 */
 	private String urlTolist(URL url) throws IOException {
 		URLConnection connection = url.openConnection();
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		//para analisar o conteúdo CSV e criar uma lista de objetos
 		CSVParser parser = CSVFormat.DEFAULT.parse(in);
 		List<CSVRecord> records = parser.getRecords();
 		in.close();
 
-		//para gravar cada registro em um arquivo CSV
 		CSVPrinter printer = new CSVPrinter(new FileWriter("outputTemp.csv"), CSVFormat.DEFAULT);
 		for (CSVRecord record : records) {
 			printer.printRecord(record);
@@ -101,8 +99,8 @@ public class Web {
 
 	
 	/**
-	*Converte uma String no formato de horário em JSON.
-	*@param fileContent a String a ser convertida em JSON.
+	*Converts a time formatted string into JSON.
+	 * *@param fileContent the String to be converted to JSON.
 	*/
 	private void stringToJson(String fileContent) {
 		String[] subString1 = fileContent.split("SUMMARY:");
@@ -122,9 +120,9 @@ public class Web {
 	}
 
 	/**
-	*Converte uma String em formato de arquivo Horario para um arquivo CSV.
-	*@param fileContent String contendo o conteúdo do arquivo Horario a ser convertido.
-	*@throws RuntimeException caso ocorra um erro durante a conversão.
+	*Converts a time-formatted String into a CSV file.
+	 *@param fileContent String containing the contents of the time-formatted file to be converted.
+	 *@throws RuntimeException if an error occurs during the conversion process.
 	*/
 	public void stringToCsv(String fileContent){
 		System.out.println("entrou aqui");
@@ -137,10 +135,10 @@ public class Web {
 	}
 
 	/**
-	 * Método que cria um objeto Session a partir da String de entrada.
-	 * @param s String contendo as informações da aula
-	 * @return objeto Session criado a partir da String de entrada
-	 * @throws ParseException se houver algum erro na conversão de data/hora
+	 * Method that creates a Session object from the input String.
+	 * * @param s String containing the class information
+	 * * @return Session object created from the input String
+	 * * @throws ParseException if there is any error in date/time conversion
 	 */
 	private Session createSession(String s) throws ParseException {
 		String curso = "";
@@ -211,9 +209,9 @@ public class Web {
 	}
 
 	/**
-	*Faz o download do conteúdo de uma página web a partir da URL fornecida e salva-o em um arquivo local com o nome "web_content.txt".
-	*@param url a URL da página web de onde baixar o conteúdo
-	*@throws IOException se ocorrer um erro de I/O durante a leitura ou gravação do conteúdo da página web
+	*Downloads the content from a web page from the provided URL and saves it to a local file named "web_content.txt".
+	 * *@param url the URL of the web page from which to download the content
+	 * *@throws IOException if an I/O error occurs during reading or writing of the web page content
 	*/
 	public void downloadWebContent(URL url) throws IOException {
 		URLConnection connection = url.openConnection();

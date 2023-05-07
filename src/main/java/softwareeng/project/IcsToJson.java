@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 
 
 /**
- * esta classe é responsavel por converter um ficheiro ics em json
+ This class is responsible for converting an ICS file to JSON.
  */
 public class IcsToJson {
     private static final Logger LOGGER = Logger.getLogger(IcsToJson.class.getName());
@@ -31,12 +31,11 @@ public class IcsToJson {
     }
 
     /**
-     * este método é responsavel por converter um ficheiro ics em json
-     * caso esta conversao seja bem sucedida é enviada uma mensagem consoante o que acontecer, dependendo se esse ficheiro ja tiver sido ou nao criado
-     *
-     * @return
-     * @throws IOException
-     * @throws ParseException
+     This method is responsible for converting an ics file to json. If the conversion is successful, a message will be sent depending on whether the file has already been created or not.
+
+     @return
+     @throws IOException
+     @throws ParseException
      */
 
     public boolean convertFile() throws IOException, ParseException {

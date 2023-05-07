@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * esta classe é responsavel por converter um ficheiro Json em Csv
+ This class is responsible for converting a Json file to Csv.
  */
 public class JSonToCSV{
 
@@ -25,9 +25,9 @@ public class JSonToCSV{
     private static final Logger LOGGER = Logger.getLogger("JSONTOCSV");
 
     /**
-     * Construtor da classe JSonToCSV
-     * @param fileName nome do ficheiro
-     * @throws IOException
+     Constructor of the JSonToCSV class
+     @param fileName name of the file
+     @throws IOException
      */
     public JSonToCSV(String fileName) throws IOException {
         JsonNode rootNode = new ObjectMapper().readTree(new File(fileName));
@@ -37,9 +37,9 @@ public class JSonToCSV{
     }
 
     /**
-    *Converte o conteúdo de um arquivo JSON em um arquivo CSV, escrevendo as informações nas colunas apropriadas.
-    *@return true se a conversão for bem-sucedida, false caso contrário
-    *@throws IOException se ocorrer um erro ao ler ou escrever os arquivos
+     *Converts the content of a JSON file to a CSV file, writing the information into the appropriate columns.
+     *@return true if the conversion is successful, false otherwise
+     *@throws IOException if an error occurs while reading or writing the files.
     */
     public boolean convertFile() throws IOException {
         while (elements.hasNext()) {
@@ -64,8 +64,7 @@ public class JSonToCSV{
     }
 
     /**
-    *Este método cria a linha de cabeçalho para o arquivo CSV que será gerado,definindo os campos que serão presentes na tabela.
-    */
+     This method creates the header row for the CSV file that will be generated, defining the fields that will be present in the table.    */
     private void createSchema(){
         String[] line = new String[11];
         line[0] = "Curso";
@@ -83,8 +82,9 @@ public class JSonToCSV{
     }
 
     /**
-    *Este método realiza a substituição de todas as vírgulas por ponto e vírgula em um arquivo CSV temporário,em seguida, cria um novo arquivo CSV sem as vírgulas e exclui o arquivo temporário.
-    */
+     This method replaces all commas with semicolons in a temporary CSV file,
+     then creates a new CSV file without commas and deletes the temporary file.
+     */
     private void changeCommas() {
         try (
                 BufferedReader reader = new BufferedReader(new FileReader(CSVFILENAMETEMP));
@@ -109,10 +109,11 @@ public class JSonToCSV{
 
     
     /**
-     * Converte um arquivo JSON em uma lista de objetos Session.
-     * @param path o caminho para o arquivo JSON a ser convertido.
-     * @return uma lista de objetos Session.
-     * @throws RuntimeException se ocorrer um erro durante a leitura do arquivo JSON.
+     *
+     Converts a JSON file to a list of Session objects.
+     * @param path the path to the JSON file to be converted.
+     * @return a list of Session objects.
+     * @throws RuntimeException if an error occurs during the JSON file reading.
      */
     public static List<Session> convertJsonToArray(String path) {
         ObjectMapper mapper = new ObjectMapper();
