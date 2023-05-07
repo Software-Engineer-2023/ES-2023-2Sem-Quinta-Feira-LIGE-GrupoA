@@ -49,7 +49,7 @@ public class Web {
 	 * @param url objeto URL contendo o endereço a ser lido
 	 * @throws IOException se houver algum erro de I/O durante a leitura da URL
 	 */
-	public String urlTolist(URL url) throws IOException {
+	private String urlTolist(URL url) throws IOException {
 		URLConnection connection = url.openConnection();
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		//para analisar o conteúdo CSV e criar uma lista de objetos
@@ -104,9 +104,7 @@ public class Web {
 	*Converte uma String no formato de horário em JSON.
 	*@param fileContent a String a ser convertida em JSON.
 	*/
-	public void stringToJson(String fileContent) {
-		System.out.println("teste1");
-
+	private void stringToJson(String fileContent) {
 		String[] subString1 = fileContent.split("SUMMARY:");
 		List<Session> array = new ArrayList<>();
 		for(String s : subString1){
@@ -120,9 +118,7 @@ public class Web {
 				}
 			}
 		}
-		System.out.println("Tamanho do session " + array.size());
-		System.out.println("teste2");
-		new CSVToJson().convertArrayToJson(array,"horarioWebcall.json");
+		new CSVToJson().convertArrayToJson(array,"WebCallSchedule.json");
 	}
 
 	/**
@@ -131,9 +127,10 @@ public class Web {
 	*@throws RuntimeException caso ocorra um erro durante a conversão.
 	*/
 	public void stringToCsv(String fileContent){
+		System.out.println("entrou aqui");
 		stringToJson(fileContent);
 		try {
-			new JSonToCSV("horario.json");
+			new JSonToCSV("WebCallSchedule.json").convertFile();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -195,6 +192,22 @@ public class Web {
 		int lotacao = 0;
 
 		return new Session(curso, uc, turno, turma, inscritos, diaSemana, horaInicio+":00", horaFim+":00", dataAula.replace('-','/'), salaAtribuida, lotacao);
+	}
+
+	public void URLToJson(URL url){
+		try {
+			stringToJson(urlTolist(url));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void URLToCsv(URL url){
+		try {
+			stringToCsv(urlTolist(url));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
