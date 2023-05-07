@@ -1,31 +1,41 @@
 package softwareeng.project;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import com.opencsv.exceptions.CsvValidationException;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JScrollPane;
 
 
 public class SelectUcs extends JFrame{
 	
 	private JButton backButton;
-	private JCheckBox checkBox;
+	private JButton finishButton;
+
+	private JButton selectFileButton;
+
+	private JButton showScheduleButton;
+
+	private JPanel checkBoxPanel;
+
+	private JScrollPane scrollPane;
+	private Horario h;
+
 
     private static final Logger LOGGER = Logger.getLogger("LoadSchedules");
+
+	private static final String ERROR_MESSAGE = "Error";
     
     public SelectUcs() {
     	super("Schedule PLUS");
@@ -52,16 +62,32 @@ public class SelectUcs extends JFrame{
         }
 
 	private void initComponents() {
-		
+		int buttonSize = 48;
+		selectFileButton = new JButton("Convert your File");
+		selectFileButton.setBorderPainted(false);
+		selectFileButton.setFocusPainted(false);
+		selectFileButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		selectFileButton.setIcon(new ImageIcon(new ImageIcon("icons/convertHorario.png")
+				.getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
+
+		showScheduleButton= new JButton("Show your Schedule");
+		showScheduleButton.setBorderPainted(false);
+		showScheduleButton.setFocusPainted(false);
+		showScheduleButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		showScheduleButton.setIcon(new ImageIcon(new ImageIcon("icons/schedule.png")
+				.getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
+
+		showScheduleButton.setVisible(false);
+		showScheduleButton.addActionListener(e -> showScheduleButton());
+
 		 backButton = new JButton();
 		    backButton.setBorderPainted(false);
 		    backButton.setFocusPainted(false);
 		    backButton.setBackground(new Color(0, 0, 0, 0)); // Set transparent background
 		    backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		    int buttonSize = 48;
+		    buttonSize = 48;
 		    backButton.setIcon(new ImageIcon(new ImageIcon("icons/back.png")
 		            .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
-		    checkBox = new JCheckBox("UC1");
 		    JPanel buttonPanel = new JPanel(new GridBagLayout()); // Create panel for button
 		    GridBagConstraints gbc = new GridBagConstraints();
 		    gbc.gridx = 0;
@@ -70,7 +96,9 @@ public class SelectUcs extends JFrame{
 		    gbc.fill = GridBagConstraints.HORIZONTAL;
 		    buttonPanel.add(backButton, gbc);
 		    add(buttonPanel);
-		
+
+
+
 	}
 	
 
@@ -82,8 +110,12 @@ public class SelectUcs extends JFrame{
 	    JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         topPanel.add(Box.createHorizontalGlue());
-        topPanel.add(checkBox);
+        //topPanel.add(checkBox);
+		topPanel.add(selectFileButton);
         topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+
+		topPanel.add(showScheduleButton);
+		topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         
         topPanel.add(Box.createHorizontalGlue());
         add(topPanel);
@@ -100,10 +132,101 @@ public class SelectUcs extends JFrame{
 	}
 	
 	private void addListeners() {
-		backButton.addActionListener(e -> backButtonClicked());	
-		
+		backButton.addActionListener(e -> backButtonClicked());
+		selectFileButton.addActionListener(e -> {
+			try {
+				selectFileButtonClicked();
+			} catch (CsvValidationException | IOException ex) {
+				JOptionPane.showMessageDialog(this, ex.getMessage(), ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+			}
+		});
 	}
-	
+
+	private List<String> selectedUCs;
+
+	private void selectFileButtonClicked() throws CsvValidationException, IOException {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv"));
+		fileChooser.setFileFilter(new FileNameExtensionFilter("Json files", "json"));
+
+		int result = fileChooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			String path = fileChooser.getSelectedFile().getPath();
+			File selectedFile = fileChooser.getSelectedFile();
+			if (selectedFile.getName().endsWith(".csv") || selectedFile.getName().endsWith(".json")) {
+				selectFileButton.setVisible(false);
+				h = new Horario(selectedFile.getName());
+				List<String> ucs = h.getUCsFromHorario();
+				int cols = 1;
+				checkBoxPanel = new JPanel(new GridLayout(0, cols));
+				for (String uc : ucs) {
+					JCheckBox checkBox = new JCheckBox(uc);
+					checkBox.addItemListener(e -> {
+						boolean atLeastOneSelected = false;
+						selectedUCs = new ArrayList<>();
+						for (Component comp : checkBoxPanel.getComponents()) {
+							if (comp instanceof JCheckBox) {
+								JCheckBox cb = (JCheckBox) comp;
+								if (cb.isSelected()) {
+									atLeastOneSelected = true;
+									selectedUCs.add(cb.getText());
+								}
+							}
+						}
+						finishButton.setVisible(atLeastOneSelected);
+					});
+					checkBoxPanel.add(checkBox);
+				}
+				scrollPane = new JScrollPane(checkBoxPanel);
+				scrollPane.setViewportView(checkBoxPanel);
+				add(scrollPane, BorderLayout.CENTER);
+				pack();
+				createFinishButton();
+				add(finishButton, BorderLayout.NORTH);
+				pack();
+			} else {
+				JOptionPane.showMessageDialog(this, "The selected file is not a CSV file or Json File.", ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
+				selectFileButtonClicked();
+			}
+		}
+	}
+
+	private void finishButtonClicked(){
+		h.horarioFile(selectedUCs);
+		for (Component comp : checkBoxPanel.getComponents()) {
+			if (comp instanceof JCheckBox) {
+				JCheckBox cb = (JCheckBox) comp;
+				cb.setVisible(false);
+			}
+		}
+		finishButton.setVisible(false);
+		scrollPane.setVisible(false);
+		showScheduleButton.setVisible(true);
+		setSize(350, 150);
+	}
+
+
+	private void showScheduleButton(){
+
+	}
+
+	private void createFinishButton() {
+		int buttonSize = 48;
+		finishButton = new JButton("Confirm Choices");
+		finishButton.setBorderPainted(false);
+		finishButton.setFocusPainted(false);
+		finishButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		finishButton.setIcon(new ImageIcon(new ImageIcon("icons/confirm.png")
+				.getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
+
+		finishButton.setVisible(true);
+		finishButton.addActionListener(e -> finishButtonClicked());
+	}
+
+
+
+
 	private void backButtonClicked() {
         if (this.isVisible()) {
             dispose();

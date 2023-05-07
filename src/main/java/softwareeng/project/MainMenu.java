@@ -50,7 +50,7 @@ public class MainMenu extends JFrame {
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
         loadSchedulesButton.setIcon(new ImageIcon(new ImageIcon("icons/load.png")
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
-        SelectUcsButton.setIcon(new ImageIcon(new ImageIcon("icons/load.png")
+        SelectUcsButton.setIcon(new ImageIcon(new ImageIcon("icons/horario.png")
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
 
         // Add action listeners using lambda expressions
