@@ -39,7 +39,7 @@ public class ConvertSchedules extends JFrame {
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            LOGGER.log(Level.WARNING, "Failed to set look and feel", ex);
+            LOGGER.log(Level.SEVERE, "Failed to set the look and feel", ex);
         }
 
 

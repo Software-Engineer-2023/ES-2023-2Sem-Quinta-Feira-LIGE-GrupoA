@@ -17,12 +17,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
 *Classe para ler, baixar e converter conteúdo de páginas web.
 */
 public class Web {
+
+	private static final Logger LOGGER = Logger.getLogger("Web");
 
 	/**
 	*Lê o conteúdo da página da URL fornecida e imprime uma mensagem de sucesso se a leitura for bem sucedida.
@@ -46,6 +50,7 @@ public class Web {
 	 * @throws IOException se houver algum erro de I/O durante a leitura da URL
 	 */
 	public String URLToList(URL url) throws IOException {
+
 
 		URLConnection connection = url.openConnection();
 		//lê cada linha
@@ -74,7 +79,7 @@ public class Web {
 					lines.add(line);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.WARNING, "Ran into an IOException: ", e);
 		}
 
 		File file = new File("outputTemp.csv");
