@@ -16,9 +16,6 @@ public class OpenSchedule extends JFrame {
 
     private JButton selectFileButton;
 
-    private transient Horario h;
-
-    private String filename;
     private JButton backButton;
 
     private static final Logger LOGGER = Logger.getLogger("OpenSchedule");
@@ -101,6 +98,8 @@ public class OpenSchedule extends JFrame {
 
 
     private void selectFileButtonClicked() {
+        String filename;
+        Horario h;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -120,7 +119,6 @@ public class OpenSchedule extends JFrame {
                 filename = selectedFile.getName();
                 h = new Horario(filename);
                 h.getWeek(selectedFile.getName(), 1);
-                //Exibir horário
 
                 List<Session> session = h.converFileToArray("horarioSemana.json");
 

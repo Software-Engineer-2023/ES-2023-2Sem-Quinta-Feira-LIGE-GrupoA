@@ -11,8 +11,6 @@ k
 0src/main/java/softwareeng/project/CSVToJson.java,9\9\99dfeba7b011ac027ab1bcb473f43c05cb14e406
 <
 horario.json,1\6\16f2cd285f882d5bd54fb664911637ffad236ae7
-^
-.src/main/java/softwareeng/project/Horario.java,5\9\595700cb3baaf506077bfea1a8bbb62a7a2cbef4
 q
 Asrc/test/java/ES_Projeto_GrupoA_2023/projetoES/JSonToCSVTest.java,c\5\c584f10a19b38295d0b818ff210832570dd02fae
 o
