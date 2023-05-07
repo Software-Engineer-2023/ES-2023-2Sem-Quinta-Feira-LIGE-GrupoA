@@ -7,10 +7,20 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.MalformedURLException;
+import java.net.StandardSocketOptions;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.FieldPosition;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,11 +39,8 @@ public class Web {
 		}
 	}
 
+	public String URLToList(URL url) throws IOException {
 
-	//class URLToCSV recebe um URL e transforma em CSV
-	public void URLToCSV(URL url) throws IOException{
-
-		//usa uma conexão URLConnection para baixar o conteúdo da página
 		URLConnection connection = url.openConnection();
 		//lê cada linha
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -43,41 +50,127 @@ public class Web {
 		in.close();
 
 		//para gravar cada registro em um arquivo CSV
-		CSVPrinter printer = new CSVPrinter(new FileWriter("output.csv"), CSVFormat.DEFAULT);
+		CSVPrinter printer = new CSVPrinter(new FileWriter("outputTemp.csv"), CSVFormat.DEFAULT);
 		for (CSVRecord record : records) {
 			printer.printRecord(record);
 		}
 		printer.close();
 
-		//o arquivo é lido e o seu conteúdo é exibido usando um objeto
-		BufferedReader reader = new BufferedReader(new FileReader("output.csv"));
-		String line;
-		while ((line = reader.readLine()) != null) {
-			System.out.println(line);
+		List<String> lines = new ArrayList<>();
+		try (BufferedReader reader = new BufferedReader(new FileReader("outputTemp.csv"))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				if (line.startsWith("SUMMARY"))
+					lines.add(line);
+				else if(line.startsWith("\""))
+					lines.add(line);
+				else if(line.startsWith("LOCATION"))
+					lines.add(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		reader.close();
+
+		if (new File("outputTemp.csv").delete()) {
+		} else {
+
+		}
+
+		StringBuilder stringBuilder = new StringBuilder();
+		for(String line : lines	)
+			stringBuilder.append(line);
+		String s1 = stringBuilder.toString();
+		String info = s1.replaceAll( "\"\" ", "");
+
+		StringTOJson(info);
+
+
+		return info;
+	}
+
+
+	public void StringTOJson(String fileContent) {
+		System.out.println("teste1");
+
+		String[] subString1 = fileContent.split("SUMMARY:");
+		List<Session> array = new ArrayList<>();
+		for(String s : subString1){
+			if(!(s.startsWith("Exame:") || s.startsWith("Teste:") || s.startsWith("Avaliação Contínua:") || s.indexOf("-") == -1)){
+				//System.out.println(s);
+				try {
+					Session session = createSession(s);
+					array.add(session);
+				} catch (ParseException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		System.out.println("teste2");
+		new CSVToJson().convertArrayToJson(array);
+	}
+
+	public void StringToCsv(String fileContent){
+		StringTOJson(fileContent);
+		try {
+			new JSonToCSV("horario.json");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
+	private Session createSession(String s) throws ParseException {
+		String curso = "";
+		String uc = s.substring(0, s.indexOf("-"));
+		String turno = s.substring(s.indexOf("Turno: ") + 7, s.indexOf("\\n", s.indexOf("Turno: ") + 7));
+		String turma = "";
+		int inscritos = 0;
+		String temp1 = s.substring(s.indexOf("Início: ") + 8, s.indexOf("\\n", s.indexOf("Início: ") + 8));
+		String temp2 = s.substring(s.indexOf("Fim: ") + 5, s.indexOf("\\n", s.indexOf("Fim: ") + 5));
+		String[] subString2 = temp1.split(" ");
+		String[] subString3 = temp2.split(" ");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+		Date date = sdf.parse(subString2[0]);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int  numDiaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+		String diaSemana = null;
+		switch (numDiaSemana){
+			case 2:
+				diaSemana = "Seg";
+			case 3:
+				diaSemana = "Ter";
+			case 4:
+				diaSemana = "Qua";
+			case 5:
+				diaSemana = "Qui";
+			case 6:
+				diaSemana = "Sex";
+			case 7:
+				diaSemana = "Sab";
+		}
+		String horaInicio = subString2[1];
+		String horaFim = subString3[1];
+		String dataAula =subString2[0];
+		String salaAtribuida = "";
+		if(!s.endsWith("LOCATION:")){
+			 salaAtribuida =  s.substring(s.indexOf("LOCATION:") + 9, s.indexOf("\\,", s.indexOf("LOCATION:") + 9));
+		}
+		int lotacao = 0;
+
+		return new Session(curso, uc, turno, turma, inscritos, diaSemana, horaInicio, horaFim, dataAula, salaAtribuida, lotacao);
+	}
+
+
+
+	//class URLToCSV recebe um URL e transforma em CSV
+	public void URLToCSV(URL url) throws IOException{
+
 	}
 
 	public void URLToJson(URL url) throws IOException {
-		URLConnection connection = url.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-		//Lê o conteúdo JSON do ficheiro
-		BufferedWriter writer = new BufferedWriter(new FileWriter("output.json"));
-		String inputLine;
-		while ((inputLine = in.readLine()) != null) {
-			writer.write(inputLine);
-		}
-		in.close();
-		writer.close();
-
-		//Lê o ficheiro JSON e imprime
-		BufferedReader reader = new BufferedReader(new FileReader("output.json"));
-		String line;
-		while ((line = reader.readLine()) != null) {
-			System.out.println(line);
-		}
-		reader.close();
 	}
 
 	public void downloadWebContent(URL url) throws IOException {
