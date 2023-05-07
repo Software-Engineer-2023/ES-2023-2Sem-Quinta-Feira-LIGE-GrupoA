@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /**
- * Classe que é responsável por criar o horário de um aluno sabendo o seu curso, turma e semana que quer.
+ This is a class responsible for creating a student's timetable based on their course, class and chosen week.
  */
 public class Horario {
 
@@ -16,9 +16,10 @@ public class Horario {
     }
 
     /**
-     * Devolve o número de semanas presentes num file. Tem como objetivo facilitar a consulta do horário semanal do utilizador
-     * @param path caminho para o ficheiro
-     * @return número de semanas presentes num file
+     *
+     Returns the number of weeks present in a file. Its purpose is to facilitate the consultation of the user's weekly schedule.
+     * @param path file path
+     * @return number of weeks present in a file
      */
     public int countWeeks(String path) {
 
@@ -49,10 +50,10 @@ public class Horario {
 
 
     /**
-     * Método que lê um ficheiro de um horário e, através do número da semana
-     * mostra as aulas dessa semana
-     * @param path caminho para o ficheiro que irá ser o horário
-     * @param semana representa a semana que queremos ver o horário
+     *Method that reads a schedule file and, using the week number,
+     * * displays the classes for that week
+     * * @param path file path for the schedule file
+     * * @param semana represents the week number we want to see the schedule for
      */
     public void getWeek(String path, int semana) {
         List<Session> list = converFileToArray(path);
@@ -85,13 +86,14 @@ public class Horario {
     }
 
     /**
-     * Método que começa por passar um ficheiro para list
-     * De seguida, pega nessa list e vai analisar as datas de início de aulas, caso sejam diferentes
-     * cria uma nova entry no map, caso sejam iguais adiciona ao map essa mesma aula.
-     * No final devolve o map com as entrys que possuem a List associada com size() superior a 1, ou seja,
-     * há mais de uma aula com o mesmo horário
-     * @param path caminho para um ficheiro
-     * @return map que contém as aulas sobrepostas
+     *
+     Method that starts by converting a file into a list.
+     Then, it takes that list and checks the start dates of classes, and if they are different, it creates a new entry in the map.
+     If they are the same, it adds that class to the map.
+     In the end, it returns the map with entries that have the associated list with a size() greater than 1, meaning that there is more than one class at the same time.
+
+     @param path the path to a file
+     @return a map that contains overlapping classes
      */
     public Map<Date, List<Session>> getOverlappingSessions(String path) {
         Map<Date, List<Session>> map = new HashMap<>();
@@ -131,8 +133,8 @@ public class Horario {
 
 
     /**
-     * Devolve uma lista das Ucs que estão no horário
-     * @return ucs que é uma lista com todas as ucs de um horario
+     * Returns a list of the Ucs present in the schedule.
+     * * @return a list of Ucs present in the schedule.
      */
     public List<String> getUCsFromHorario() {
         List<String> ucs = new ArrayList<>();
@@ -149,9 +151,10 @@ public class Horario {
     }
 
     /**
-     * Converte um ficheiro para List<Session>
-     * @param path caminho do ficheiro
-     * @return list com todas as aulas do ficheiro
+     *
+     Converts a file to a List<Session>.
+     * @param path the path of the file
+     * @return list with all the sessions from the file
      */
     public List<Session> converFileToArray(String path){
         List<Session> list = new ArrayList<>();
@@ -168,10 +171,10 @@ public class Horario {
     }
 
     /**
-     * Recebe uma lista que contém o nome das Ucs que o utilizador escolheu.
-     * Assim irá filtrar uma List com todas as aulas presentes no ficheiro.
-     * No final irá criar um ficheiro com todas as aulas das Ucs recebidas.
-     * @param ucs List de ucs selecionadas pelo utilizador
+     Receives a list containing the names of the Ucs that the user has chosen.
+     It will filter a List with all the sessions present in the file accordingly.
+     Finally, it will create a file with all the sessions of the received Ucs.
+     @param ucs List of Ucs selected by the user.
      */
     public void horarioFile(List<String> ucs){
         List<Session> horario = converFileToArray(path);

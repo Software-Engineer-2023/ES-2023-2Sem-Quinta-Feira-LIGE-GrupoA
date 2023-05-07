@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Esta classe é responsavel por fazer a conversao de um ficheiro ics em csv
+ This class is responsible for converting a .ics file to a .csv file.
  */
 
 public class IcsToCSV {
@@ -17,9 +17,9 @@ public class IcsToCSV {
     }
 
     /**
-     * neste metodo vamos ler um ficheiro ics linha a linha e converte-lo para um ficheiro csv
-     * @return
-     * @throws IOException
+     This method reads a file in ics format line by line and converts it to a csv file
+     @return
+     @throws IOException
      */
 
     public boolean convertFile() throws IOException {
