@@ -1,34 +1,21 @@
 package softwareeng.project;
 
-import com.opencsv.exceptions.CsvValidationException;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OpenSchedule extends JFrame {
 
+    private static final Logger LOGGER = Logger.getLogger(OpenSchedule.class.getName());
     private JButton selectFileButton;
-
-    private Horario h;
-
-    private String filename;
     private JButton backButton;
-
-    private JPanel panel;
-
-    private static final Logger LOGGER = Logger.getLogger("OpenSchedule");
-
-    private static final String ERROR_MESSAGE = "Error";
 
 
     public OpenSchedule() {
@@ -103,18 +90,14 @@ public class OpenSchedule extends JFrame {
 
     private void addListeners() {
 
-        selectFileButton.addActionListener(e -> {
-            try {
-                selectFileButtonClicked();
-            } catch (CsvValidationException | IOException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), ERROR_MESSAGE, JOptionPane.ERROR_MESSAGE);
-            }
-        });
+        selectFileButton.addActionListener(e -> selectFileButtonClicked());
         backButton.addActionListener(e -> backToMainMenu());
     }
 
 
-    private void selectFileButtonClicked() throws CsvValidationException, IOException {
+    private void selectFileButtonClicked() {
+        String filename;
+        Horario h;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -127,7 +110,7 @@ public class OpenSchedule extends JFrame {
 
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            String path = fileChooser.getSelectedFile().getPath();
+
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile.getName().endsWith(".csv") || selectedFile.getName().endsWith(".json")) {
                 selectFileButton.setVisible(false);
@@ -138,7 +121,7 @@ public class OpenSchedule extends JFrame {
 
                 List<Session> session = h.converFileToArray("horarioSemana.json");
 
-                panel = new JPanel();
+
                 String[] columns = {"Horas", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"};
                 String[] rows = {"08:00-09:30", "09:30-11:00", "11:00-12:30", "13:00-14:30", "14:30-16:00", "16:00-17:30", "18:00-19:30", "19:30-21:00", "21:00-22:30"};
 
@@ -167,17 +150,15 @@ public class OpenSchedule extends JFrame {
                 JPanel buttonPanel = new JPanel();
                 for (int count = 1; count <= numberWeeks; count++) {
                     JButton button = new JButton(Integer.toString(count));
-                    button.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            String buttonText = button.getText();
-                            h.getWeek(filename, Integer.parseInt(buttonText));
-                            List<Session> session = h.converFileToArray("horarioSemana.json");
-                            if (session.isEmpty()) {
-                                JOptionPane.showMessageDialog(buttonPanel, "Não possui aulas marcadas nessa semana");
-                            } else {
-                                Object dados[][] = getTable(rows,columns,session);
-                                tableModel.setDataVector(dados,columns);
-                            }
+                    button.addActionListener(e -> {
+                        String buttonText = button.getText();
+                        h.getWeek(filename, Integer.parseInt(buttonText));
+                        List<Session> session1 = h.converFileToArray("horarioSemana.json");
+                        if (session1.isEmpty()) {
+                            JOptionPane.showMessageDialog(buttonPanel, "Não possui aulas marcadas nessa semana");
+                        } else {
+                            Object[][] dados = getTable(rows,columns, session1);
+                            tableModel.setDataVector(dados,columns);
                         }
                     });
                     buttonPanel.add(button);
@@ -228,6 +209,8 @@ public class OpenSchedule extends JFrame {
                 case "21:00:00":
                     linha = 8;
                     break;
+                default:
+                    break;
             }
             switch (dia) {
                 case "Seg":
@@ -248,20 +231,16 @@ public class OpenSchedule extends JFrame {
                 case "Sáb":
                     coluna = 6;
                     break;
+                default:
+                    break;
             }
-
             if (data[linha][coluna] != null) {
-                String a = (String) data[linha][coluna];
-
-
-
+                LOGGER.log(Level.WARNING,("Value already set at position %d, %d") , linha + coluna);
             } else {
                 data[linha][coluna] = s.getUc();
             }
 
-
         }
-
         return data;
     }
 
