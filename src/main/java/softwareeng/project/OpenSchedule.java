@@ -32,7 +32,7 @@ public class OpenSchedule extends JFrame {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error starting program", ex);
         }
 
         setSize(350, 150);

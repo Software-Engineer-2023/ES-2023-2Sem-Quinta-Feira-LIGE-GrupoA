@@ -1,3 +1,4 @@
 /.settings/
 /.vscode/
 .idea/sonarlint
+.idea/workspace.xml
