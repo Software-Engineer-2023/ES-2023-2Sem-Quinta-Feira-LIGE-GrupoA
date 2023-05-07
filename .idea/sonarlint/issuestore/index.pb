@@ -27,3 +27,15 @@ g
 7src/main/java/softwareeng/project/ConvertSchedules.java,8\d\8d6d621e403cfd1113fc62490df6e256ede1e47a
 `
 0src/main/java/softwareeng/project/SelectUcs.java,5\5\552b2407dd03027b46e2f82ef5a508f368805183
+d
+4src/main/java/softwareeng/project/LoadSchedules.java,e\c\ecbb4113167ccaf365ade0951883753a82fcdcad
+_
+/src/main/java/softwareeng/project/MainMenu.java,c\c\cc230a41efca0bf77cf0dfc1d2ae2d3d745497c7
+Z
+*src/main/java/softwareeng/project/Web.java,4\1\410378366bca26189901e56329207a82181aecb3
+Z
+*src/main/java/softwareeng/project/App.java,8\1\810cc6b5dd0f884ded57e43343827871e39c0a3b
+^
+.src/main/java/softwareeng/project/Horario.java,5\9\595700cb3baaf506077bfea1a8bbb62a7a2cbef4
+c
+3src/main/java/softwareeng/project/OpenSchedule.java,5\8\58f53fa8d367a8e62272160bfb257ccb623c41e6
