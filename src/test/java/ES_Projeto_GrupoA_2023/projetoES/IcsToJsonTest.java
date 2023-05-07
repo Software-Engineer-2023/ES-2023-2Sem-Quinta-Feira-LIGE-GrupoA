@@ -30,7 +30,7 @@ public class IcsToJsonTest {
 
         assertTrue(success);
 
-        String jsonFilePath = "C:\\Users\\carol\\OneDrive\\Documentos\\GitHub\\ES-2023-2Sem-Quinta-Feira-LIGE-GrupoAasd\\";
+        String jsonFilePath = "C:\\Users\\Proprietário\\Documents\\GitHub\\ES-2023-2Sem-Quinta-Feira-LIGE-GrupoA\\rafetelvino@gmail.com.json";
         File jsonFile = new File(jsonFilePath);
 
         assertTrue(jsonFile.exists());

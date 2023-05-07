@@ -21,7 +21,7 @@ public class JSonToCSV{
     private final CSVWriter writer;
 
     private static final  String CSVFILENAMETEMP = "data_temp.csv";
-    private static final  String CSVFILENAME = "data.csv";
+    private static final  String CSVFILENAME = "data123.csv";
     private static final Logger LOGGER = Logger.getLogger("JSONTOCSV");
 
     /**

@@ -84,54 +84,6 @@ public class Horario {
         CSVToJson csv = new CSVToJson();
         csv.convertArrayToJson(s, "horarioSemana.json");
     }
-
-    /**
-     *
-     Method that starts by converting a file into a list.
-     Then, it takes that list and checks the start dates of classes, and if they are different, it creates a new entry in the map.
-     If they are the same, it adds that class to the map.
-     In the end, it returns the map with entries that have the associated list with a size() greater than 1, meaning that there is more than one class at the same time.
-
-     @param path the path to a file
-     @return a map that contains overlapping classes
-     */
-    public Map<Date, List<Session>> getOverlappingSessions(String path) {
-        Map<Date, List<Session>> map = new HashMap<>();
-        List<Session> list = converFileToArray(path);
-        for (Session sessao : list) {
-            Date data = sessao.getDate();
-            if (!map.containsKey(data)) {
-                map.put(data, new ArrayList<>());
-            }
-            map.get(data).add(sessao);
-        }
-        Iterator<Map.Entry<Date, List<Session>>> iter = map.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry<Date, List<Session>> entry = iter.next();
-            if (entry.getValue().size() == 1) {
-                iter.remove();
-            }
-        }
-        return map;
-    }
-
-
-    public Map<Date, List<Session>> getSessionsMap(List<Session> list){
-
-        Map<Date,List<Session>> map = new HashMap<>();
-        for (Session sessao : list) {
-            Date data = sessao.getDate();
-            if (!map.containsKey(data)) {
-                map.put(data, new ArrayList<>());
-            }
-            map.get(data).add(sessao);
-        }
-        return map;
-    }
-
-
-
-
     /**
      * Returns a list of the Ucs present in the schedule.
      * * @return a list of Ucs present in the schedule.
