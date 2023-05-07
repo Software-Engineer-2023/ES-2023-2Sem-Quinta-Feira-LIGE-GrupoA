@@ -106,7 +106,7 @@ public class Web {
 			}
 		}
 		System.out.println("teste2");
-		new CSVToJson().convertArrayToJson(array);
+		new CSVToJson().convertArrayToJson(array,fileContent);
 	}
 
 	public void StringToCsv(String fileContent){

@@ -23,6 +23,8 @@ public class Horario {
 
         int count = 1;
         List<Session> list = converFileToArray(path);
+        list.sort(Comparator.comparing(Session::getDate));
+        System.out.println(list.get(list.size()-1));
         Date data = list.get(0).getDate();
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(data);
@@ -32,7 +34,7 @@ public class Horario {
             Session aux = iterator.next();
             calendario.setTime(aux.getDate());
             int semanaAux = calendario.get(Calendar.WEEK_OF_YEAR);
-            if(semanaAux != weekSessionDay && semanaAux !=0) {
+            if(semanaAux != weekSessionDay && !aux.getDataAula().equals("") && !aux.getHoraInicio().equals("")) {
                 count ++;
                 calendario.setTime(aux.getDate());
                 weekSessionDay = calendario.get(Calendar.WEEK_OF_YEAR);
@@ -41,6 +43,17 @@ public class Horario {
         }
         return count;
     }
+
+
+    public void ordenaFile(){
+        List<Session> session = converFileToArray("horario.json");
+        session.sort(Comparator.comparing(Session::getDate));
+        CSVToJson csv = new CSVToJson();
+        csv.convertArrayToJson(session, "horarioOrdenado.json");
+    }
+
+
+
     /**
      * Método que lê um ficheiro de um horário e, através do número da semana
      * mostra as aulas dessa semana
