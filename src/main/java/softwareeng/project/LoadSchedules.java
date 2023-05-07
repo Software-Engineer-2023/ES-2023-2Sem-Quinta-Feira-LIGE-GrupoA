@@ -49,8 +49,9 @@ public class LoadSchedules extends JFrame {
             try {
                 URL u = new URL(s);
                 web.ReadWeb(u);
-                web.URLToCSV(u);
-                web.URLToJson(u);
+                //ALTEREI AQUI
+                web.URLToList(u);
+                web.URLToList(u);
             } catch (MalformedURLException ex) {
                 LOGGER.log(Level.SEVERE, "Exception occurred", ex);
             } catch (IOException ex) {
@@ -61,7 +62,8 @@ public class LoadSchedules extends JFrame {
             try {
                 URL u = new URL(url);
                 web.ReadWeb(u);
-                web.URLToCSV(u);
+                //ALTEREI AQUI
+                web.URLToList(u);
             } catch (MalformedURLException ex) {
                 LOGGER.log(Level.SEVERE, "Exception occurred", ex);
             } catch (IOException ex) {
