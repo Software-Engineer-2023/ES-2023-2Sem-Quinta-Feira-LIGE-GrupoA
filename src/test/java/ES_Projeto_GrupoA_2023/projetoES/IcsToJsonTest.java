@@ -10,6 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import softwareeng.project.IcsToJson;
 
+/**
+ * Classe de testes unitarios para a class IcsToJson
+ */
+
+
 public class IcsToJsonTest {
     private IcsToJson converter;
 
