@@ -201,9 +201,8 @@ public class ConvertSchedules extends JFrame {
     }
 
     /**
-     *      * metodo responsavel por adicionar a ação de converter um ficheiro ics em json
+     * metodo responsavel por adicionar a ação de converter um ficheiro ics em json
      */
-
     private void icsToJsonButtonClicked() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);

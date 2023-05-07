@@ -14,10 +14,6 @@ public class App {
             LOGGER.log(Level.CONFIG, "Program started.");
             MainMenu mainMenu = new MainMenu();
             mainMenu.setVisible(true);
-            mainMenu.getOpenSchedulesButton().addActionListener(e -> {});
-            mainMenu.getConvertSchedulesButton().addActionListener(e -> {
-                    }
-            );
             mainMenu.getLoadSchedulesButton().addActionListener(e -> {
                 mainMenu.setVisible(false);
                 LoadSchedules loadSchedules = new LoadSchedules();
