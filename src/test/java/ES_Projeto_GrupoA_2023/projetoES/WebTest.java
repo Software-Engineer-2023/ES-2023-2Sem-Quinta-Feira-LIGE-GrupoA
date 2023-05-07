@@ -7,6 +7,10 @@ import softwareeng.project.Web;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Classe de testes unitários da classe Web
+ */
+
 class WebTest {
 
     @Test
@@ -34,7 +38,7 @@ class WebTest {
         }
     }
 
-
+    
     @Test
     void testURLToCSVWithInvalidUrl() {
         Web web = new Web();

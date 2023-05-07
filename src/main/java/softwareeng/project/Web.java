@@ -24,9 +24,15 @@ import java.util.Date;
 import java.util.List;
 
 
+/**
+*Classe para ler, baixar e converter conteúdo de páginas web.
+*/
 public class Web {
 
-	//usamos a classe URL para criar uma conexão com a página web e a classe BufferedReader para ler o conteúdo da página linha por linha
+	/**
+	*Lê o conteúdo da página da URL fornecida e imprime uma mensagem de sucesso se a leitura for bem sucedida.
+	*@param url a URL da página a ser lida
+	*/
 	public void ReadWeb(URL url) {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -39,6 +45,11 @@ public class Web {
 		}
 	}
 
+	/**
+	 * Método que lê o conteúdo da URL passada, converte para CSV, filtra as informações desejadas,converte para um objeto JSON e salva em um arquivo JSON.
+	 * @param url objeto URL contendo o endereço a ser lido
+	 * @throws IOException se houver algum erro de I/O durante a leitura da URL
+	 */
 	public String URLToList(URL url) throws IOException {
 
 		URLConnection connection = url.openConnection();
@@ -88,7 +99,11 @@ public class Web {
 		return info;
 	}
 
-
+	
+	/**
+	*Converte uma String no formato de horário em JSON.
+	*@param fileContent a String a ser convertida em JSON.
+	*/
 	public void StringTOJson(String fileContent) {
 		System.out.println("teste1");
 
@@ -109,6 +124,11 @@ public class Web {
 		new CSVToJson().convertArrayToJson(array,fileContent);
 	}
 
+	/**
+	*Converte uma String em formato de arquivo Horario para um arquivo CSV.
+	*@param fileContent String contendo o conteúdo do arquivo Horario a ser convertido.
+	*@throws RuntimeException caso ocorra um erro durante a conversão.
+	*/
 	public void StringToCsv(String fileContent){
 		StringTOJson(fileContent);
 		try {
@@ -118,7 +138,12 @@ public class Web {
 		}
 	}
 
-
+	/**
+	 * Método que cria um objeto Session a partir da String de entrada.
+	 * @param s String contendo as informações da aula
+	 * @return objeto Session criado a partir da String de entrada
+	 * @throws ParseException se houver algum erro na conversão de data/hora
+	 */
 	private Session createSession(String s) throws ParseException {
 		String curso = "";
 		String uc = s.substring(0, s.indexOf("-"));
@@ -164,7 +189,6 @@ public class Web {
 
 
 
-	//class URLToCSV recebe um URL e transforma em CSV
 	public void URLToCSV(URL url) throws IOException{
 
 	}
@@ -173,6 +197,11 @@ public class Web {
 
 	}
 
+	/**
+	*Faz o download do conteúdo de uma página web a partir da URL fornecida e salva-o em um arquivo local com o nome "web_content.txt".
+	*@param url a URL da página web de onde baixar o conteúdo
+	*@throws IOException se ocorrer um erro de I/O durante a leitura ou gravação do conteúdo da página web
+	*/
 	public void downloadWebContent(URL url) throws IOException {
 		URLConnection connection = url.openConnection();
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
