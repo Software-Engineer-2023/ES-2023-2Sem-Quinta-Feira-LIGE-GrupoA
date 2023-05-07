@@ -11,7 +11,6 @@ public class MainMenu extends JFrame {
     private final JButton loadSchedulesButton;
     private final JButton selectUcsButton;
 
-    private final JButton weekScheduleButton;
     private static final Logger LOGGER = Logger.getLogger("FileLocationFrame");
 
     public MainMenu() {
@@ -32,25 +31,21 @@ public class MainMenu extends JFrame {
         convertSchedulesButton = new JButton("Convert Schedules");
         loadSchedulesButton = new JButton("Load Schedules");
         selectUcsButton = new JButton ("Selecionar UCs");
-        weekScheduleButton = new JButton("Horário Semanal");
         
         openSchedulesButton.setBorderPainted(false);
         convertSchedulesButton.setBorderPainted(false);
         loadSchedulesButton.setBorderPainted(false);
         selectUcsButton.setBorderPainted(false);
-        weekScheduleButton.setBorderPainted(false);
 
         openSchedulesButton.setFocusPainted(false);
         convertSchedulesButton.setFocusPainted(false);
         loadSchedulesButton.setFocusPainted(false);
         selectUcsButton.setFocusPainted(false);
-        weekScheduleButton.setFocusPainted(false);
 
         openSchedulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         convertSchedulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loadSchedulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         selectUcsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        weekScheduleButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // Set icons for buttons
         int buttonSize = 48;
@@ -62,22 +57,18 @@ public class MainMenu extends JFrame {
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
         selectUcsButton.setIcon(new ImageIcon(new ImageIcon("icons/horario.png")
                 .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
-        weekScheduleButton.setIcon(new ImageIcon(new ImageIcon("icons/semana.png")
-                .getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
 
         // Add action listeners using lambda expressions
         openSchedulesButton.addActionListener(e -> openSchedules());
         convertSchedulesButton.addActionListener(e -> convertSchedules());
         loadSchedulesButton.addActionListener(e -> loadSchedules());
         selectUcsButton.addActionListener(e -> SelectUcs());
-        weekScheduleButton.addActionListener(e -> weekSchedule());
 
         JPanel panel = new JPanel();
         panel.add(openSchedulesButton);
         panel.add(convertSchedulesButton);
         panel.add(loadSchedulesButton);
         panel.add(selectUcsButton);
-        panel.add(weekScheduleButton);
 
         getContentPane().add(panel);
         pack();
@@ -85,13 +76,6 @@ public class MainMenu extends JFrame {
         setVisible(true);
     }
 
-    private void weekSchedule() {
-        if(this.isVisible()){
-            dispose();
-            WeekSchedule week = new WeekSchedule();
-            week.setVisible(true);
-        }
-    }
 
     // Methods for button functionality
     public void openSchedules() {

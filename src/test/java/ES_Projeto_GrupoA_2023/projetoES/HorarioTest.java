@@ -91,7 +91,8 @@ class HorarioTest {
 
     @Test
     void countWeeks(){
-        System.out.println(horario.countWeeks("horarioPessoal.json"));
+        System.out.println(horario.countWeeks("horario.json"));
+        horario.ordenaFile();
         assertEquals(5,horario.countWeeks("horarioPessoal123.json"));
     }
 
