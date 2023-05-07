@@ -17,7 +17,9 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JScrollPane;
 
-
+/**
+ * Classe SelectUcs que vai permitir criar o horário do utilizador através da escolha das Ucs que seleciona
+ */
 public class SelectUcs extends JFrame{
 	
 	private JButton backButton;
@@ -32,12 +34,18 @@ public class SelectUcs extends JFrame{
 	private JScrollPane scrollPane;
 	private Horario h;
 
+	private List<String> selectedUCs;
 
-    private static final Logger LOGGER = Logger.getLogger("LoadSchedules");
+
+    private static final Logger LOGGER = Logger.getLogger("SelectUcs");
 
 	private static final String ERROR_MESSAGE = "Error";
-    
-    public SelectUcs() {
+
+	/**
+	 * Construtor da classe SelectUcs
+	 * Define o tamanho da JFrame e inicializa os outros componentes
+	 */
+	public SelectUcs() {
     	super("Schedule PLUS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -61,6 +69,9 @@ public class SelectUcs extends JFrame{
           
         }
 
+	/**
+	 * Método responsável por inicializar os botões e posicioná-los
+	 */
 	private void initComponents() {
 		int buttonSize = 48;
 		selectFileButton = new JButton("Convert your File");
@@ -100,13 +111,12 @@ public class SelectUcs extends JFrame{
 
 
 	}
-	
 
+	/**
+	 * Adiciona os botoes anteriormente criados e tratados a JPanels e, por fim, adiciona-os à JFrame
+	 */
 	private void layoutComponents() {
-		// Use a Box layout instead of a GridLayout
 	    setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
-	    // Add the location label and text field to the first panel
 	    JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         topPanel.add(Box.createHorizontalGlue());
@@ -130,7 +140,10 @@ public class SelectUcs extends JFrame{
 		
 		
 	}
-	
+
+	/**
+	 * Adiciona Listeners aos botões backButton e selectFileButton
+	 */
 	private void addListeners() {
 		backButton.addActionListener(e -> backButtonClicked());
 		selectFileButton.addActionListener(e -> {
@@ -141,14 +154,26 @@ public class SelectUcs extends JFrame{
 			}
 		});
 	}
-
-	private List<String> selectedUCs;
-
+//TODO terminar isto
+	/**
+	 * Este método permite selecionar um ficheiro do nosso computador e, de seguida, lê o seu conteúdo e mostra todas as
+	 * ucs desse mesmo ficheiro com uma checkbox cada.
+	 * Nesta fase, o JPanel checkBoxPanel tem um Listener associado a si para que detete sempre que uma checkbox é selecionada.
+	 * Quando uma checkbox é selecionada, o botão finixhButton é mostrado na tela e assim já é possível terminar as escolhas.
+	 * @throws CsvValidationException quando o ficheiro csv é inválido
+	 * @throws IOException quando nao é possível ler o ficheiro selecionado
+	 */
 	private void selectFileButtonClicked() throws CsvValidationException, IOException {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		fileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv"));
-		fileChooser.setFileFilter(new FileNameExtensionFilter("Json files", "json"));
+
+		FileNameExtensionFilter csvFilter = new FileNameExtensionFilter("CSV files (*.csv)", "csv");
+		fileChooser.setFileFilter(csvFilter);
+
+		FileNameExtensionFilter jsonFilter = new FileNameExtensionFilter("JSON files (*.json)", "json");
+		fileChooser.setFileFilter(jsonFilter);
+
+
 
 		int result = fileChooser.showOpenDialog(this);
 		if (result == JFileChooser.APPROVE_OPTION) {
@@ -192,6 +217,9 @@ public class SelectUcs extends JFrame{
 		}
 	}
 
+	/**
+	 * Método responsável por fazer acoes quando o botão finishButton é carregado
+	 */
 	private void finishButtonClicked(){
 		h.horarioFile(selectedUCs);
 		for (Component comp : checkBoxPanel.getComponents()) {
@@ -211,6 +239,9 @@ public class SelectUcs extends JFrame{
 
 	}
 
+	/**
+	 * Cria o botão finishButton
+	 */
 	private void createFinishButton() {
 		int buttonSize = 48;
 		finishButton = new JButton("Confirm Choices");
@@ -220,18 +251,23 @@ public class SelectUcs extends JFrame{
 		finishButton.setIcon(new ImageIcon(new ImageIcon("icons/confirm.png")
 				.getImage().getScaledInstance(buttonSize, buttonSize, java.awt.Image.SCALE_SMOOTH)));
 
-		finishButton.setVisible(true);
+		finishButton.setVisible(false);
 		finishButton.addActionListener(e -> finishButtonClicked());
 	}
 
 
-
-
+	/**
+	 * Realiza as ações de quando o backButton é clicado
+	 */
 	private void backButtonClicked() {
         if (this.isVisible()) {
             dispose();
             MainMenu mainMenu = new MainMenu();
             mainMenu.setVisible(true);
+			File file = new File("horarioPessoal.json");
+			if(file.exists() && !showScheduleButton.isVisible()){
+				file.delete();
+			}
         }
     }
 }

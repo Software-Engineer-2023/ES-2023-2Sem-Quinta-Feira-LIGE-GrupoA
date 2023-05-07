@@ -15,6 +15,33 @@ public class Horario {
     }
 
     /**
+     * Devolve o número de semanas presentes num file. Tem como objetivo facilitar a consulta do horário semanal do utilizador
+     * @param path caminho para o ficheiro
+     * @return número de semanas presentes num file
+     */
+    public int countWeeks(String path) {
+
+        int count = 1;
+        List<Session> list = converFileToArray(path);
+        Date data = list.get(0).getDate();
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTime(data);
+        int weekSessionDay = calendario.get(Calendar.WEEK_OF_YEAR);
+        Iterator<Session> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Session aux = iterator.next();
+            calendario.setTime(aux.getDate());
+            int semanaAux = calendario.get(Calendar.WEEK_OF_YEAR);
+            if(semanaAux != weekSessionDay && semanaAux !=0) {
+                count ++;
+                calendario.setTime(aux.getDate());
+                weekSessionDay = calendario.get(Calendar.WEEK_OF_YEAR);
+            }
+
+        }
+        return count;
+    }
+    /**
      * Método que lê um ficheiro de um horário e, através do número da semana
      * mostra as aulas dessa semana
      * @param path caminho para o ficheiro que irá ser o horário
@@ -85,6 +112,7 @@ public class Horario {
     public List<String> getUCsFromHorario() {
         List<String> ucs = new ArrayList<>();
         List<Session> horario = converFileToArray(path);
+        horario.sort(Comparator.comparing(Session::getUc));
         Iterator<Session> iterator = horario.iterator();
         while (iterator.hasNext()) {
             Session aux = iterator.next();
